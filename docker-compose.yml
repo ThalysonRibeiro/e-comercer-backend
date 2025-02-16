@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_DB=trendify
+    ports:
+      - '5430:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - prisma-networks
+
+networks:
+  prisma-networks:
+    driver: bridge
+
+volumes:
+  postgres_data:

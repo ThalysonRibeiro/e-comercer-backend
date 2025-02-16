@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountType {
+  useradmin
+}
+
+enum AccountStatus {
+  ativo
+  inativo
+}
+
+model Users {
+  id           String        @id @default(uuid())
+  name         String
+  email        String        @unique
+  password     String
+  userFunction AccountType
+  status       AccountStatus
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @default(now())
+
+  // Colunas para o NextAuth.js
+  emailVerified DateTime? @db.Timestamptz // Para armazenar quando o email foi verificado
+  image         String? // Para armazenar a imagem de perfil do usuário (caso esteja usando provedores como Google)
+
+  @@map("user")
+}
