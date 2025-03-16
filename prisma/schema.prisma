@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,6 +9,7 @@ datasource db {
 
 enum AccountType {
   useradmin
+  userdefault
 }
 
 enum AccountStatus {
@@ -22,19 +17,52 @@ enum AccountStatus {
   inativo
 }
 
-model Users {
-  id           String        @id @default(uuid())
-  name         String
-  email        String        @unique
-  password     String
-  userFunction AccountType
-  status       AccountStatus
-  created_at   DateTime      @default(now())
-  updated_at   DateTime      @default(now())
+model User {
+  id                     String        @id @default(cuid())
+  status                 AccountStatus
+  type                   AccountType
+  name                   String?
+  cpf                    String
+  genero                 String
+  dateOfBirth            String
+  email                  String        @unique
+  phone                  String
+  password               String?
+  resetPasswordToken     String?
+  resetPasswordExpires   DateTime?
+  emailVerified          DateTime?
+  emailVerificationToken String?
+  googleId               String?       @unique
+  avatar                 String?
 
-  // Colunas para o NextAuth.js
-  emailVerified DateTime? @db.Timestamptz // Para armazenar quando o email foi verificado
-  image         String? // Para armazenar a imagem de perfil do usuário (caso esteja usando provedores como Google)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("user")
+  @@map("users")
 }
+
+// model Produto {
+//   id            String   @id
+//   title         String
+//   price         Float
+//   old_price     Float
+//   assessment    Int
+//   description   String
+//   products_sold Int
+//   endDate       DateTime
+//   bigsale       Boolean
+//   sku           String   @unique
+//   stock         Int
+//   category      String
+//   brand         String
+//   tags          String[]
+//   options       Json     // Pode ser usado para armazenar as opções de tamanho e cor
+//   images        Image[]  // Relacionamento com a tabela de imagens
+// }
+
+// model Image {
+//   id       String @id
+//   image    String
+//   productId String
+//   product  Produto @relation(fields: [productId], references: [id])
+// }
