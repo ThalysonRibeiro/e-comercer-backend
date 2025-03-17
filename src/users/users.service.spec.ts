@@ -54,9 +54,9 @@ describe('UsersService', () => {
             get: jest.fn((key) => {
               // Mock das variáveis de ambiente para os testes
               const envVars = {
-                'CLOUDINARY_CLOUD_NAME': 'test-cloud-name',
-                'CLOUDINARY_API_KEY': 'test-api-key',
-                'CLOUDINARY_API_SECRET': 'test-api-secret',
+                CLOUDINARY_CLOUD_NAME: 'test-cloud-name',
+                CLOUDINARY_API_KEY: 'test-api-key',
+                CLOUDINARY_API_SECRET: 'test-api-secret',
               };
               return envVars[key];
             }),
@@ -384,7 +384,9 @@ describe('UsersService', () => {
 
       mockPrismaService.user.findFirst.mockResolvedValue(null);
 
-      await expect(service.uploadAvatarImage(req, file)).rejects.toThrow(HttpException);
+      await expect(service.uploadAvatarImage(req, file)).rejects.toThrow(
+        HttpException,
+      );
     });
 
     it('deve lançar uma exceção quando ocorrer erro no upload', async () => {
@@ -395,9 +397,13 @@ describe('UsersService', () => {
         mimetype: 'image/jpeg',
       } as Express.Multer.File;
 
-      mockPrismaService.user.findFirst.mockRejectedValue(new Error('Erro de banco de dados'));
+      mockPrismaService.user.findFirst.mockRejectedValue(
+        new Error('Erro de banco de dados'),
+      );
 
-      await expect(service.uploadAvatarImage(req, file)).rejects.toThrow(HttpException);
+      await expect(service.uploadAvatarImage(req, file)).rejects.toThrow(
+        HttpException,
+      );
     });
   });
 
@@ -414,11 +420,14 @@ describe('UsersService', () => {
 
       // Mock do resultado do Cloudinary
       const cloudinaryResult = {
-        secure_url: 'https://res.cloudinary.com/demo/image/upload/avatars/user_123.jpg',
+        secure_url:
+          'https://res.cloudinary.com/demo/image/upload/avatars/user_123.jpg',
       };
 
       // Configurar mocks
-      (cloudinary.uploader.upload as jest.Mock).mockResolvedValue(cloudinaryResult);
+      (cloudinary.uploader.upload as jest.Mock).mockResolvedValue(
+        cloudinaryResult,
+      );
       mockPrismaService.user.findFirst.mockResolvedValue(mockUser);
       mockPrismaService.user.update.mockResolvedValue(mockUpdatedUser);
 
@@ -433,7 +442,7 @@ describe('UsersService', () => {
           public_id: 'user_user-123',
           overwrite: true,
           resource_type: 'image',
-        }
+        },
       );
 
       expect(prisma.user.findFirst).toHaveBeenCalledWith({
@@ -442,7 +451,10 @@ describe('UsersService', () => {
 
       expect(prisma.user.update).toHaveBeenCalledWith({
         where: { id: 'user-123' },
-        data: { avatar: 'https://res.cloudinary.com/demo/image/upload/avatars/user_123.jpg' },
+        data: {
+          avatar:
+            'https://res.cloudinary.com/demo/image/upload/avatars/user_123.jpg',
+        },
         select: {
           id: true,
           name: true,
@@ -467,19 +479,22 @@ describe('UsersService', () => {
 
       // Mock do resultado do Cloudinary
       const cloudinaryResult = {
-        secure_url: 'https://res.cloudinary.com/demo/image/upload/avatars/user_123.jpg',
+        secure_url:
+          'https://res.cloudinary.com/demo/image/upload/avatars/user_123.jpg',
       };
 
       // Configurar mocks
-      (cloudinary.uploader.upload as jest.Mock).mockResolvedValue(cloudinaryResult);
+      (cloudinary.uploader.upload as jest.Mock).mockResolvedValue(
+        cloudinaryResult,
+      );
       mockPrismaService.user.findFirst.mockResolvedValue(null); // Usuário não encontrado
 
       // Verificar que o método lança exceção
       await expect(service.uploadAvatarCloudnary(req, file)).rejects.toThrow(
         new HttpException(
           'Falha ao atualizar o avatar do usuário',
-          HttpStatus.BAD_REQUEST
-        )
+          HttpStatus.BAD_REQUEST,
+        ),
       );
 
       // Verificar que upload foi feito mas update não foi chamado
@@ -500,15 +515,15 @@ describe('UsersService', () => {
 
       // Configurar mock para simular falha no Cloudinary
       (cloudinary.uploader.upload as jest.Mock).mockRejectedValue(
-        new Error('Erro no upload para o Cloudinary')
+        new Error('Erro no upload para o Cloudinary'),
       );
 
       // Verificar que o método lança exceção
       await expect(service.uploadAvatarCloudnary(req, file)).rejects.toThrow(
         new HttpException(
           'Falha ao atualizar o avatar do usuário',
-          HttpStatus.BAD_REQUEST
-        )
+          HttpStatus.BAD_REQUEST,
+        ),
       );
 
       // Verificar que não tentou buscar ou atualizar o usuário
@@ -528,22 +543,25 @@ describe('UsersService', () => {
 
       // Mock do resultado do Cloudinary
       const cloudinaryResult = {
-        secure_url: 'https://res.cloudinary.com/demo/image/upload/avatars/user_123.jpg',
+        secure_url:
+          'https://res.cloudinary.com/demo/image/upload/avatars/user_123.jpg',
       };
 
       // Configurar mocks
-      (cloudinary.uploader.upload as jest.Mock).mockResolvedValue(cloudinaryResult);
+      (cloudinary.uploader.upload as jest.Mock).mockResolvedValue(
+        cloudinaryResult,
+      );
       mockPrismaService.user.findFirst.mockResolvedValue(mockUser);
       mockPrismaService.user.update.mockRejectedValue(
-        new Error('Erro ao atualizar usuário no banco de dados')
+        new Error('Erro ao atualizar usuário no banco de dados'),
       );
 
       // Verificar que o método lança exceção
       await expect(service.uploadAvatarCloudnary(req, file)).rejects.toThrow(
         new HttpException(
           'Falha ao atualizar o avatar do usuário',
-          HttpStatus.BAD_REQUEST
-        )
+          HttpStatus.BAD_REQUEST,
+        ),
       );
 
       // Verificar que tentou fazer upload e buscar o usuário
@@ -564,15 +582,19 @@ describe('UsersService', () => {
 
       // Mock do resultado do Cloudinary
       const cloudinaryResult = {
-        secure_url: 'https://res.cloudinary.com/demo/image/upload/avatars/user_123.png',
+        secure_url:
+          'https://res.cloudinary.com/demo/image/upload/avatars/user_123.png',
       };
 
       // Configurar mocks
-      (cloudinary.uploader.upload as jest.Mock).mockResolvedValue(cloudinaryResult);
+      (cloudinary.uploader.upload as jest.Mock).mockResolvedValue(
+        cloudinaryResult,
+      );
       mockPrismaService.user.findFirst.mockResolvedValue(mockUser);
       mockPrismaService.user.update.mockResolvedValue({
         ...mockUpdatedUser,
-        avatar: 'https://res.cloudinary.com/demo/image/upload/avatars/user_123.png',
+        avatar:
+          'https://res.cloudinary.com/demo/image/upload/avatars/user_123.png',
       });
 
       // Executar método
@@ -581,9 +603,8 @@ describe('UsersService', () => {
       // Verificar que o dataURI contém o mimetype correto
       expect(cloudinary.uploader.upload).toHaveBeenCalledWith(
         'data:image/png;base64,aW1hZ2VtLXRlc3RlLXBuZw==',
-        expect.any(Object)
+        expect.any(Object),
       );
     });
   });
-
-})
+});

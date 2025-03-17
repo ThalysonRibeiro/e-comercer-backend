@@ -10,7 +10,10 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService, private configService: ConfigService,) {
+  constructor(
+    private prisma: PrismaService,
+    private configService: ConfigService,
+  ) {
     // cloudinary.config({
     //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     //   api_key: process.env.CLOUDINARY_API_KEY,
@@ -22,8 +25,6 @@ export class UsersService {
       api_secret: this.configService.get<string>('CLOUDINARY_API_SECRET'),
     });
   }
-
-
 
   async findByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findUnique({

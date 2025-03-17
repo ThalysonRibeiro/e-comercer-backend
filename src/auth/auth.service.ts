@@ -73,88 +73,132 @@ export class AuthService {
         'Confirme seu email - POWER GADGET',
         `Olá ${newUser.name}, sua conta foi criada com sucesso! Por favor, confirme seu email clicando no link: ${confirmationUrl}`,
         `
-        <!doctype html>
+       <!doctype html>
         <html lang="pt-br">
-        <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>Confirme seu email</title>
-          <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-        </head>
-        <body
-          class="bg-[#0E0C1D] text-gray-400 font-sans leading-normal tracking-normal"
-        >
-          <div
-            class="max-w-md mx-auto my-8 bg-[#221F2F] rounded-lg shadow-md overflow-hidden"
-          >
-            <div class="text-center py-6 border-b border-gray-200">
-              <h1 class="text-2xl font-bold text-gray-300">
-                Confirme seu Email
-              </h1>
-            </div>
-  
-            <div class="p-6">
-              <p class="mb-4">Olá ${newUser.name},</p>
-  
-              <p class="mb-4">
-                Sua conta foi criada com sucesso! Para começar a usar todos os recursos da nossa plataforma, 
-                por favor confirme seu email.
-              </p>
-  
-              <p class="mb-2">
-                Ao confirmar seu email, você terá acesso a:
-              </p>
-  
-              <ul class="list-disc pl-6 mb-4">
-                <li class="mb-1">Acesso a conteúdos exclusivos</li>
-                <li class="mb-1">Recursos personalizados</li>
-                <li class="mb-1">Suporte prioritário</li>
-              </ul>
-  
-              <p class="mb-4">
-                Para confirmar, basta clicar no botão abaixo:
-              </p>
-  
-              <div class="text-center my-6">
-                <a
-                  href="${confirmationUrl}"
-                  class="px-6 py-3 bg-[#C01A40] text-white font-bold rounded hover:bg-[#AF5EFF] transition duration-300"
-                >
-                  Confirmar Meu E-mail
-                </a>
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Confirme seu email</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f7fa;
+                color: #333;
+                margin: 0;
+                padding: 0;
+              }
+              .container {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+              }
+              .header {
+                text-align: center;
+                margin-bottom: 20px;
+              }
+              .header h1 {
+                font-size: 24px;
+                color: #4a90e2;
+              }
+              .content {
+                font-size: 16px;
+                line-height: 1.5;
+              }
+              .content p {
+                margin-bottom: 10px;
+              }
+              .content ul {
+                margin-left: 20px;
+              }
+              .content ul li {
+                margin-bottom: 5px;
+              }
+              .button-container {
+                text-align: center;
+                margin: 20px 0;
+              }
+              .confirm-button {
+                display: inline-block;
+                padding: 12px 30px;
+                font-size: 16px;
+                color: #fff;
+                background-color: #4a90e2;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+              }
+              .confirm-button:hover {
+                background-color: #357ab7;
+              }
+              .link {
+                word-wrap: break-word;
+                color: #4a90e2;
+                text-decoration: none;
+              }
+              .link:hover {
+                text-decoration: underline;
+              }
+              .footer {
+                text-align: center;
+                font-size: 14px;
+                color: #999;
+                margin-top: 20px;
+              }
+              .footer p {
+                margin: 0;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>Confirme seu Email</h1>
               </div>
-  
-              <p class="mb-4">
-                Se o botão não funcionar, copie e cole este link no seu navegador:
-              </p>
-              
-              <p class="mb-4 break-all bg-gray-800 p-2 rounded">
-                ${confirmationUrl}
-              </p>
-  
-              <p class="mb-4">
-                Se você tiver alguma dúvida ou precisar de ajuda, não hesite em entrar
-                em contato com nossa equipe de suporte.
-              </p>
-  
-              <p class="mb-2">
-                Atenciosamente,<br />
-                Equipe POWER GADGET
-              </p>
+              <div class="content">
+                <p>Olá ${newUser.name},</p>
+                <p>
+                  Sua conta foi criada com sucesso! Para começar a usar todos os
+                  recursos da nossa plataforma, por favor confirme seu email.
+                </p>
+                <p>Ao confirmar seu email, você terá acesso a:</p>
+                <ul>
+                  <li>Acesso a conteúdos exclusivos</li>
+                  <li>Recursos personalizados</li>
+                  <li>Suporte prioritário</li>
+                </ul>
+                <p>Para confirmar, basta clicar no botão abaixo:</p>
+                <div class="button-container">
+                  <a href="${confirmationUrl}" class="confirm-button"
+                    >Confirmar Meu E-mail</a
+                  >
+                </div>
+                <p>
+                  Se o botão não funcionar, copie e cole este link no seu navegador:
+                </p>
+                <p class="link">${confirmationUrl}</p>
+                <p>
+                  Se você tiver alguma dúvida ou precisar de ajuda, não hesite em entrar
+                  em contato com nossa equipe de suporte.
+                </p>
+                <p>
+                  Atenciosamente,<br />
+                  Equipe POWER GADGET
+                </p>
+              </div>
+              <div class="footer">
+                <p>&copy; 2025 POWER GADGET. Todos os direitos reservados.</p>
+              </div>
             </div>
-  
-            <div
-              class="text-center py-4 border-t border-gray-200 text-sm text-gray-600"
-            >
-              <p>&copy; 2025 POWER GADGET. Todos os direitos reservados.</p>
-            </div>
-          </div>
-        </body>
+          </body>
         </html>
+
         `,
       );
     } catch (error) {
-      console.error('Erro ao enviar email de confirmação:', error);
+      throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
       // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
     }
 
@@ -178,7 +222,6 @@ export class AuthService {
       accessToken: this.jwtService.sign(jwtPayload),
     };
   }
-
 
   async registerAdmin(createUserAdminDTO: CreateUserAdminDTO) {
     // Recupera a senha do admin do arquivo .env
@@ -237,88 +280,133 @@ export class AuthService {
         'Confirme seu email - POWER GADGET',
         `Olá ${newUser.name}, sua conta foi criada com sucesso! Por favor, confirme seu email clicando no link: ${confirmationUrl}`,
         `
-        <!doctype html>
+       <!doctype html>
         <html lang="pt-br">
-        <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>Confirme seu email</title>
-          <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-        </head>
-        <body
-          class="bg-[#0E0C1D] text-gray-400 font-sans leading-normal tracking-normal"
-        >
-          <div
-            class="max-w-md mx-auto my-8 bg-[#221F2F] rounded-lg shadow-md overflow-hidden"
-          >
-            <div class="text-center py-6 border-b border-gray-200">
-              <h1 class="text-2xl font-bold text-gray-300">
-                Confirme seu Email
-              </h1>
-            </div>
-  
-            <div class="p-6">
-              <p class="mb-4">Olá ${newUser.name},</p>
-  
-              <p class="mb-4">
-                Sua conta foi criada com sucesso! Para começar a usar todos os recursos da nossa plataforma, 
-                por favor confirme seu email.
-              </p>
-  
-              <p class="mb-2">
-                Ao confirmar seu email, você terá acesso a:
-              </p>
-  
-              <ul class="list-disc pl-6 mb-4">
-                <li class="mb-1">Acesso a conteúdos exclusivos</li>
-                <li class="mb-1">Recursos personalizados</li>
-                <li class="mb-1">Suporte prioritário</li>
-              </ul>
-  
-              <p class="mb-4">
-                Para confirmar, basta clicar no botão abaixo:
-              </p>
-  
-              <div class="text-center my-6">
-                <a
-                  href="${confirmationUrl}"
-                  class="px-6 py-3 bg-[#C01A40] text-white font-bold rounded hover:bg-[#AF5EFF] transition duration-300"
-                >
-                  Confirmar Meu E-mail
-                </a>
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Confirme seu email</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f7fa;
+                color: #333;
+                margin: 0;
+                padding: 0;
+              }
+              .container {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+              }
+              .header {
+                text-align: center;
+                margin-bottom: 20px;
+              }
+              .header h1 {
+                font-size: 24px;
+                color: #4a90e2;
+              }
+              .content {
+                font-size: 16px;
+                line-height: 1.5;
+              }
+              .content p {
+                margin-bottom: 10px;
+              }
+              .content ul {
+                margin-left: 20px;
+              }
+              .content ul li {
+                margin-bottom: 5px;
+              }
+              .button-container {
+                text-align: center;
+                margin: 20px 0;
+              }
+              .confirm-button {
+                display: inline-block;
+                padding: 12px 30px;
+                font-size: 16px;
+                color: #fff;
+                background-color: #4a90e2;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+              }
+              .confirm-button:hover {
+                background-color: #357ab7;
+              }
+              .link {
+                word-wrap: break-word;
+                color: #4a90e2;
+                text-decoration: none;
+              }
+              .link:hover {
+                text-decoration: underline;
+              }
+              .footer {
+                text-align: center;
+                font-size: 14px;
+                color: #999;
+                margin-top: 20px;
+              }
+              .footer p {
+                margin: 0;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>Confirme seu Email</h1>
               </div>
-  
-              <p class="mb-4">
-                Se o botão não funcionar, copie e cole este link no seu navegador:
-              </p>
-              
-              <p class="mb-4 break-all bg-gray-800 p-2 rounded">
-                ${confirmationUrl}
-              </p>
-  
-              <p class="mb-4">
-                Se você tiver alguma dúvida ou precisar de ajuda, não hesite em entrar
-                em contato com nossa equipe de suporte.
-              </p>
-  
-              <p class="mb-2">
-                Atenciosamente,<br />
-                Equipe POWER GADGET
-              </p>
+              <div class="content">
+                <p>Olá ${newUser.name},</p>
+                <p>
+                  Sua conta foi criada com sucesso! Para começar a usar todos os
+                  recursos da nossa plataforma, por favor confirme seu email.
+                </p>
+                <p>Ao confirmar seu email, você terá acesso a:</p>
+                <ul>
+                  <li>Acesso a conteúdos exclusivos</li>
+                  <li>Recursos personalizados</li>
+                  <li>Suporte prioritário</li>
+                </ul>
+                <p>Para confirmar, basta clicar no botão abaixo:</p>
+                <div class="button-container">
+                  <a href="${confirmationUrl}" class="confirm-button"
+                    >Confirmar Meu E-mail</a
+                  >
+                </div>
+                <p>
+                  Se o botão não funcionar, copie e cole este link no seu navegador:
+                </p>
+                <p class="link">${confirmationUrl}</p>
+                <p>
+                  Se você tiver alguma dúvida ou precisar de ajuda, não hesite em entrar
+                  em contato com nossa equipe de suporte.
+                </p>
+                <p>
+                  Atenciosamente,<br />
+                  Equipe POWER GADGET
+                </p>
+              </div>
+              <div class="footer">
+                <p>&copy; 2025 POWER GADGET. Todos os direitos reservados.</p>
+              </div>
             </div>
-  
-            <div
-              class="text-center py-4 border-t border-gray-200 text-sm text-gray-600"
-            >
-              <p>&copy; 2025 POWER GADGET. Todos os direitos reservados.</p>
-            </div>
-          </div>
-        </body>
+          </body>
         </html>
+
         `,
+
       );
     } catch (error) {
-      console.error('Erro ao enviar email de confirmação:', error);
+      throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
       // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
     }
 
@@ -335,7 +423,7 @@ export class AuthService {
         email: newUser.email,
         name: newUser.name,
         avatar: newUser.avatar,
-        // type: newUser.type,
+        type: newUser.type,
         status: newUser.status,
         isProfileComplete: this.isProfileComplete(newUser),
       },
@@ -419,7 +507,7 @@ export class AuthService {
         email: user.email,
         name: user.name,
         avatar: user.avatar,
-        // type: user.type,
+        type: user.type,
         status: user.status,
         isProfileComplete: this.isProfileComplete(user),
       },
@@ -428,11 +516,8 @@ export class AuthService {
   }
 
   async loginWithCredentials(login: string, password: string) {
-    console.log('Login attempt:', login);
 
     const user = await this.usersService.findByEmailOrPhone(login);
-
-    console.log('User found:', user);
 
     if (!user) {
       throw new HttpException(
@@ -497,7 +582,6 @@ export class AuthService {
         `<h1>Olá ${user.name || 'Usuário'},</h1><p>Sua senha foi alterada com sucesso. Se você não solicitou esta alteração, entre em contato conosco imediatamente.</p>`,
       );
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         'Erro ao enviar email de confirmação de alteração de senha:',
         HttpStatus.BAD_REQUEST,
@@ -543,7 +627,7 @@ export class AuthService {
          <p>Se você não solicitou esta alteração, ignore este email.</p>`,
       );
     } catch (error) {
-      console.error('Erro ao enviar email de recuperação de senha:', error);
+      throw new HttpException('Erro ao enviar email de recuperação de senha:', HttpStatus.BAD_REQUEST)
     }
 
     return {
@@ -584,10 +668,8 @@ export class AuthService {
           `<h1>Olá ${user.name || 'Usuário'},</h1><p>Sua senha foi redefinida com sucesso. Agora você pode fazer login com sua nova senha.</p>`,
         );
       } catch (error) {
-        console.error(
-          'Erro ao enviar email de confirmação de redefinição de senha:',
-          error,
-        );
+        ;
+        throw new HttpException('Erro ao enviar email de confirmação de redefinição de senha:', HttpStatus.BAD_REQUEST);
       }
 
       return { message: 'Senha redefinida com sucesso.' };
@@ -595,7 +677,6 @@ export class AuthService {
       if (error instanceof HttpException) {
         throw error;
       }
-      console.log(error);
 
       throw new HttpException(
         'Erro ao redefinir a senha.',

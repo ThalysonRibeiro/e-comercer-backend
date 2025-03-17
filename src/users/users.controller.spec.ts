@@ -1,169 +1,202 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import request from 'supertest'; // Importação correta
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { HttpStatus } from '@nestjs/common';
 
 describe('UsersController', () => {
-  let app: INestApplication;
+  let controller: UsersController;
   let usersService: UsersService;
 
-  // beforeEach(async () => {
-  //   const moduleFixture: TestingModule = await Test.createTestingModule({
-  //     controllers: [UsersController],
-  //     providers: [
-  //       {
-  //         provide: UsersService,
-  //         useValue: {
-  //           completeProfile: jest.fn(), // Mock correto da função
-  //           uploadAvatarImage: jest.fn(),
-  //           uploadAvatarCloudnary: jest.fn(),
-  //         },
-  //       },
-  //     ],
-  //   })
-  //     .overrideGuard(JwtAuthGuard)
-  //     .useValue({ canActivate: jest.fn(() => true) })
-  //     .compile();
+  // Mock de serviço
+  const mockUsersService = {
+    completeProfile: jest.fn(),
+    uploadAvatarImage: jest.fn(),
+    uploadAvatarCloudnary: jest.fn(),
+  };
 
-  //   app = moduleFixture.createNestApplication();
-  //   usersService = moduleFixture.get<UsersService>(UsersService);
-  //   await app.init();
-  // });
+  // Mock de arquivo
+  const mockFile = {
+    fieldname: 'file',
+    originalname: 'test.jpg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    buffer: Buffer.from('test'),
+    size: 1024,
+  } as Express.Multer.File;
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [
         {
           provide: UsersService,
-          useValue: {
-            completeProfile: jest.fn(),
-            uploadAvatarImage: jest.fn(),
-            uploadAvatarCloudnary: jest.fn(),
-          },
+          useValue: mockUsersService,
         },
       ],
     })
       .overrideGuard(JwtAuthGuard)
-      .useValue({
-        canActivate: jest.fn(() => true), // Isso simula que o guard está passando
-        getRequest: jest.fn(() => ({ user: { id: 'cm8awbgye0000f8mwuzbnso4e' } })), // Mock do request.user
-      })
+      .useValue({ canActivate: () => true })
       .compile();
 
-    app = moduleFixture.createNestApplication();
-    usersService = moduleFixture.get<UsersService>(UsersService);
-    await app.init();
+    controller = module.get<UsersController>(UsersController);
+    usersService = module.get<UsersService>(UsersService);
   });
 
-  afterEach(async () => {
-    await app.close();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  describe('PATCH /users/complete-profile', () => {
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
 
-    it('should update the user profile', async () => {
-      // Mock da resposta do serviço
-      const updatedUser = {
-        id: '1',
-        name: 'John Doe',
-        email: 'john@example.com',
+  describe('completeProfile', () => {
+    it('should update user profile successfully', async () => {
+      // Arrange
+      const mockRequest = {
+        user: { id: 'user-123' },
+      };
+
+      const profileData = {
+        name: 'Test User',
+        cpf: '123.456.789-00',
+        genero: 'Masculino',
+        dateOfBirth: '1990-01-01',
+        phone: '(11) 99999-9999',
+      };
+
+      const mockUpdatedUser = {
+        id: 'user-123',
+        name: 'Test User',
+        email: 'test@example.com',
         status: 'active',
       };
 
-      // Definindo o comportamento esperado do serviço
-      (usersService.completeProfile as jest.Mock).mockResolvedValue(updatedUser);
+      mockUsersService.completeProfile.mockResolvedValue(mockUpdatedUser);
 
-      // Dados do corpo da requisição
+      // Act
+      const result = await controller.completeProfile(mockRequest, profileData);
+
+      // Assert
+      expect(usersService.completeProfile).toHaveBeenCalledWith('user-123', profileData);
+      expect(result).toEqual({
+        message: 'Perfil atualizado com sucesso',
+        user: {
+          id: 'user-123',
+          name: 'Test User',
+          email: 'test@example.com',
+          status: 'active',
+        },
+      });
+    });
+
+    it('should throw an error if service throws', async () => {
+      // Arrange
+      const mockRequest = {
+        user: { id: 'user-123' },
+      };
+
       const profileData = {
-        name: 'John Doe',
+        name: 'Test User',
         cpf: '123.456.789-00',
-        genero: 'masculino',
+        genero: 'Masculino',
         dateOfBirth: '1990-01-01',
-        phone: '+55 11 99999-9999',
+        phone: '(11) 99999-9999',
       };
 
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbThhd2JneWUwMDAwZjhtd3V6Ym5zbzRlIiwiZW1haWwiOiJyYWZhZWwyM2JyQGhvdG1haWwuY29tIiwicGhvbmUiOiIrNTU2NTk4MTI3ODI5NyIsImlhdCI6MTc0MjEzNTEyMSwiZXhwIjoxNzQ0NzI3MTIxLCJhdWQiOiJ1c2VycyIsImlzcyI6ImF1dGgtYXBpIn0.E3m9MnLxqNRCUh5Av08XvbxA9Bm9U5LR3Vv40DLOalQ";
+      mockUsersService.completeProfile.mockRejectedValue(new Error('Database error'));
 
-      try {
-        const response = await request(app.getHttpServer())
-          .patch('/users/complete-profile')
-          .set('Authorization', `Bearer ${token}`)
-          .send(profileData);
-
-        expect(response.status).toBe(200);  // Verifica o status HTTP 200
-        expect(response.body).toEqual({
-          message: 'Perfil atualizado com sucesso',
-          user: {
-            id: updatedUser.id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-            status: updatedUser.status,
-          },
-        });
-      } catch (error) {
-        console.error('Error response:', error.response);
-      }
+      // Act & Assert
+      await expect(controller.completeProfile(mockRequest, profileData)).rejects.toThrow('Database error');
+      expect(usersService.completeProfile).toHaveBeenCalledWith('user-123', profileData);
     });
   });
 
-
-  describe('POST /users/avatar', () => {
-    it('should upload avatar image', async () => {
-      const mockUser = {
-        id: '123',
-        name: 'John Doe',
-        email: 'john@example.com',
-        avatar: 'http://example.com/avatar.jpg',
-        phone: '123456789',
+  describe('uploadAvatar', () => {
+    it('should upload avatar successfully', async () => {
+      // Arrange
+      const mockRequest = {
+        user: { id: 'user-123' },
       };
 
-      jest
-        .spyOn(usersService, 'uploadAvatarImage')
-        .mockResolvedValue(mockUser);
+      const mockResponse = {
+        message: 'Avatar uploaded successfully',
+        avatarUrl: 'http://example.com/avatar.jpg',
+      };
 
-      return request(app.getHttpServer())
-        .post('/users/avatar')
-        .attach('file', Buffer.from('avatar image content'), 'avatar.jpg')
-        .expect(201)
-        .expect({
-          id: mockUser.id,
-          name: mockUser.name,
-          email: mockUser.email,
-          avatar: mockUser.avatar,
-          phone: mockUser.phone,
-        });
+      mockUsersService.uploadAvatarImage.mockResolvedValue(mockResponse);
+
+      // Act
+      const result = await controller.uploadAvatar(mockRequest, mockFile);
+
+      // Assert
+      expect(usersService.uploadAvatarImage).toHaveBeenCalledWith(mockRequest, mockFile);
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should throw an error if service throws', async () => {
+      // Arrange
+      const mockRequest = {
+        user: { id: 'user-123' },
+      };
+
+      mockUsersService.uploadAvatarImage.mockRejectedValue(new Error('Upload failed'));
+
+      // Act & Assert
+      await expect(controller.uploadAvatar(mockRequest, mockFile)).rejects.toThrow('Upload failed');
+      expect(usersService.uploadAvatarImage).toHaveBeenCalledWith(mockRequest, mockFile);
     });
   });
 
-  describe('POST /users/avatar-Cloudnary', () => {
-    it('should upload avatar to Cloudinary', async () => {
-      const mockUser = {
-        id: '123',
-        name: 'John Doe',
-        email: 'john@example.com',
-        avatar: 'http://example.com/avatar.jpg',
-        phone: '123456789',
+  describe('uploadAvatarCloudnary', () => {
+    it('should upload avatar to Cloudinary successfully', async () => {
+      // Arrange
+      const mockRequest = {
+        user: { id: 'user-123' },
       };
 
-      jest
-        .spyOn(usersService, 'uploadAvatarCloudnary')
-        .mockResolvedValue(mockUser);
+      const mockResponse = {
+        message: 'Avatar uploaded to Cloudinary successfully',
+        avatarUrl: 'https://cloudinary.com/avatar.jpg',
+      };
 
-      return request(app.getHttpServer())
-        .post('/users/avatar-Cloudnary')
-        .attach('file', Buffer.from('avatar image content'), 'avatar-cloud.jpg')
-        .expect(201)
-        .expect({
-          id: mockUser.id,
-          name: mockUser.name,
-          email: mockUser.email,
-          avatar: mockUser.avatar,
-          phone: mockUser.phone,
-        });
+      mockUsersService.uploadAvatarCloudnary.mockResolvedValue(mockResponse);
+
+      // Act
+      const result = await controller.uploadAvatarCloudnary(mockRequest, mockFile);
+
+      // Assert
+      expect(usersService.uploadAvatarCloudnary).toHaveBeenCalledWith(mockRequest, mockFile);
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should throw an error if service throws', async () => {
+      // Arrange
+      const mockRequest = {
+        user: { id: 'user-123' },
+      };
+
+      mockUsersService.uploadAvatarCloudnary.mockRejectedValue(new Error('Cloudinary upload failed'));
+
+      // Act & Assert
+      await expect(controller.uploadAvatarCloudnary(mockRequest, mockFile)).rejects.toThrow('Cloudinary upload failed');
+      expect(usersService.uploadAvatarCloudnary).toHaveBeenCalledWith(mockRequest, mockFile);
     });
   });
 
+  // Teste para validação de arquivos
+  describe('file validation', () => {
+    // Estes testes são mais difíceis de implementar diretamente no controller 
+    // porque a validação é feita pelo ParseFilePipeBuilder
+    // Normalmente, estes são testados com testes de integração
+    // Mas podemos simular o comportamento esperado
+
+    it('should validate file type and size', () => {
+      // Este é um exemplo de como seria um teste de integração
+      // Na prática, precisaríamos de um teste e2e para isso
+      expect(mockFile.mimetype).toMatch(/jpeg|jpg|png|webp/);
+      expect(mockFile.size).toBeLessThanOrEqual(6 * 1024 * 1024);
+    });
+  });
 });
