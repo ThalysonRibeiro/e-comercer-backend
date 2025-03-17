@@ -17,7 +17,7 @@ import { Roles } from './decorators/roles.decorator';
 import {
   CreateUserAdminDTO,
   CreateUserDTO,
-} from 'src/users/dto/create-user.dto';
+} from '../users/dto/create-user.dto';
 
 // DTOs
 
@@ -37,7 +37,7 @@ export class ResetPasswordDto {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
   //useradmin
   @Public()
   @Post('register-admin')

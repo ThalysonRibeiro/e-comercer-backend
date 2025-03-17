@@ -15,7 +15,7 @@ import {
 } from 'src/users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { EmailService } from 'src/email/email.service';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class AuthService {
@@ -42,7 +42,7 @@ export class AuthService {
     const existeCPF = await this.usersService.findByCPF(createUserDTO.cpf);
 
     if (existeEmail || existePhone || existeCPF) {
-      return { message: 'email, telefone ou cpf já existe' };
+      throw new HttpException('email, telefone ou cpf já existe', HttpStatus.BAD_REQUEST);
     }
 
     // Gerar token de verificação de email
@@ -246,10 +246,7 @@ export class AuthService {
     const existeCPF = await this.usersService.findByCPF(createUserAdminDTO.cpf);
 
     if (existeEmail || existePhone || existeCPF) {
-      throw new HttpException(
-        'Email, telefone ou CPF já existe.',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('email, telefone ou cpf já existe', HttpStatus.BAD_REQUEST);
     }
 
     const emailVerificationToken = crypto.randomBytes(32).toString('hex');
