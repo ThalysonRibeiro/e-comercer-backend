@@ -6,8 +6,8 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
-import { EmailModule } from 'src/email/email.module';
-import { EmailVerificationModule } from 'src/email-verification/email-verification.module';
+import { EmailModule } from '../email/email.module';
+import { EmailVerificationModule } from '../email-verification/email-verification.module';
 
 @Module({
   imports: [
@@ -33,4 +33,4 @@ import { EmailVerificationModule } from 'src/email-verification/email-verificati
   providers: [AuthService, JwtStrategy],
   exports: [AuthService, JwtModule],
 })
-export class AuthModule {}
+export class AuthModule { }

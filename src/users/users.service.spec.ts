@@ -4,7 +4,7 @@ import { AccountStatus, AccountType, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { v2 as cloudinary } from 'cloudinary';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { CreateUserDTO } from 'src/users/dto/create-user.dto';
+import { CreateUserDTO } from '../users/dto/create-user.dto';
 import { UsersService } from './users.service';
 import { ConfigService } from '@nestjs/config';
 
