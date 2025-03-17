@@ -1,4 +1,3 @@
-// email-verification.controller.ts
 import {
   Controller,
   Get,
@@ -10,12 +9,12 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { EmailVerificationService } from './email-verification.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Public } from 'src/auth/decorators/public.decorator';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('email-verification')
 export class EmailVerificationController {
-  constructor(private emailVerificationService: EmailVerificationService) {}
+  constructor(private emailVerificationService: EmailVerificationService) { }
 
   @Post('send')
   @UseGuards(JwtAuthGuard) // Se quiser proteger a rota (opcional)

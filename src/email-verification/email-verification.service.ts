@@ -1,7 +1,7 @@
 // email-verification.service.ts
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { EmailService } from 'src/email/email.service'; // Ajuste o caminho conforme necessário
+import { PrismaService } from '../prisma/prisma.service';
+import { EmailService } from '../email/email.service'; // Ajuste o caminho conforme necessário
 import { ConfigService } from '@nestjs/config';
 import * as crypto from 'crypto';
 
@@ -11,7 +11,7 @@ export class EmailVerificationService {
     private prisma: PrismaService,
     private emailService: EmailService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   async sendVerificationEmail(userId: string): Promise<{ success: boolean }> {
     // Buscar o usuário

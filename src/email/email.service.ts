@@ -1,18 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class EmailService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private configService: ConfigService,
+  ) { }
 
+  // private transporter = nodemailer.createTransport({
+  //   host: process.env.MAIL_HOST, // Servidor SMTP do Gmail
+  //   port: process.env.MAIL_PORT, // Porta para TLS (recomendado)
+  //   secure: false, // Usar 'false' para a porta 587 (não SSL)
+  //   auth: {
+  //     user: process.env.MAIL_USER, // Seu e-mail SMTP
+  //     pass: process.env.MAIL_PASS, // Sua senha ou App Password
+  //   },
+  // });
   private transporter = nodemailer.createTransport({
-    host: process.env.MAIL_HOST, // Servidor SMTP do Gmail
-    port: process.env.MAIL_PORT, // Porta para TLS (recomendado)
-    secure: false, // Usar 'false' para a porta 587 (não SSL)
+    host: this.configService.get<string>('MAIL_HOST'),
+    port: this.configService.get<string>('MAIL_PORT'),
+    secure: false,
     auth: {
-      user: process.env.MAIL_USER, // Seu e-mail SMTP
-      pass: process.env.MAIL_PASS, // Sua senha ou App Password
+      user: this.configService.get<string>('MAIL_USER'),
+      pass: this.configService.get<string>('MAIL_PASS'),
     },
   });
 
@@ -32,6 +45,4 @@ export class EmailService {
       throw error; // Lançar erro para ser tratado
     }
   }
-
-  // Outras funções...
 }
