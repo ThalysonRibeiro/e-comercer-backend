@@ -41,28 +41,46 @@ model User {
   @@map("users")
 }
 
-// model Produto {
-//   id            String   @id
-//   title         String
-//   price         Float
-//   old_price     Float
-//   assessment    Int
-//   description   String
-//   products_sold Int
-//   endDate       DateTime
-//   bigsale       Boolean
-//   sku           String   @unique
-//   stock         Int
-//   category      String
-//   brand         String
-//   tags          String[]
-//   options       Json     // Pode ser usado para armazenar as opções de tamanho e cor
-//   images        Image[]  // Relacionamento com a tabela de imagens
-// }
+model Product {
+  id             String    @id @unique
+  title          String
+  price          Float
+  old_price      Float
+  assessment     Int
+  promotion_time Int
+  description    String
+  products_sold  Int
+  endDate        DateTime
+  bigsale        Boolean
+  sku            String    @unique
+  stock          Int
+  category       String
+  brand          String
+  tags           String[]
+  options        Options[]
+  images         Image[]
 
-// model Image {
-//   id       String @id
-//   image    String
-//   productId String
-//   product  Produto @relation(fields: [productId], references: [id])
-// }
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Image {
+  id        String  @id
+  image     String
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("images")
+}
+
+model Options {
+  id        String   @id @default(uuid())
+  color     String
+  size      String
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+
+  @@map("options")
+}

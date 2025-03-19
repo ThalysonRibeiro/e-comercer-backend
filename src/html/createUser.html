@@ -1,120 +1,243 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Confirme seu email</title>
+    <title>Company Newsletter</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f7fa;
-        color: #333;
+      /* Reset styles */
+      body,
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
         margin: 0;
         padding: 0;
       }
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f3f4f6;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      /* Container */
       .container {
-        width: 100%;
         max-width: 600px;
         margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
+      /* Header */
       .header {
+        background-color: #2563eb;
+        color: #ffffff;
+        padding: 32px;
         text-align: center;
-        margin-bottom: 20px;
       }
       .header h1 {
         font-size: 24px;
-        color: #4a90e2;
+        margin-bottom: 8px;
       }
+      .header p {
+        color: #bfdbfe;
+      }
+      /* Content */
       .content {
-        font-size: 16px;
-        line-height: 1.5;
+        padding: 32px;
       }
-      .content p {
-        margin-bottom: 10px;
+      .hero-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 24px;
       }
-      .content ul {
-        margin-left: 20px;
+      .title {
+        font-size: 20px;
+        color: #1f2937;
+        margin-bottom: 16px;
       }
-      .content ul li {
-        margin-bottom: 5px;
+      .text {
+        color: #4b5563;
+        margin-bottom: 16px;
       }
-      .button-container {
-        text-align: center;
-        margin: 20px 0;
+      /* Featured Section */
+      .featured {
+        background-color: #f9fafb;
+        padding: 24px;
+        border-radius: 8px;
+        margin: 24px 0;
       }
-      .confirm-button {
+      .button {
         display: inline-block;
-        padding: 12px 30px;
-        font-size: 16px;
-        color: #fff;
-        background-color: #4a90e2;
+        background-color: #2563eb;
+        color: #ffffff;
+        padding: 12px 24px;
+        border-radius: 6px;
         text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
+        margin-top: 16px;
       }
-      .confirm-button:hover {
-        background-color: #357ab7;
+      /* Contact */
+      .contact {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 24px;
       }
-      .link {
-        word-wrap: break-word;
-        color: #4a90e2;
-        text-decoration: none;
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-top: 16px;
       }
-      .link:hover {
-        text-decoration: underline;
+      .contact-item {
+        display: flex;
+        align-items: center;
+        color: #4b5563;
       }
+      .contact-item img {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+      /* Footer */
       .footer {
+        background-color: #f9fafb;
+        padding: 32px;
         text-align: center;
-        font-size: 14px;
-        color: #999;
-        margin-top: 20px;
+        border-top: 1px solid #e5e7eb;
       }
-      .footer p {
-        margin: 0;
+      .social-links {
+        margin-bottom: 24px;
+      }
+      .social-links a {
+        margin: 0 12px;
+        text-decoration: none;
+      }
+      .social-links img {
+        width: 24px;
+        height: 24px;
+      }
+      .footer-text {
+        color: #6b7280;
+        font-size: 14px;
+      }
+      .unsubscribe {
+        color: #9ca3af;
+        font-size: 12px;
+        margin-top: 8px;
+      }
+      /* Responsive */
+      @media (max-width: 600px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+        .container {
+          margin: 16px;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="header">
-        <h1>Confirme seu Email</h1>
+        <h1>Company Newsletter</h1>
+        <p>Stay updated with our latest news and updates</p>
       </div>
+
       <div class="content">
-        <p>Olá ${newUser.name},</p>
-        <p>
-          Sua conta foi criada com sucesso! Para começar a usar todos os
-          recursos da nossa plataforma, por favor confirme seu email.
+        <img
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+          alt="Team collaboration"
+          class="hero-image"
+        />
+
+        <h2 class="title">Welcome to Our Monthly Newsletter</h2>
+        <p class="text">Dear Valued Customer,</p>
+        <p class="text">
+          We hope this email finds you well. We're excited to share our latest
+          updates and news with you. This month has been filled with exciting
+          developments and achievements that we can't wait to share.
         </p>
-        <p>Ao confirmar seu email, você terá acesso a:</p>
-        <ul>
-          <li>Acesso a conteúdos exclusivos</li>
-          <li>Recursos personalizados</li>
-          <li>Suporte prioritário</li>
-        </ul>
-        <p>Para confirmar, basta clicar no botão abaixo:</p>
-        <div class="button-container">
-          <a href="${confirmationUrl}" class="confirm-button"
-            >Confirmar Meu E-mail</a
-          >
+        <p class="text">
+          Our team has been working hard to bring you the best possible
+          experience, and we're proud to showcase some of our recent
+          accomplishments.
+        </p>
+
+        <div class="featured">
+          <h3 class="title">Featured Update</h3>
+          <p class="text">
+            We're thrilled to announce the launch of our new product line coming
+            next month. Stay tuned for more details!
+          </p>
+          <a href="#" class="button">Learn More</a>
         </div>
-        <p>
-          Se o botão não funcionar, copie e cole este link no seu navegador:
-        </p>
-        <p class="link">${confirmationUrl}</p>
-        <p>
-          Se você tiver alguma dúvida ou precisar de ajuda, não hesite em entrar
-          em contato com nossa equipe de suporte.
-        </p>
-        <p>
-          Atenciosamente,<br />
-          Equipe POWER GADGET
-        </p>
+
+        <div class="contact">
+          <h4 class="title">Get in Touch</h4>
+          <div class="contact-grid">
+            <div class="contact-item">
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z'/%3E%3C/svg%3E"
+                alt="Location"
+              />
+              <span>123 Business Street, Suite 100</span>
+            </div>
+            <div class="contact-item">
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'/%3E%3C/svg%3E"
+                alt="Phone"
+              />
+              <span>+1 (555) 123-4567</span>
+            </div>
+            <div class="contact-item">
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'/%3E%3C/svg%3E"
+                alt="Email"
+              />
+              <span>contact@company.com</span>
+            </div>
+            <div class="contact-item">
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9'/%3E%3C/svg%3E"
+                alt="Website"
+              />
+              <span>www.company.com</span>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="footer">
-        <p>&copy; 2025 POWER GADGET. Todos os direitos reservados.</p>
+        <div class="social-links">
+          <a href="#"
+            ><img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/%3E%3C/svg%3E"
+              alt="Twitter"
+          /></a>
+          <a href="#"
+            ><img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 4.5a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5z'/%3E%3C/svg%3E"
+              alt="Instagram"
+          /></a>
+          <a href="#"
+            ><img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath d='M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z'/%3E%3C/svg%3E"
+              alt="LinkedIn"
+          /></a>
+        </div>
+        <p class="footer-text">© 2024 Company Name. All rights reserved.</p>
+        <p class="unsubscribe">
+          If you wish to unsubscribe from our newsletter,
+          <a href="#">click here</a>
+        </p>
       </div>
     </div>
   </body>
