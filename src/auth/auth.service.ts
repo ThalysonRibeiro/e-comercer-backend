@@ -42,37 +42,39 @@ export class AuthService {
     const existeCPF = await this.usersService.findByCPF(createUserDTO.cpf);
 
     if (existeEmail || existePhone || existeCPF) {
-      throw new HttpException('email, telefone ou cpf já existe', HttpStatus.BAD_REQUEST);
+      throw new HttpException('email, telefone ou cpf já em uso', HttpStatus.BAD_REQUEST);
     }
 
     // Gerar token de verificação de email
     const emailVerificationToken = crypto.randomBytes(32).toString('hex');
 
-    const newUser = await this.usersService.createUser({
-      email: createUserDTO.email.trim(),
-      name: createUserDTO.name,
-      password: createUserDTO.password, // Idealmente, o password deve ser hashado
-      status: AccountStatus.ativo,
-      type: AccountType.userdefault,
-      cpf: createUserDTO.cpf.trim(),
-      genero: createUserDTO.genero.trim(),
-      dateOfBirth: createUserDTO.dateOfBirth,
-      phone: createUserDTO.phone,
-      emailVerificationToken, // Adicionar o token ao criar o usuário
-    });
-
-    // Criar URL de confirmação
-    const frontendUrl =
-      this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3001';
-    const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
-
-    // Enviar um email de confirmação
+    let newUser;
     try {
-      await this.emailService.sendEmail(
-        newUser.email,
-        'Confirme seu email - POWER GADGET',
-        `Olá ${newUser.name}, sua conta foi criada com sucesso! Por favor, confirme seu email clicando no link: ${confirmationUrl}`,
-        `
+      newUser = await this.usersService.createUser({
+        email: createUserDTO.email.trim(),
+        name: createUserDTO.name,
+        password: createUserDTO.password, // Idealmente, o password deve ser hashado
+        status: AccountStatus.ativo,
+        type: AccountType.userdefault,
+        cpf: createUserDTO.cpf.trim(),
+        genero: createUserDTO.genero.trim(),
+        dateOfBirth: createUserDTO.dateOfBirth,
+        phone: createUserDTO.phone,
+        emailVerificationToken, // Adicionar o token ao criar o usuário
+      });
+
+      // Criar URL de confirmação
+      const frontendUrl =
+        this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3001';
+      const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
+
+      // Enviar um email de confirmação
+      try {
+        await this.emailService.sendEmail(
+          newUser.email,
+          'Confirme seu email - POWER GADGET',
+          `Olá ${newUser.name}, sua conta foi criada com sucesso! Por favor, confirme seu email clicando no link: ${confirmationUrl}`,
+          `
        <!doctype html>
         <html lang="pt-br">
           <head>
@@ -196,31 +198,45 @@ export class AuthService {
         </html>
 
         `,
-      );
-    } catch (error) {
-      throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
-      // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
-    }
+        );
+      } catch (error) {
+        if (newUser) {
+          await this.usersService.deleteUser(newUser.id)
+        }
+        throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
+        // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
+      }
 
-    const jwtPayload = {
-      sub: newUser.id,
-      email: newUser.email,
-      name: newUser.name,
-      type: newUser.type,
-    };
-
-    return {
-      user: {
-        id: newUser.id,
+      const jwtPayload = {
+        sub: newUser.id,
         email: newUser.email,
         name: newUser.name,
-        avatar: newUser.avatar,
         type: newUser.type,
-        status: newUser.status,
-        isProfileComplete: this.isProfileComplete(newUser),
-      },
-      accessToken: this.jwtService.sign(jwtPayload),
-    };
+      };
+
+      return {
+        user: {
+          id: newUser.id,
+          email: newUser.email,
+          name: newUser.name,
+          avatar: newUser.avatar,
+          type: newUser.type,
+          status: newUser.status,
+          isProfileComplete: this.isProfileComplete(newUser),
+        },
+        accessToken: this.jwtService.sign(jwtPayload),
+      };
+    } catch (error) {
+      // Se o usuário foi criado, mas o envio de e-mail falhou, exclua o usuário
+      if (newUser) {
+        await this.usersService.deleteUser(newUser.id)
+      }
+
+      throw new HttpException(
+        'Erro durante o registro. Por favor, tente novamente.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   async registerAdmin(createUserAdminDTO: CreateUserAdminDTO) {
@@ -251,32 +267,34 @@ export class AuthService {
 
     const emailVerificationToken = crypto.randomBytes(32).toString('hex');
 
-    // Criação da conta de administrador
-    const newUser = await this.usersService.createUser({
-      email: createUserAdminDTO.email.trim(),
-      name: createUserAdminDTO.name,
-      password: createUserAdminDTO.password, // Idealmente, o password deve ser hashado
-      status: AccountStatus.ativo,
-      type: AccountType.useradmin,
-      cpf: createUserAdminDTO.cpf.trim(),
-      genero: createUserAdminDTO.genero.trim(),
-      dateOfBirth: createUserAdminDTO.dateOfBirth,
-      phone: createUserAdminDTO.phone,
-      emailVerificationToken, // Adicionar o token ao criar o usuário
-    });
-
-    // Criar URL de confirmação
-    const frontendUrl =
-      this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3001';
-    const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
-
-    // Enviar um email de confirmação
+    let newUser;
     try {
-      await this.emailService.sendEmail(
-        newUser.email,
-        'Confirme seu email - POWER GADGET',
-        `Olá ${newUser.name}, sua conta foi criada com sucesso! Por favor, confirme seu email clicando no link: ${confirmationUrl}`,
-        `
+      // Criação da conta de administrador
+      newUser = await this.usersService.createUser({
+        email: createUserAdminDTO.email.trim(),
+        name: createUserAdminDTO.name,
+        password: createUserAdminDTO.password, // Idealmente, o password deve ser hashado
+        status: AccountStatus.ativo,
+        type: AccountType.useradmin,
+        cpf: createUserAdminDTO.cpf.trim(),
+        genero: createUserAdminDTO.genero.trim(),
+        dateOfBirth: createUserAdminDTO.dateOfBirth,
+        phone: createUserAdminDTO.phone,
+        emailVerificationToken, // Adicionar o token ao criar o usuário
+      });
+
+      // Criar URL de confirmação
+      const frontendUrl =
+        this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3001';
+      const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
+
+      // Enviar um email de confirmação
+      try {
+        await this.emailService.sendEmail(
+          newUser.email,
+          'Confirme seu email - POWER GADGET',
+          `Olá ${newUser.name}, sua conta foi criada com sucesso! Por favor, confirme seu email clicando no link: ${confirmationUrl}`,
+          `
        <!doctype html>
         <html lang="pt-br">
           <head>
@@ -401,31 +419,41 @@ export class AuthService {
 
         `,
 
-      );
+        );
+      } catch (error) {
+        if (newUser) {
+          await this.usersService.deleteUser(newUser.id)
+        }
+        throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
+        // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
+      }
+
+      const jwtPayload = {
+        sub: newUser.id,
+        email: newUser.email,
+        name: newUser.name,
+        type: newUser.type,
+      };
+
+      return {
+        user: {
+          id: newUser.id,
+          email: newUser.email,
+          name: newUser.name,
+          avatar: newUser.avatar,
+          type: newUser.type,
+          status: newUser.status,
+          isProfileComplete: this.isProfileComplete(newUser),
+        },
+        accessToken: this.jwtService.sign(jwtPayload),
+      };
     } catch (error) {
+      if (newUser) {
+        await this.usersService.deleteUser(newUser.id)
+      }
       throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
       // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
     }
-
-    const jwtPayload = {
-      sub: newUser.id,
-      email: newUser.email,
-      name: newUser.name,
-      type: newUser.type,
-    };
-
-    return {
-      user: {
-        id: newUser.id,
-        email: newUser.email,
-        name: newUser.name,
-        avatar: newUser.avatar,
-        type: newUser.type,
-        status: newUser.status,
-        isProfileComplete: this.isProfileComplete(newUser),
-      },
-      accessToken: this.jwtService.sign(jwtPayload),
-    };
   }
 
   async validateGoogleToken(token: string) {
@@ -681,6 +709,8 @@ export class AuthService {
       );
     }
   }
+
+
 
   // Verificar se o perfil está completo
 

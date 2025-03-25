@@ -200,4 +200,19 @@ export class UsersService {
       );
     }
   }
+
+  async deleteUser(id: string) {
+    try {
+      return await this.prisma.user.delete({
+        where: {
+          id: id
+        }
+      });
+    } catch (error) {
+      // Log the error
+      console.error('Error deleting user:', error);
+      // Optionally rethrow or handle specifically
+      throw new Error('Failed to delete user');
+    }
+  }
 }
