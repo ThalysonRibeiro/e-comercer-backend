@@ -42,16 +42,16 @@ model User {
 }
 
 model Product {
-  id             String    @id @unique
+  id             String    @id @unique @default(uuid())
   title          String
   price          Float
   old_price      Float
-  assessment     Int
+  assessment     Int?
   promotion_time Int
   description    String
   products_sold  Int
   endDate        DateTime
-  bigsale        Boolean
+  bigsale        Boolean   @default(false)
   sku            String    @unique
   stock          Int
   category       String
@@ -67,19 +67,19 @@ model Product {
 }
 
 model Image {
-  id        String  @id
+  id        String  @id @unique @default(uuid())
   image     String
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@map("images")
 }
 
 model Options {
-  id        String   @id @default(uuid())
-  color     String
-  size      String
-  product   Product? @relation(fields: [productId], references: [id])
+  id        String   @id @unique @default(uuid())
+  color     String[]
+  size      String[]
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String?
 
   @@map("options")

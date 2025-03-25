@@ -11,6 +11,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'node:path';
 import { EmailVerificationModule } from '../email-verification/email-verification.module';
+import { ProductsModule } from 'src/products/products.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { EmailVerificationModule } from '../email-verification/email-verificatio
       serveRoot: '/files',
     }),
     EmailVerificationModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [

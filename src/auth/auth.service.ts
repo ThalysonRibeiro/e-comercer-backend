@@ -49,13 +49,13 @@ export class AuthService {
     const emailVerificationToken = crypto.randomBytes(32).toString('hex');
 
     const newUser = await this.usersService.createUser({
-      email: createUserDTO.email,
+      email: createUserDTO.email.trim(),
       name: createUserDTO.name,
       password: createUserDTO.password, // Idealmente, o password deve ser hashado
       status: AccountStatus.ativo,
       type: AccountType.userdefault,
-      cpf: createUserDTO.cpf,
-      genero: createUserDTO.genero,
+      cpf: createUserDTO.cpf.trim(),
+      genero: createUserDTO.genero.trim(),
       dateOfBirth: createUserDTO.dateOfBirth,
       phone: createUserDTO.phone,
       emailVerificationToken, // Adicionar o token ao criar o usuário
@@ -253,13 +253,13 @@ export class AuthService {
 
     // Criação da conta de administrador
     const newUser = await this.usersService.createUser({
-      email: createUserAdminDTO.email,
+      email: createUserAdminDTO.email.trim(),
       name: createUserAdminDTO.name,
       password: createUserAdminDTO.password, // Idealmente, o password deve ser hashado
       status: AccountStatus.ativo,
       type: AccountType.useradmin,
-      cpf: createUserAdminDTO.cpf,
-      genero: createUserAdminDTO.genero,
+      cpf: createUserAdminDTO.cpf.trim(),
+      genero: createUserAdminDTO.genero.trim(),
       dateOfBirth: createUserAdminDTO.dateOfBirth,
       phone: createUserAdminDTO.phone,
       emailVerificationToken, // Adicionar o token ao criar o usuário

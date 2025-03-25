@@ -107,6 +107,7 @@ Essas rotas serão acessíveis para usuários comuns.
 ### 1 filtro
 
 GET /api/produtos?categoria=eletronicos&marca=sony&preco_min=100&preco_max=1000
+http://localhost:3333/products?limit=10&offset=0&category=notebooks&price=100&-price=4000&brand=acer1&tags=aaaa&bigsale=false&assessment=0
 
 ---
 
