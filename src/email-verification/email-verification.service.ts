@@ -11,7 +11,7 @@ export class EmailVerificationService {
     private prisma: PrismaService,
     private emailService: EmailService,
     private configService: ConfigService,
-  ) { }
+  ) {}
 
   async sendVerificationEmail(userId: string): Promise<{ success: boolean }> {
     // Buscar o usuário

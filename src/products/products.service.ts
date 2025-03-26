@@ -24,7 +24,7 @@ export class ProductsService {
 
   async createProductWithImages(
     createProductDto: CreateProductDto,
-    files?: Array<Express.Multer.File>
+    files?: Array<Express.Multer.File>,
   ) {
     try {
       // Remova as imagens do DTO para não incluir na criação inicial
@@ -37,25 +37,29 @@ export class ProductsService {
           sku: `SKU-PRD-${crypto.randomInt(10000)}`,
           category: productData.category.toLowerCase(),
           brand: productData.brand.toLowerCase(),
-          tags: productData.tags.map(tag => tag.toLowerCase()),
-          options: productData.options && productData.options.length > 0
-            ? {
-              create: productData.options.flatMap(optionInput =>
-                optionInput.create
-                  ? optionInput.create.map(option => ({
-                    color: option.color || [],
-                    size: option.size || []
-                  }))
-                  : []
-              ).filter(option =>
-                option.color.length > 0 || option.size.length > 0
-              )
-            }
-            : undefined
+          tags: productData.tags.map((tag) => tag.toLowerCase()),
+          options:
+            productData.options && productData.options.length > 0
+              ? {
+                  create: productData.options
+                    .flatMap((optionInput) =>
+                      optionInput.create
+                        ? optionInput.create.map((option) => ({
+                            color: option.color || [],
+                            size: option.size || [],
+                          }))
+                        : [],
+                    )
+                    .filter(
+                      (option) =>
+                        option.color.length > 0 || option.size.length > 0,
+                    ),
+                }
+              : undefined,
         },
         include: {
-          options: true
-        }
+          options: true,
+        },
       });
 
       // Se houver arquivos, realiza o upload das imagens
@@ -63,7 +67,10 @@ export class ProductsService {
         const savedImages: { id: string; image: string }[] = [];
 
         for (const file of files) {
-          const fileExtension = path.extname(file.originalname).toLowerCase().substring(1);
+          const fileExtension = path
+            .extname(file.originalname)
+            .toLowerCase()
+            .substring(1);
           const fileName = `${product.id}.${fileExtension}`;
 
           const fileDirectory = path.resolve(process.cwd(), 'files');
@@ -92,8 +99,8 @@ export class ProductsService {
           where: { id: product.id },
           include: {
             images: true,
-            options: true
-          }
+            options: true,
+          },
         });
 
         return productWithImages;
@@ -104,7 +111,7 @@ export class ProductsService {
       console.error('Erro ao criar produto com imagens:', error);
       throw new HttpException(
         `Falha ao criar produto: ${error.message}`,
-        HttpStatus.BAD_REQUEST
+        HttpStatus.BAD_REQUEST,
       );
     }
   }
@@ -134,33 +141,38 @@ export class ProductsService {
           stock: createProductDto.stock,
           category: createProductDto.category.toLowerCase(),
           brand: createProductDto.brand.toLowerCase(),
-          tags: createProductDto.tags.map(tag => tag.toLowerCase()),
-          options: createProductDto.options && createProductDto.options.length > 0
-            ? {
-              create: createProductDto.options.flatMap(optionInput =>
-                optionInput.create
-                  ? optionInput.create.map(option => ({
-                    color: option.color || [],
-                    size: option.size || []
-                  }))
-                  : []
-              ).filter(option =>
-                option.color.length > 0 || option.size.length > 0
-              )
-            }
-            : undefined,
-          images: createProductDto.images && createProductDto.images.length > 0
-            ? {
-              create: createProductDto.images.map(img => ({
-                image: img.image
-              }))
-            }
-            : undefined
+          tags: createProductDto.tags.map((tag) => tag.toLowerCase()),
+          options:
+            createProductDto.options && createProductDto.options.length > 0
+              ? {
+                  create: createProductDto.options
+                    .flatMap((optionInput) =>
+                      optionInput.create
+                        ? optionInput.create.map((option) => ({
+                            color: option.color || [],
+                            size: option.size || [],
+                          }))
+                        : [],
+                    )
+                    .filter(
+                      (option) =>
+                        option.color.length > 0 || option.size.length > 0,
+                    ),
+                }
+              : undefined,
+          images:
+            createProductDto.images && createProductDto.images.length > 0
+              ? {
+                  create: createProductDto.images.map((img) => ({
+                    image: img.image,
+                  })),
+                }
+              : undefined,
         },
         include: {
           options: true,
-          images: true
-        }
+          images: true,
+        },
       });
 
       return product;
@@ -170,7 +182,10 @@ export class ProductsService {
     }
   }
 
-  async uploadImageslocal(productId: string, files: Array<Express.Multer.File>) {
+  async uploadImageslocal(
+    productId: string,
+    files: Array<Express.Multer.File>,
+  ) {
     try {
       const savedImages: { id: string; image: string }[] = [];
 
@@ -185,7 +200,10 @@ export class ProductsService {
 
       // Garantindo que fileName seja uma string
       for (const file of files) {
-        const fileExtension = path.extname(file.originalname).toLowerCase().substring(1);
+        const fileExtension = path
+          .extname(file.originalname)
+          .toLowerCase()
+          .substring(1);
         const fileName = `${productId}.${fileExtension}`;
 
         // Verificando o nome do arquivo
@@ -221,11 +239,17 @@ export class ProductsService {
       return savedImages;
     } catch (error) {
       console.log(error);
-      throw new HttpException('Falha ao fazer o upload das imagens', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Falha ao fazer o upload das imagens',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
-  async uploadImagesCloudinary(productId: string, files: Array<Express.Multer.File>) {
+  async uploadImagesCloudinary(
+    productId: string,
+    files: Array<Express.Multer.File>,
+  ) {
     try {
       const savedImages: { id: string; image: string }[] = [];
 
@@ -240,7 +264,10 @@ export class ProductsService {
 
       // Realiza o upload das imagens no Cloudinary
       for (const file of files) {
-        const fileExtension = path.extname(file.originalname).toLowerCase().substring(1);
+        const fileExtension = path
+          .extname(file.originalname)
+          .toLowerCase()
+          .substring(1);
         const fileName = `${productId}.${fileExtension}`;
 
         // Verificando o nome do arquivo
@@ -248,17 +275,24 @@ export class ProductsService {
 
         // Enviando para o Cloudinary usando upload_stream
         const uploadedImage = await new Promise<any>((resolve, reject) => {
-          cloudinary.uploader.upload_stream(
-            { public_id: fileName, resource_type: 'auto' },
-            async (error, result) => {
-              if (error) {
-                console.log('Error uploading to Cloudinary:', error);
-                reject(new HttpException('Falha ao fazer o upload das imagens para o Cloudinary', HttpStatus.BAD_REQUEST));
-              } else {
-                resolve(result);
-              }
-            }
-          ).end(file.buffer); // Usa o método .end() para passar o buffer
+          cloudinary.uploader
+            .upload_stream(
+              { public_id: fileName, resource_type: 'auto' },
+              async (error, result) => {
+                if (error) {
+                  console.log('Error uploading to Cloudinary:', error);
+                  reject(
+                    new HttpException(
+                      'Falha ao fazer o upload das imagens para o Cloudinary',
+                      HttpStatus.BAD_REQUEST,
+                    ),
+                  );
+                } else {
+                  resolve(result);
+                }
+              },
+            )
+            .end(file.buffer); // Usa o método .end() para passar o buffer
         });
 
         // Salva a URL da imagem no banco de dados (Prisma)
@@ -280,10 +314,12 @@ export class ProductsService {
       return savedImages;
     } catch (error) {
       console.log(error);
-      throw new HttpException('Falha ao fazer o upload das imagens', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Falha ao fazer o upload das imagens',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
-
 
   async findAll(paginationDto: PaginationDto) {
     const {
@@ -299,22 +335,28 @@ export class ProductsService {
     } = paginationDto;
 
     // Prepara o filtro de preço
-    let priceFilter: { price?: { gte?: number; lte?: number } } = {};  // Definindo a estrutura
+    let priceFilter: { price?: { gte?: number; lte?: number } } = {}; // Definindo a estrutura
     if (price) {
-      priceFilter = { ...priceFilter, price: { gte: parseFloat(price.toString()) } };
+      priceFilter = {
+        ...priceFilter,
+        price: { gte: parseFloat(price.toString()) },
+      };
     }
     if (maxPrice) {
-      priceFilter = { ...priceFilter, price: { ...priceFilter.price, lte: parseFloat(maxPrice.toString()) } };
+      priceFilter = {
+        ...priceFilter,
+        price: { ...priceFilter.price, lte: parseFloat(maxPrice.toString()) },
+      };
     }
 
     // Filtro para categoria
-    let categoryFilter: { category?: string } = {};  // Definindo a estrutura
+    let categoryFilter: { category?: string } = {}; // Definindo a estrutura
     if (category) {
       categoryFilter = { category: category };
     }
 
     // Filtro para marca
-    let brandFilter: { brand?: string } = {};  // Definindo a estrutura
+    let brandFilter: { brand?: string } = {}; // Definindo a estrutura
     if (brand) {
       brandFilter = { brand: brand };
     }
@@ -322,7 +364,10 @@ export class ProductsService {
     // Filtro de tags (verifica se é uma string e converte para array)
     let tagsFilter: { tags?: { hasSome: string[] } } = {};
     if (tags) {
-      const tagArray = typeof tags === 'string' ? tags.split(',').map(tag => tag.trim()) : tags;
+      const tagArray =
+        typeof tags === 'string'
+          ? tags.split(',').map((tag) => tag.trim())
+          : tags;
       tagsFilter = { tags: { hasSome: tagArray } };
     }
 
@@ -335,9 +380,11 @@ export class ProductsService {
     }
 
     // Filtro para avaliação
-    let assessmentFilter: { assessment?: { gte: number } } = {};  // Definindo a estrutura
+    let assessmentFilter: { assessment?: { gte: number } } = {}; // Definindo a estrutura
     if (assessment) {
-      assessmentFilter = { assessment: { gte: parseInt(assessment.toString()) } };
+      assessmentFilter = {
+        assessment: { gte: parseInt(assessment.toString()) },
+      };
     }
 
     // Fazendo a consulta no banco com todos os filtros
@@ -358,7 +405,7 @@ export class ProductsService {
       include: {
         options: true,
         images: true,
-      }
+      },
     });
 
     return products;
@@ -367,20 +414,20 @@ export class ProductsService {
   async findOne(id: string) {
     const product = await this.prisma.product.findFirst({
       where: {
-        id: id
+        id: id,
       },
       include: {
         options: true,
         images: true,
-      }
-    })
+      },
+    });
     return product;
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
     const product = await this.prisma.product.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
         title: updateProductDto.title,
@@ -395,43 +442,48 @@ export class ProductsService {
         stock: updateProductDto.stock,
         category: updateProductDto.category?.toLowerCase(),
         brand: updateProductDto.brand?.toLowerCase(),
-        tags: updateProductDto.tags?.map(tag => tag.toLowerCase()),
-        options: updateProductDto.options && updateProductDto.options.length > 0
-          ? {
-            create: updateProductDto.options.flatMap(optionInput =>
-              optionInput.create
-                ? optionInput.create.map(option => ({
-                  color: option.color || [],
-                  size: option.size || []
-                }))
-                : []
-            ).filter(option =>
-              option.color.length > 0 || option.size.length > 0
-            )
-          }
-          : undefined,
-        images: updateProductDto.images && updateProductDto.images.length > 0
-          ? {
-            create: updateProductDto.images.map(img => ({
-              image: img.image
-            }))
-          }
-          : undefined
+        tags: updateProductDto.tags?.map((tag) => tag.toLowerCase()),
+        options:
+          updateProductDto.options && updateProductDto.options.length > 0
+            ? {
+                create: updateProductDto.options
+                  .flatMap((optionInput) =>
+                    optionInput.create
+                      ? optionInput.create.map((option) => ({
+                          color: option.color || [],
+                          size: option.size || [],
+                        }))
+                      : [],
+                  )
+                  .filter(
+                    (option) =>
+                      option.color.length > 0 || option.size.length > 0,
+                  ),
+              }
+            : undefined,
+        images:
+          updateProductDto.images && updateProductDto.images.length > 0
+            ? {
+                create: updateProductDto.images.map((img) => ({
+                  image: img.image,
+                })),
+              }
+            : undefined,
       },
       select: {
         options: true,
-        images: true
-      }
-    })
+        images: true,
+      },
+    });
     return product;
   }
 
   async remove(id: string) {
     await this.prisma.product.delete({
       where: {
-        id: id
-      }
-    })
+        id: id,
+      },
+    });
     return `This action removes a #${id} product`;
   }
 }

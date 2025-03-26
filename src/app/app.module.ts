@@ -41,4 +41,4 @@ import { ProductsModule } from 'src/products/products.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

@@ -68,7 +68,8 @@ describe('AppModule', () => {
       const providers = Reflect.getMetadata('providers', AppModule);
 
       const jwtGuardProvider = providers.find(
-        provider => provider.provide === APP_GUARD && provider.useClass === JwtAuthGuard
+        (provider) =>
+          provider.provide === APP_GUARD && provider.useClass === JwtAuthGuard,
       );
 
       expect(jwtGuardProvider).toBeDefined();
@@ -78,7 +79,8 @@ describe('AppModule', () => {
       const providers = Reflect.getMetadata('providers', AppModule);
 
       const rolesGuardProvider = providers.find(
-        provider => provider.provide === APP_GUARD && provider.useClass === RolesGuard
+        (provider) =>
+          provider.provide === APP_GUARD && provider.useClass === RolesGuard,
       );
 
       expect(rolesGuardProvider).toBeDefined();
@@ -91,7 +93,7 @@ describe('AppModule', () => {
       const imports = Reflect.getMetadata('imports', AppModule);
 
       // Assert: Check if any import is or includes ServeStaticModule
-      const includesServeStaticModule = imports.some(importItem => {
+      const includesServeStaticModule = imports.some((importItem) => {
         // Check direct import
         if (importItem === ServeStaticModule) return true;
 
@@ -102,7 +104,8 @@ describe('AppModule', () => {
         if (typeof importItem === 'function') {
           try {
             const dynamicModule = importItem();
-            if (dynamicModule && dynamicModule.module === ServeStaticModule) return true;
+            if (dynamicModule && dynamicModule.module === ServeStaticModule)
+              return true;
           } catch (e) {
             // Ignore errors when trying to call function imports
           }

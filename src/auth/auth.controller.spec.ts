@@ -1,9 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
-import { AuthController, ChangePasswordDto, ForgotPasswordDto, ResetPasswordDto } from './auth.controller';
+import {
+  AuthController,
+  ChangePasswordDto,
+  ForgotPasswordDto,
+  ResetPasswordDto,
+} from './auth.controller';
 import { AuthService } from './auth.service';
 import { AccountType } from '@prisma/client';
-import { CreateUserAdminDTO, CreateUserDTO } from '../users/dto/create-user.dto';
+import {
+  CreateUserAdminDTO,
+  CreateUserDTO,
+} from '../users/dto/create-user.dto';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -48,11 +56,11 @@ describe('AuthController', () => {
         password: 'senha123',
         cpf: '12345678900',
         phone: '11999887766',
-        dateOfBirth: "1990-01-01",
-        genero: "masculino",
-        type: "useradmin",
-        status: "ativo",
-        adminPassword: "123456789"
+        dateOfBirth: '1990-01-01',
+        genero: 'masculino',
+        type: 'useradmin',
+        status: 'ativo',
+        adminPassword: '123456789',
       };
 
       const expectedResult = {
@@ -77,18 +85,20 @@ describe('AuthController', () => {
         password: 'senha123',
         cpf: '12345678900',
         phone: '11999887766',
-        dateOfBirth: "1990-01-01",
-        genero: "masculino",
-        type: "useradmin",
-        status: "ativo",
-        adminPassword: "123456789"
+        dateOfBirth: '1990-01-01',
+        genero: 'masculino',
+        type: 'useradmin',
+        status: 'ativo',
+        adminPassword: '123456789',
       };
 
       mockAuthService.registerAdmin.mockRejectedValue(
-        new HttpException('Email já cadastrado', HttpStatus.CONFLICT)
+        new HttpException('Email já cadastrado', HttpStatus.CONFLICT),
       );
 
-      await expect(authController.registerAdmin(adminData)).rejects.toThrow(HttpException);
+      await expect(authController.registerAdmin(adminData)).rejects.toThrow(
+        HttpException,
+      );
       expect(authService.registerAdmin).toHaveBeenCalledWith(adminData);
     });
   });
@@ -113,7 +123,10 @@ describe('AuthController', () => {
 
       const result = await authController.loginAdmin(credentials);
 
-      expect(authService.loginWithCredentials).toHaveBeenCalledWith(credentials.login, credentials.password);
+      expect(authService.loginWithCredentials).toHaveBeenCalledWith(
+        credentials.login,
+        credentials.password,
+      );
       expect(result).toEqual(expectedResult);
     });
 
@@ -124,18 +137,25 @@ describe('AuthController', () => {
       };
 
       mockAuthService.loginWithCredentials.mockRejectedValue(
-        new HttpException('Credenciais inválidas', HttpStatus.UNAUTHORIZED)
+        new HttpException('Credenciais inválidas', HttpStatus.UNAUTHORIZED),
       );
 
-      await expect(authController.loginAdmin(credentials)).rejects.toThrow(HttpException);
-      expect(authService.loginWithCredentials).toHaveBeenCalledWith(credentials.login, credentials.password);
+      await expect(authController.loginAdmin(credentials)).rejects.toThrow(
+        HttpException,
+      );
+      expect(authService.loginWithCredentials).toHaveBeenCalledWith(
+        credentials.login,
+        credentials.password,
+      );
     });
   });
 
   describe('getAdminData', () => {
     it('deve retornar dados protegidos para admins', () => {
       const result = authController.getAdminData();
-      expect(result).toEqual({ message: 'Esta é uma rota protegida apenas para administradores' });
+      expect(result).toEqual({
+        message: 'Esta é uma rota protegida apenas para administradores',
+      });
     });
   });
 
@@ -145,12 +165,12 @@ describe('AuthController', () => {
         name: 'Usuário Teste',
         email: 'usuario@teste.com',
         password: 'senha123',
-        type: "userdefault",
-        dateOfBirth: "1992-03-28",
-        phone: "123456784",
-        status: "ativo",
+        type: 'userdefault',
+        dateOfBirth: '1992-03-28',
+        phone: '123456784',
+        status: 'ativo',
         cpf: '12345678900',
-        genero: "masculino",
+        genero: 'masculino',
       };
 
       const expectedResult = {
@@ -173,19 +193,21 @@ describe('AuthController', () => {
         name: 'Usuário Teste',
         email: 'usuario@teste.com',
         password: 'senha123',
-        type: "userdefault",
-        dateOfBirth: "1992-03-28",
-        phone: "123456784",
-        status: "ativo",
+        type: 'userdefault',
+        dateOfBirth: '1992-03-28',
+        phone: '123456784',
+        status: 'ativo',
         cpf: '12345678900',
-        genero: "masculino",
+        genero: 'masculino',
       };
 
       mockAuthService.register.mockRejectedValue(
-        new HttpException('Email já cadastrado', HttpStatus.CONFLICT)
+        new HttpException('Email já cadastrado', HttpStatus.CONFLICT),
       );
 
-      await expect(authController.register(userData)).rejects.toThrow(HttpException);
+      await expect(authController.register(userData)).rejects.toThrow(
+        HttpException,
+      );
       expect(authService.register).toHaveBeenCalledWith(userData);
     });
   });
@@ -216,8 +238,12 @@ describe('AuthController', () => {
 
       const result = await authController.googleLogin(googleData);
 
-      expect(authService.validateGoogleToken).toHaveBeenCalledWith(googleData.token);
-      expect(authService.authenticateWithGoogle).toHaveBeenCalledWith(googlePayload);
+      expect(authService.validateGoogleToken).toHaveBeenCalledWith(
+        googleData.token,
+      );
+      expect(authService.authenticateWithGoogle).toHaveBeenCalledWith(
+        googlePayload,
+      );
       expect(result).toEqual(expectedResult);
     });
 
@@ -227,11 +253,15 @@ describe('AuthController', () => {
       };
 
       mockAuthService.validateGoogleToken.mockRejectedValue(
-        new HttpException('Token inválido', HttpStatus.UNAUTHORIZED)
+        new HttpException('Token inválido', HttpStatus.UNAUTHORIZED),
       );
 
-      await expect(authController.googleLogin(googleData)).rejects.toThrow(HttpException);
-      expect(authService.validateGoogleToken).toHaveBeenCalledWith(googleData.token);
+      await expect(authController.googleLogin(googleData)).rejects.toThrow(
+        HttpException,
+      );
+      expect(authService.validateGoogleToken).toHaveBeenCalledWith(
+        googleData.token,
+      );
       expect(authService.authenticateWithGoogle).not.toHaveBeenCalled();
     });
   });
@@ -256,7 +286,10 @@ describe('AuthController', () => {
 
       const result = await authController.login(credentials);
 
-      expect(authService.loginWithCredentials).toHaveBeenCalledWith(credentials.login, credentials.password);
+      expect(authService.loginWithCredentials).toHaveBeenCalledWith(
+        credentials.login,
+        credentials.password,
+      );
       expect(result).toEqual(expectedResult);
     });
 
@@ -267,11 +300,16 @@ describe('AuthController', () => {
       };
 
       mockAuthService.loginWithCredentials.mockRejectedValue(
-        new HttpException('Credenciais inválidas', HttpStatus.UNAUTHORIZED)
+        new HttpException('Credenciais inválidas', HttpStatus.UNAUTHORIZED),
       );
 
-      await expect(authController.login(credentials)).rejects.toThrow(HttpException);
-      expect(authService.loginWithCredentials).toHaveBeenCalledWith(credentials.login, credentials.password);
+      await expect(authController.login(credentials)).rejects.toThrow(
+        HttpException,
+      );
+      expect(authService.loginWithCredentials).toHaveBeenCalledWith(
+        credentials.login,
+        credentials.password,
+      );
     });
   });
 
@@ -311,12 +349,15 @@ describe('AuthController', () => {
 
       mockAuthService.changePassword.mockResolvedValue(expectedResult);
 
-      const result = await authController.changePassword(req, changePasswordDto);
+      const result = await authController.changePassword(
+        req,
+        changePasswordDto,
+      );
 
       expect(authService.changePassword).toHaveBeenCalledWith(
         req.user.id,
         changePasswordDto.currentPassword,
-        changePasswordDto.newPassword
+        changePasswordDto.newPassword,
       );
       expect(result).toEqual(expectedResult);
     });
@@ -335,14 +376,16 @@ describe('AuthController', () => {
       };
 
       mockAuthService.changePassword.mockRejectedValue(
-        new HttpException('Senha atual incorreta', HttpStatus.UNAUTHORIZED)
+        new HttpException('Senha atual incorreta', HttpStatus.UNAUTHORIZED),
       );
 
-      await expect(authController.changePassword(req, changePasswordDto)).rejects.toThrow(HttpException);
+      await expect(
+        authController.changePassword(req, changePasswordDto),
+      ).rejects.toThrow(HttpException);
       expect(authService.changePassword).toHaveBeenCalledWith(
         req.user.id,
         changePasswordDto.currentPassword,
-        changePasswordDto.newPassword
+        changePasswordDto.newPassword,
       );
     });
   });
@@ -357,11 +400,15 @@ describe('AuthController', () => {
         message: 'Email de redefinição enviado com sucesso',
       };
 
-      mockAuthService.generatePasswordResetToken.mockResolvedValue(expectedResult);
+      mockAuthService.generatePasswordResetToken.mockResolvedValue(
+        expectedResult,
+      );
 
       const result = await authController.forgotPassword(forgotPasswordDto);
 
-      expect(authService.generatePasswordResetToken).toHaveBeenCalledWith(forgotPasswordDto.email);
+      expect(authService.generatePasswordResetToken).toHaveBeenCalledWith(
+        forgotPasswordDto.email,
+      );
       expect(result).toEqual(expectedResult);
     });
 
@@ -371,11 +418,15 @@ describe('AuthController', () => {
       };
 
       mockAuthService.generatePasswordResetToken.mockRejectedValue(
-        new NotFoundException('Usuário não encontrado')
+        new NotFoundException('Usuário não encontrado'),
       );
 
-      await expect(authController.forgotPassword(forgotPasswordDto)).rejects.toThrow(NotFoundException);
-      expect(authService.generatePasswordResetToken).toHaveBeenCalledWith(forgotPasswordDto.email);
+      await expect(
+        authController.forgotPassword(forgotPasswordDto),
+      ).rejects.toThrow(NotFoundException);
+      expect(authService.generatePasswordResetToken).toHaveBeenCalledWith(
+        forgotPasswordDto.email,
+      );
     });
   });
 
@@ -396,7 +447,7 @@ describe('AuthController', () => {
 
       expect(authService.resetPassword).toHaveBeenCalledWith(
         resetPasswordDto.token,
-        resetPasswordDto.newPassword
+        resetPasswordDto.newPassword,
       );
       expect(result).toEqual(expectedResult);
     });
@@ -408,13 +459,15 @@ describe('AuthController', () => {
       };
 
       mockAuthService.resetPassword.mockRejectedValue(
-        new HttpException('Token inválido ou expirado', HttpStatus.BAD_REQUEST)
+        new HttpException('Token inválido ou expirado', HttpStatus.BAD_REQUEST),
       );
 
-      await expect(authController.resetPassword(resetPasswordDto)).rejects.toThrow(HttpException);
+      await expect(
+        authController.resetPassword(resetPasswordDto),
+      ).rejects.toThrow(HttpException);
       expect(authService.resetPassword).toHaveBeenCalledWith(
         resetPasswordDto.token,
-        resetPasswordDto.newPassword
+        resetPasswordDto.newPassword,
       );
     });
   });

@@ -5,22 +5,24 @@ import {
   IsOptional,
   IsString,
   Validate,
-  ValidationArguments, ValidatorConstraint,
-  ValidatorConstraintInterface
+  ValidationArguments,
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
 } from 'class-validator';
 import { INVALID_EMAIL_DOMAINS } from './invalid-email-domains';
 
 @ValidatorConstraint({ name: 'isValidEmail', async: false })
 export class IsValidEmailConstraint implements ValidatorConstraintInterface {
   validate(email: string, args?: ValidationArguments): boolean {
-
     // Verifica se o email passou na validação padrão do @IsEmail()
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) return false;
 
     // Verifica domínios inválidos
     const lowercaseEmail = email.toLowerCase();
-    if (INVALID_EMAIL_DOMAINS.some(domain => lowercaseEmail.endsWith(domain))) {
+    if (
+      INVALID_EMAIL_DOMAINS.some((domain) => lowercaseEmail.endsWith(domain))
+    ) {
       return false;
     }
 

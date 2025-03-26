@@ -33,4 +33,4 @@ import { EmailVerificationModule } from '../email-verification/email-verificatio
   providers: [AuthService, JwtStrategy],
   exports: [AuthService, JwtModule],
 })
-export class AuthModule { }
+export class AuthModule {}

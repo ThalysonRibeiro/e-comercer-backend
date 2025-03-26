@@ -51,7 +51,7 @@ describe('PrismaModule', () => {
     it('should make PrismaService available globally', async () => {
       // Create a test module that doesn't explicitly import PrismaModule
       const testModule = {
-        module: class TestModule { },
+        module: class TestModule {},
         providers: [],
       };
 

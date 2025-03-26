@@ -10,4 +10,4 @@ import { ConfigModule } from '@nestjs/config';
   providers: [UsersService, PrismaService],
   exports: [UsersService],
 })
-export class UsersModule { }
+export class UsersModule {}

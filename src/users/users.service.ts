@@ -200,8 +200,8 @@ export class UsersService {
     try {
       return await this.prisma.user.delete({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
     } catch (error) {
       // Log the error

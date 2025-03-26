@@ -17,10 +17,10 @@ describe('EmailService', () => {
   const mockConfigService = {
     get: jest.fn((key: string) => {
       const configs = {
-        'MAIL_HOST': 'smtp.example.com',
-        'MAIL_PORT': '587',
-        'MAIL_USER': 'test@example.com',
-        'MAIL_PASS': 'password123',
+        MAIL_HOST: 'smtp.example.com',
+        MAIL_PORT: '587',
+        MAIL_USER: 'test@example.com',
+        MAIL_PASS: 'password123',
       };
       return configs[key];
     }),
@@ -137,11 +137,13 @@ describe('EmailService', () => {
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
       // Act & Assert
-      await expect(service.sendEmail(to, subject, text)).rejects.toThrow(errorMessage);
+      await expect(service.sendEmail(to, subject, text)).rejects.toThrow(
+        errorMessage,
+      );
       expect(mockTransporter.sendMail).toHaveBeenCalled();
       expect(consoleSpy).toHaveBeenCalledWith(
         'Erro ao enviar o e-mail:',
-        expect.any(Error)
+        expect.any(Error),
       );
 
       // Restaurar o console.error

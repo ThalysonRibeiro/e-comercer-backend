@@ -4,16 +4,23 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { EmailService } from '../email/email.service';
-import { HttpException, HttpStatus, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { OAuth2Client } from 'google-auth-library';
 import { AccountStatus, AccountType } from '@prisma/client';
-import { CreateUserAdminDTO, CreateUserDTO } from '../users/dto/create-user.dto';
+import {
+  CreateUserAdminDTO,
+  CreateUserDTO,
+} from '../users/dto/create-user.dto';
 
 jest.mock('bcrypt');
 jest.mock('crypto', () => ({
-  randomBytes: jest.fn().mockReturnValue(Buffer.from('randomToken'))
+  randomBytes: jest.fn().mockReturnValue(Buffer.from('randomToken')),
 }));
 jest.mock('google-auth-library');
 
@@ -79,7 +86,7 @@ describe('AuthService', () => {
       dateOfBirth: '1990-01-01',
       phone: '1234567890',
       status: 'ativo',
-      type: 'userdefault'
+      type: 'userdefault',
     };
 
     it('should successfully register a new user', async () => {
@@ -115,7 +122,7 @@ describe('AuthService', () => {
       mockUsersService.findByEmail.mockResolvedValue({});
 
       await expect(authService.register(createUserDTO)).rejects.toThrow(
-        HttpException
+        HttpException,
       );
     });
 
@@ -135,17 +142,18 @@ describe('AuthService', () => {
       mockUsersService.createUser.mockResolvedValue(mockNewUser);
 
       // Mock email service to throw an error
-      mockEmailService.sendEmail.mockRejectedValue(new Error('Email sending failed'));
+      mockEmailService.sendEmail.mockRejectedValue(
+        new Error('Email sending failed'),
+      );
 
       await expect(authService.register(createUserDTO)).rejects.toThrow(
-        HttpException
+        HttpException,
       );
       expect(mockUsersService.deleteUser).toHaveBeenCalledWith(mockNewUser.id);
     });
   });
 
   describe('registerAdmin', () => {
-
     const createAdminDTO: CreateUserAdminDTO = {
       email: 'admin@example.com',
       name: 'Admin User',
@@ -156,7 +164,7 @@ describe('AuthService', () => {
       phone: '1234567890',
       adminPassword: 'correct-admin-password', // senha correta no DTO
       status: 'ativo',
-      type: 'useradmin'
+      type: 'useradmin',
     };
 
     it('should successfully register an admin user', async () => {
@@ -204,12 +212,16 @@ describe('AuthService', () => {
       mockConfigService.get.mockReturnValue('correct-admin-password');
 
       // Expect error to be thrown due to incorrect admin password
-      await expect(authService.registerAdmin(incorrectAdminDTO)).rejects.toThrow(
-        new HttpException('Senha de administrador incorreta.', HttpStatus.FORBIDDEN)
+      await expect(
+        authService.registerAdmin(incorrectAdminDTO),
+      ).rejects.toThrow(
+        new HttpException(
+          'Senha de administrador incorreta.',
+          HttpStatus.FORBIDDEN,
+        ),
       );
     });
   });
-
 
   describe('validateGoogleToken', () => {
     it('should validate a google token successfully', async () => {
@@ -221,7 +233,9 @@ describe('AuthService', () => {
         }),
       };
 
-      (OAuth2Client.prototype.verifyIdToken as jest.Mock).mockResolvedValue(mockTicket);
+      (OAuth2Client.prototype.verifyIdToken as jest.Mock).mockResolvedValue(
+        mockTicket,
+      );
       mockConfigService.get.mockReturnValue('client-id');
 
       const payload = await authService.validateGoogleToken('test-token');
@@ -230,11 +244,13 @@ describe('AuthService', () => {
     });
 
     it('should throw unauthorized exception for invalid token', async () => {
-      (OAuth2Client.prototype.verifyIdToken as jest.Mock).mockRejectedValue(new Error('Invalid token'));
-
-      await expect(authService.validateGoogleToken('invalid-token')).rejects.toThrow(
-        UnauthorizedException
+      (OAuth2Client.prototype.verifyIdToken as jest.Mock).mockRejectedValue(
+        new Error('Invalid token'),
       );
+
+      await expect(
+        authService.validateGoogleToken('invalid-token'),
+      ).rejects.toThrow(UnauthorizedException);
     });
   });
 
@@ -297,7 +313,10 @@ describe('AuthService', () => {
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
       mockJwtService.sign.mockReturnValue('mock-jwt-token');
 
-      const result = await authService.loginWithCredentials('test@example.com', 'password123');
+      const result = await authService.loginWithCredentials(
+        'test@example.com',
+        'password123',
+      );
 
       expect(result.accessToken).toBe('mock-jwt-token');
     });
@@ -305,9 +324,9 @@ describe('AuthService', () => {
     it('should throw error for non-existent user', async () => {
       mockUsersService.findByEmailOrPhone.mockResolvedValue(null);
 
-      await expect(authService.loginWithCredentials('test@example.com', 'password123')).rejects.toThrow(
-        HttpException
-      );
+      await expect(
+        authService.loginWithCredentials('test@example.com', 'password123'),
+      ).rejects.toThrow(HttpException);
     });
 
     it('should throw error for invalid password', async () => {
@@ -321,9 +340,9 @@ describe('AuthService', () => {
       mockUsersService.findByEmailOrPhone.mockResolvedValue(user);
       (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
-      await expect(authService.loginWithCredentials('test@example.com', 'wrongpassword')).rejects.toThrow(
-        HttpException
-      );
+      await expect(
+        authService.loginWithCredentials('test@example.com', 'wrongpassword'),
+      ).rejects.toThrow(HttpException);
     });
   });
 
@@ -331,7 +350,6 @@ describe('AuthService', () => {
     const userId = 'user-id';
     const currentPassword = 'oldpassword';
     const newPassword = 'newpassword';
-
 
     // it('should change password successfully', async () => {
     //   const user = {
@@ -367,9 +385,9 @@ describe('AuthService', () => {
       // Mock para quando o usuário não existe
       mockUsersService.findById.mockResolvedValue(null);
 
-      await expect(authService.changePassword(userId, currentPassword, newPassword)).rejects.toThrow(
-        HttpException
-      );
+      await expect(
+        authService.changePassword(userId, currentPassword, newPassword),
+      ).rejects.toThrow(HttpException);
     });
 
     it('should throw error for incorrect current password', async () => {
@@ -386,9 +404,9 @@ describe('AuthService', () => {
       // Simula a comparação de senha falha
       (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
-      await expect(authService.changePassword(userId, 'wrongpassword', newPassword)).rejects.toThrow(
-        HttpException
-      );
+      await expect(
+        authService.changePassword(userId, 'wrongpassword', newPassword),
+      ).rejects.toThrow(HttpException);
     });
 
     it('should throw error when user does not have a password', async () => {
@@ -403,12 +421,16 @@ describe('AuthService', () => {
       // Mock para o serviço de busca do usuário
       mockUsersService.findById.mockResolvedValue(userWithoutPassword);
 
-      await expect(authService.changePassword(userId, currentPassword, newPassword)).rejects.toThrow(
-        new HttpException('Usuário não possue senha configurada', HttpStatus.BAD_REQUEST)
+      await expect(
+        authService.changePassword(userId, currentPassword, newPassword),
+      ).rejects.toThrow(
+        new HttpException(
+          'Usuário não possue senha configurada',
+          HttpStatus.BAD_REQUEST,
+        ),
       );
     });
   });
-
 
   describe('generatePasswordResetToken', () => {
     it('should generate reset token for existing user', async () => {
@@ -423,9 +445,12 @@ describe('AuthService', () => {
       mockEmailService.sendEmail.mockResolvedValue(true);
       mockConfigService.get.mockReturnValue('http://frontend.com');
 
-      const result = await authService.generatePasswordResetToken('test@example.com');
+      const result =
+        await authService.generatePasswordResetToken('test@example.com');
 
-      expect(result.message).toBe('Se o email existir, um link de recuperação será enviado.');
+      expect(result.message).toBe(
+        'Se o email existir, um link de recuperação será enviado.',
+      );
       expect(mockUsersService.updateUser).toHaveBeenCalled();
       expect(mockEmailService.sendEmail).toHaveBeenCalled();
     });
@@ -433,9 +458,13 @@ describe('AuthService', () => {
     it('should return generic message for non-existent user', async () => {
       mockUsersService.findByEmail.mockResolvedValue(null);
 
-      const result = await authService.generatePasswordResetToken('nonexistent@example.com');
+      const result = await authService.generatePasswordResetToken(
+        'nonexistent@example.com',
+      );
 
-      expect(result.message).toBe('Se o email existir, um link de recuperação será enviado.');
+      expect(result.message).toBe(
+        'Se o email existir, um link de recuperação será enviado.',
+      );
     });
   });
 
@@ -449,12 +478,18 @@ describe('AuthService', () => {
         resetPasswordExpires: new Date(Date.now() + 3600000),
       };
 
-      mockJwtService.verify.mockReturnValue({ sub: user.id, email: user.email });
+      mockJwtService.verify.mockReturnValue({
+        sub: user.id,
+        email: user.email,
+      });
       mockUsersService.findById.mockResolvedValue(user);
       (bcrypt.hash as jest.Mock).mockResolvedValue('hashed-new-password');
       mockEmailService.sendEmail.mockResolvedValue(true);
 
-      const result = await authService.resetPassword('valid-token', 'newpassword');
+      const result = await authService.resetPassword(
+        'valid-token',
+        'newpassword',
+      );
 
       expect(result.message).toBe('Senha redefinida com sucesso.');
       expect(mockUsersService.updateUser).toHaveBeenCalledWith(user.id, {
@@ -465,12 +500,15 @@ describe('AuthService', () => {
     });
 
     it('should throw error for invalid token', async () => {
-      mockJwtService.verify.mockReturnValue({ sub: 'user-id', email: 'test@example.com' });
+      mockJwtService.verify.mockReturnValue({
+        sub: 'user-id',
+        email: 'test@example.com',
+      });
       mockUsersService.findById.mockResolvedValue(null);
 
-      await expect(authService.resetPassword('invalid-token', 'newpassword')).rejects.toThrow(
-        HttpException
-      );
+      await expect(
+        authService.resetPassword('invalid-token', 'newpassword'),
+      ).rejects.toThrow(HttpException);
     });
 
     it('should throw error for expired token', async () => {
@@ -481,12 +519,15 @@ describe('AuthService', () => {
         resetPasswordExpires: new Date(Date.now() - 3600000),
       };
 
-      mockJwtService.verify.mockReturnValue({ sub: user.id, email: user.email });
+      mockJwtService.verify.mockReturnValue({
+        sub: user.id,
+        email: user.email,
+      });
       mockUsersService.findById.mockResolvedValue(user);
 
-      await expect(authService.resetPassword('expired-token', 'newpassword')).rejects.toThrow(
-        HttpException
-      );
+      await expect(
+        authService.resetPassword('expired-token', 'newpassword'),
+      ).rejects.toThrow(HttpException);
     });
   });
 

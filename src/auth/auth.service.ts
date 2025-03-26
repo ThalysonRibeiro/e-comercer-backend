@@ -42,7 +42,10 @@ export class AuthService {
     const existeCPF = await this.usersService.findByCPF(createUserDTO.cpf);
 
     if (existeEmail || existePhone || existeCPF) {
-      throw new HttpException('email, telefone ou cpf já em uso', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'email, telefone ou cpf já em uso',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     // Gerar token de verificação de email
@@ -65,7 +68,8 @@ export class AuthService {
 
       // Criar URL de confirmação
       const frontendUrl =
-        this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3001';
+        this.configService.get<string>('FRONTEND_URL') ||
+        'http://localhost:3001';
       const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
 
       // Enviar um email de confirmação
@@ -201,9 +205,12 @@ export class AuthService {
         );
       } catch (error) {
         if (newUser) {
-          await this.usersService.deleteUser(newUser.id)
+          await this.usersService.deleteUser(newUser.id);
         }
-        throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
+        throw new HttpException(
+          'Erro ao enviar email de confirmação:',
+          HttpStatus.BAD_REQUEST,
+        );
         // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
       }
 
@@ -229,12 +236,12 @@ export class AuthService {
     } catch (error) {
       // Se o usuário foi criado, mas o envio de e-mail falhou, exclua o usuário
       if (newUser) {
-        await this.usersService.deleteUser(newUser.id)
+        await this.usersService.deleteUser(newUser.id);
       }
 
       throw new HttpException(
         'Erro durante o registro. Por favor, tente novamente.',
-        HttpStatus.INTERNAL_SERVER_ERROR
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -262,7 +269,10 @@ export class AuthService {
     const existeCPF = await this.usersService.findByCPF(createUserAdminDTO.cpf);
 
     if (existeEmail || existePhone || existeCPF) {
-      throw new HttpException('email, telefone ou cpf já existe', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'email, telefone ou cpf já existe',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const emailVerificationToken = crypto.randomBytes(32).toString('hex');
@@ -285,7 +295,8 @@ export class AuthService {
 
       // Criar URL de confirmação
       const frontendUrl =
-        this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3001';
+        this.configService.get<string>('FRONTEND_URL') ||
+        'http://localhost:3001';
       const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
 
       // Enviar um email de confirmação
@@ -418,13 +429,15 @@ export class AuthService {
         </html>
 
         `,
-
         );
       } catch (error) {
         if (newUser) {
-          await this.usersService.deleteUser(newUser.id)
+          await this.usersService.deleteUser(newUser.id);
         }
-        throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
+        throw new HttpException(
+          'Erro ao enviar email de confirmação:',
+          HttpStatus.BAD_REQUEST,
+        );
         // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
       }
 
@@ -449,9 +462,12 @@ export class AuthService {
       };
     } catch (error) {
       if (newUser) {
-        await this.usersService.deleteUser(newUser.id)
+        await this.usersService.deleteUser(newUser.id);
       }
-      throw new HttpException('Erro ao enviar email de confirmação:', HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        'Erro ao enviar email de confirmação:',
+        HttpStatus.BAD_REQUEST,
+      );
       // Opcionalmente, você pode reverter a criação do usuário ou simplesmente continuar
     }
   }
@@ -541,7 +557,6 @@ export class AuthService {
   }
 
   async loginWithCredentials(login: string, password: string) {
-
     const user = await this.usersService.findByEmailOrPhone(login);
 
     if (!user) {
@@ -652,7 +667,10 @@ export class AuthService {
          <p>Se você não solicitou esta alteração, ignore este email.</p>`,
       );
     } catch (error) {
-      throw new HttpException('Erro ao enviar email de recuperação de senha:', HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        'Erro ao enviar email de recuperação de senha:',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     return {
@@ -693,8 +711,10 @@ export class AuthService {
           `<h1>Olá ${user.name || 'Usuário'},</h1><p>Sua senha foi redefinida com sucesso. Agora você pode fazer login com sua nova senha.</p>`,
         );
       } catch (error) {
-        ;
-        throw new HttpException('Erro ao enviar email de confirmação de redefinição de senha:', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Erro ao enviar email de confirmação de redefinição de senha:',
+          HttpStatus.BAD_REQUEST,
+        );
       }
 
       return { message: 'Senha redefinida com sucesso.' };
@@ -709,8 +729,6 @@ export class AuthService {
       );
     }
   }
-
-
 
   // Verificar se o perfil está completo
 

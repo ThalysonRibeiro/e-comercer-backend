@@ -21,17 +21,13 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { AccountType } from '@prisma/client';
 import { FilesInterceptor } from '@nestjs/platform-express';
 
-
-
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) { }
+  constructor(private readonly productsService: ProductsService) {}
 
   @Roles(AccountType.useradmin)
   @Post()
-  createProduct(
-    @Body() createProductDto: CreateProductDto,
-  ) {
+  createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
@@ -53,7 +49,6 @@ export class ProductsController {
     )
     files: Array<Express.Multer.File>,
   ) {
-
     const { productId } = body;
     return this.productsService.uploadImageslocal(productId, files);
   }
@@ -72,7 +67,10 @@ export class ProductsController {
 
   @Roles(AccountType.useradmin)
   @Patch(':id')
-  updateProduct(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  updateProduct(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
     return this.productsService.update(id, updateProductDto);
   }
 

@@ -1,4 +1,15 @@
-import { IsOptional, IsInt, IsString, IsArray, IsBoolean, IsNumber, Min, Max, IsDateString, isString } from 'class-validator';
+import {
+  IsOptional,
+  IsInt,
+  IsString,
+  IsArray,
+  IsBoolean,
+  IsNumber,
+  Min,
+  Max,
+  IsDateString,
+  isString,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class PaginationDto {

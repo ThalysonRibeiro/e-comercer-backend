@@ -43,12 +43,18 @@ describe('EmailVerificationModule', () => {
     });
 
     it('should declare EmailVerificationController', () => {
-      const controllers = Reflect.getMetadata('controllers', EmailVerificationModule);
+      const controllers = Reflect.getMetadata(
+        'controllers',
+        EmailVerificationModule,
+      );
       expect(controllers).toContain(EmailVerificationController);
     });
 
     it('should provide EmailVerificationService', () => {
-      const providers = Reflect.getMetadata('providers', EmailVerificationModule);
+      const providers = Reflect.getMetadata(
+        'providers',
+        EmailVerificationModule,
+      );
       expect(providers).toContain(EmailVerificationService);
     });
   });
@@ -67,19 +73,21 @@ describe('EmailVerificationModule', () => {
       })
         .overrideModule(PrismaModule)
         .useModule({
-          module: class MockPrismaModule { },
+          module: class MockPrismaModule {},
           providers: [{ provide: 'PrismaService', useValue: {} }],
           exports: ['PrismaService'],
         })
         .overrideModule(EmailModule)
         .useModule({
-          module: class MockEmailModule { },
+          module: class MockEmailModule {},
           providers: [{ provide: 'EmailService', useValue: {} }],
           exports: ['EmailService'],
         })
         .compile();
 
-      const emailVerificationService = moduleRef.get<EmailVerificationService>(EmailVerificationService);
+      const emailVerificationService = moduleRef.get<EmailVerificationService>(
+        EmailVerificationService,
+      );
       expect(emailVerificationService).toBeDefined();
     });
 
@@ -89,19 +97,20 @@ describe('EmailVerificationModule', () => {
       })
         .overrideModule(PrismaModule)
         .useModule({
-          module: class MockPrismaModule { },
+          module: class MockPrismaModule {},
           providers: [{ provide: 'PrismaService', useValue: {} }],
           exports: ['PrismaService'],
         })
         .overrideModule(EmailModule)
         .useModule({
-          module: class MockEmailModule { },
+          module: class MockEmailModule {},
           providers: [{ provide: 'EmailService', useValue: {} }],
           exports: ['EmailService'],
         })
         .compile();
 
-      const emailVerificationController = moduleRef.get<EmailVerificationController>(EmailVerificationController);
+      const emailVerificationController =
+        moduleRef.get<EmailVerificationController>(EmailVerificationController);
       expect(emailVerificationController).toBeDefined();
     });
   });

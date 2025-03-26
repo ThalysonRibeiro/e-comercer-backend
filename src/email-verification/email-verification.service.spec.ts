@@ -138,7 +138,9 @@ describe('EmailVerificationService', () => {
         emailVerificationToken: 'mock-token',
       });
       mockConfigService.get.mockReturnValue('http://localhost:3000');
-      mockEmailService.sendEmail.mockRejectedValue(new Error('Email sending failed'));
+      mockEmailService.sendEmail.mockRejectedValue(
+        new Error('Email sending failed'),
+      );
 
       // Act & Assert
       await expect(service.sendVerificationEmail(userId)).rejects.toThrow(
@@ -252,7 +254,10 @@ describe('EmailVerificationService', () => {
 
       // Act & Assert
       await expect(service.confirmEmail(token)).rejects.toThrow(
-        new HttpException('Token inválido ou expirado.', HttpStatus.BAD_REQUEST),
+        new HttpException(
+          'Token inválido ou expirado.',
+          HttpStatus.BAD_REQUEST,
+        ),
       );
       expect(mockPrismaService.user.findFirst).toHaveBeenCalledWith({
         where: { emailVerificationToken: token },
@@ -275,7 +280,10 @@ describe('EmailVerificationService', () => {
 
       // Act & Assert
       await expect(service.confirmEmail(token)).rejects.toThrow(
-        new HttpException('Este email já foi confirmado.', HttpStatus.BAD_REQUEST),
+        new HttpException(
+          'Este email já foi confirmado.',
+          HttpStatus.BAD_REQUEST,
+        ),
       );
       expect(mockPrismaService.user.findFirst).toHaveBeenCalledWith({
         where: { emailVerificationToken: token },

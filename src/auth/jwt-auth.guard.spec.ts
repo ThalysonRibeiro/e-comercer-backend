@@ -34,7 +34,9 @@ describe('JwtAuthGuard', () => {
       getClass: jest.fn(),
     } as any;
 
-    const canActivateSpy = jest.spyOn(JwtAuthGuard.prototype, 'canActivate').mockImplementation(async () => true);
+    const canActivateSpy = jest
+      .spyOn(JwtAuthGuard.prototype, 'canActivate')
+      .mockImplementation(async () => true);
 
     const result = await guard.canActivate(context);
     expect(canActivateSpy).toHaveBeenCalled();

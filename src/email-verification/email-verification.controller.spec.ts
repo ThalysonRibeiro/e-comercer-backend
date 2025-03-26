@@ -29,8 +29,12 @@ describe('EmailVerificationController', () => {
       .useValue({ canActivate: () => true })
       .compile();
 
-    controller = module.get<EmailVerificationController>(EmailVerificationController);
-    emailVerificationService = module.get<EmailVerificationService>(EmailVerificationService);
+    controller = module.get<EmailVerificationController>(
+      EmailVerificationController,
+    );
+    emailVerificationService = module.get<EmailVerificationService>(
+      EmailVerificationService,
+    );
   });
 
   afterEach(() => {
@@ -46,13 +50,17 @@ describe('EmailVerificationController', () => {
       // Arrange
       const userId = 'user-123';
       const expectedResult = { success: true };
-      mockEmailVerificationService.sendVerificationEmail.mockResolvedValue(expectedResult);
+      mockEmailVerificationService.sendVerificationEmail.mockResolvedValue(
+        expectedResult,
+      );
 
       // Act
       const result = await controller.sendVerification({ userId });
 
       // Assert
-      expect(emailVerificationService.sendVerificationEmail).toHaveBeenCalledWith(userId);
+      expect(
+        emailVerificationService.sendVerificationEmail,
+      ).toHaveBeenCalledWith(userId);
       expect(result).toEqual(expectedResult);
     });
 
@@ -60,11 +68,17 @@ describe('EmailVerificationController', () => {
       // Arrange
       const userId = 'user-123';
       const errorMessage = 'Usuário não encontrado';
-      mockEmailVerificationService.sendVerificationEmail.mockRejectedValue(new Error(errorMessage));
+      mockEmailVerificationService.sendVerificationEmail.mockRejectedValue(
+        new Error(errorMessage),
+      );
 
       // Act & Assert
-      await expect(controller.sendVerification({ userId })).rejects.toThrow(errorMessage);
-      expect(emailVerificationService.sendVerificationEmail).toHaveBeenCalledWith(userId);
+      await expect(controller.sendVerification({ userId })).rejects.toThrow(
+        errorMessage,
+      );
+      expect(
+        emailVerificationService.sendVerificationEmail,
+      ).toHaveBeenCalledWith(userId);
     });
   });
 
@@ -80,7 +94,10 @@ describe('EmailVerificationController', () => {
 
       // Assert
       expect(emailVerificationService.verifyEmail).toHaveBeenCalledWith(token);
-      expect(result).toEqual({ success: true, message: 'Email verificado com sucesso!' });
+      expect(result).toEqual({
+        success: true,
+        message: 'Email verificado com sucesso!',
+      });
     });
 
     it('should throw HttpException if token is not provided', async () => {
@@ -94,7 +111,9 @@ describe('EmailVerificationController', () => {
     it('should throw HttpException if token is invalid', async () => {
       // Arrange
       const token = 'invalid-token';
-      mockEmailVerificationService.verifyEmail.mockRejectedValue(new Error('Token inválido ou expirado'));
+      mockEmailVerificationService.verifyEmail.mockRejectedValue(
+        new Error('Token inválido ou expirado'),
+      );
 
       // Act & Assert
       await expect(controller.verifyEmail(token)).rejects.toThrow(
@@ -106,11 +125,16 @@ describe('EmailVerificationController', () => {
     it('should throw HttpException for other errors', async () => {
       // Arrange
       const token = 'valid-token';
-      mockEmailVerificationService.verifyEmail.mockRejectedValue(new Error('Database error'));
+      mockEmailVerificationService.verifyEmail.mockRejectedValue(
+        new Error('Database error'),
+      );
 
       // Act & Assert
       await expect(controller.verifyEmail(token)).rejects.toThrow(
-        new HttpException('Erro ao verificar email', HttpStatus.INTERNAL_SERVER_ERROR),
+        new HttpException(
+          'Erro ao verificar email',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        ),
       );
       expect(emailVerificationService.verifyEmail).toHaveBeenCalledWith(token);
     });
@@ -121,7 +145,9 @@ describe('EmailVerificationController', () => {
       // Arrange
       const token = 'valid-token';
       const expectedResult = { success: true };
-      mockEmailVerificationService.confirmEmail.mockResolvedValue(expectedResult);
+      mockEmailVerificationService.confirmEmail.mockResolvedValue(
+        expectedResult,
+      );
 
       // Act
       const result = await controller.confirmEmail({ token });
@@ -134,11 +160,18 @@ describe('EmailVerificationController', () => {
     it('should propagate HttpException from service', async () => {
       // Arrange
       const token = 'invalid-token';
-      const httpException = new HttpException('Token inválido ou expirado.', HttpStatus.BAD_REQUEST);
-      mockEmailVerificationService.confirmEmail.mockRejectedValue(httpException);
+      const httpException = new HttpException(
+        'Token inválido ou expirado.',
+        HttpStatus.BAD_REQUEST,
+      );
+      mockEmailVerificationService.confirmEmail.mockRejectedValue(
+        httpException,
+      );
 
       // Act & Assert
-      await expect(controller.confirmEmail({ token })).rejects.toThrow(httpException);
+      await expect(controller.confirmEmail({ token })).rejects.toThrow(
+        httpException,
+      );
       expect(emailVerificationService.confirmEmail).toHaveBeenCalledWith(token);
     });
   });

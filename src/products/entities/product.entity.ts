@@ -1,4 +1,4 @@
-import { ImageDto, OptionsDto } from "../dto/create-product.dto";
+import { ImageDto, OptionsDto } from '../dto/create-product.dto';
 
 export class Product {
   id: string;

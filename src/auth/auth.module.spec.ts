@@ -70,7 +70,7 @@ describe('AuthModule', () => {
       const imports = Reflect.getMetadata('imports', AuthModule);
 
       // Find PassportModule in imports
-      const passportModuleImport = imports.find(imp => {
+      const passportModuleImport = imports.find((imp) => {
         if (typeof imp === 'object' && imp.module === PassportModule) {
           return true;
         }
@@ -84,7 +84,7 @@ describe('AuthModule', () => {
       const imports = Reflect.getMetadata('imports', AuthModule);
 
       // Find JwtModule in imports
-      const jwtModuleImport = imports.find(imp => {
+      const jwtModuleImport = imports.find((imp) => {
         if (typeof imp === 'object' && imp.module === JwtModule) {
           return true;
         }

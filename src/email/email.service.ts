@@ -8,7 +8,7 @@ export class EmailService {
   constructor(
     private prisma: PrismaService,
     private configService: ConfigService,
-  ) { }
+  ) {}
 
   // private transporter = nodemailer.createTransport({
   //   host: process.env.MAIL_HOST, // Servidor SMTP do Gmail

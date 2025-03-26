@@ -23,7 +23,10 @@ describe('JwtStrategy', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         JwtStrategy,
-        { provide: ConfigService, useValue: { get: jest.fn().mockReturnValue('secret') } },
+        {
+          provide: ConfigService,
+          useValue: { get: jest.fn().mockReturnValue('secret') },
+        },
         { provide: UsersService, useValue: usersServiceMock },
       ],
     }).compile();
@@ -52,7 +55,9 @@ describe('JwtStrategy', () => {
     jest.spyOn(usersService, 'findById').mockResolvedValueOnce(null);
 
     const payload = { sub: 1 };
-    await expect(jwtStrategy.validate(payload)).rejects.toThrow(UnauthorizedException);
+    await expect(jwtStrategy.validate(payload)).rejects.toThrow(
+      UnauthorizedException,
+    );
   });
 
   it('should throw UnauthorizedException if user account is inactive', async () => {
@@ -77,10 +82,9 @@ describe('JwtStrategy', () => {
       avatar: null, // Adicionando avatars
     });
 
-
-
     const payload = { sub: '1' };
-    await expect(jwtStrategy.validate(payload)).rejects.toThrow(UnauthorizedException);
+    await expect(jwtStrategy.validate(payload)).rejects.toThrow(
+      UnauthorizedException,
+    );
   });
-
 });

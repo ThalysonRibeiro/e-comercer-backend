@@ -79,7 +79,10 @@ describe('UsersController', () => {
       const result = await controller.completeProfile(mockRequest, profileData);
 
       // Assert
-      expect(usersService.completeProfile).toHaveBeenCalledWith('user-123', profileData);
+      expect(usersService.completeProfile).toHaveBeenCalledWith(
+        'user-123',
+        profileData,
+      );
       expect(result).toEqual({
         message: 'Perfil atualizado com sucesso',
         user: {
@@ -105,11 +108,18 @@ describe('UsersController', () => {
         phone: '(11) 99999-9999',
       };
 
-      mockUsersService.completeProfile.mockRejectedValue(new Error('Database error'));
+      mockUsersService.completeProfile.mockRejectedValue(
+        new Error('Database error'),
+      );
 
       // Act & Assert
-      await expect(controller.completeProfile(mockRequest, profileData)).rejects.toThrow('Database error');
-      expect(usersService.completeProfile).toHaveBeenCalledWith('user-123', profileData);
+      await expect(
+        controller.completeProfile(mockRequest, profileData),
+      ).rejects.toThrow('Database error');
+      expect(usersService.completeProfile).toHaveBeenCalledWith(
+        'user-123',
+        profileData,
+      );
     });
   });
 
@@ -131,7 +141,10 @@ describe('UsersController', () => {
       const result = await controller.uploadAvatar(mockRequest, mockFile);
 
       // Assert
-      expect(usersService.uploadAvatarImage).toHaveBeenCalledWith(mockRequest, mockFile);
+      expect(usersService.uploadAvatarImage).toHaveBeenCalledWith(
+        mockRequest,
+        mockFile,
+      );
       expect(result).toEqual(mockResponse);
     });
 
@@ -141,11 +154,18 @@ describe('UsersController', () => {
         user: { id: 'user-123' },
       };
 
-      mockUsersService.uploadAvatarImage.mockRejectedValue(new Error('Upload failed'));
+      mockUsersService.uploadAvatarImage.mockRejectedValue(
+        new Error('Upload failed'),
+      );
 
       // Act & Assert
-      await expect(controller.uploadAvatar(mockRequest, mockFile)).rejects.toThrow('Upload failed');
-      expect(usersService.uploadAvatarImage).toHaveBeenCalledWith(mockRequest, mockFile);
+      await expect(
+        controller.uploadAvatar(mockRequest, mockFile),
+      ).rejects.toThrow('Upload failed');
+      expect(usersService.uploadAvatarImage).toHaveBeenCalledWith(
+        mockRequest,
+        mockFile,
+      );
     });
   });
 
@@ -164,10 +184,16 @@ describe('UsersController', () => {
       mockUsersService.uploadAvatarCloudnary.mockResolvedValue(mockResponse);
 
       // Act
-      const result = await controller.uploadAvatarCloudnary(mockRequest, mockFile);
+      const result = await controller.uploadAvatarCloudnary(
+        mockRequest,
+        mockFile,
+      );
 
       // Assert
-      expect(usersService.uploadAvatarCloudnary).toHaveBeenCalledWith(mockRequest, mockFile);
+      expect(usersService.uploadAvatarCloudnary).toHaveBeenCalledWith(
+        mockRequest,
+        mockFile,
+      );
       expect(result).toEqual(mockResponse);
     });
 
@@ -177,17 +203,24 @@ describe('UsersController', () => {
         user: { id: 'user-123' },
       };
 
-      mockUsersService.uploadAvatarCloudnary.mockRejectedValue(new Error('Cloudinary upload failed'));
+      mockUsersService.uploadAvatarCloudnary.mockRejectedValue(
+        new Error('Cloudinary upload failed'),
+      );
 
       // Act & Assert
-      await expect(controller.uploadAvatarCloudnary(mockRequest, mockFile)).rejects.toThrow('Cloudinary upload failed');
-      expect(usersService.uploadAvatarCloudnary).toHaveBeenCalledWith(mockRequest, mockFile);
+      await expect(
+        controller.uploadAvatarCloudnary(mockRequest, mockFile),
+      ).rejects.toThrow('Cloudinary upload failed');
+      expect(usersService.uploadAvatarCloudnary).toHaveBeenCalledWith(
+        mockRequest,
+        mockFile,
+      );
     });
   });
 
   // Teste para validação de arquivos
   describe('file validation', () => {
-    // Estes testes são mais difíceis de implementar diretamente no controller 
+    // Estes testes são mais difíceis de implementar diretamente no controller
     // porque a validação é feita pelo ParseFilePipeBuilder
     // Normalmente, estes são testados com testes de integração
     // Mas podemos simular o comportamento esperado
