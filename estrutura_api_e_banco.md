@@ -232,3 +232,50 @@ UI/UX: Trabalhe no design da interface para que seja intuitiva e atraente. Isso 
 Integração com APIs de Pagamento: Se você ainda não fez isso, adicione uma integração com serviços de pagamento como Stripe ou PayPal.
 Implementação de SEO e performance: Como você está usando o Next.js, explore as funcionalidades de otimização de SEO e performance (SSR, geração de sitemap, etc.) para melhorar a visibilidade nos motores de busca e a velocidade do site.
 Deploy em Produção: Coloque seu projeto online! Faça o deploy do seu e-commerce (pode ser na Vercel para o frontend e Heroku ou DigitalOcean para o backend) e mostre aos recrutadores que você sabe como colocar um projeto em produção.
+
+    {
+      "title": "Mouse Gamer Redragon Cobra, Chroma RGB, 10000DPI, 7 Botões, Preto",
+      "price": 149.49,
+      "old_price": 149.49,
+      "images": [
+        {
+          "image": "https://m.media-amazon.com/images/I/61saZHQI52L._AC_SL1500_.jpg"
+        },
+        {
+          "image": "https://m.media-amazon.com/images/I/71OZ9LXH1RL._AC_SL1500_.jpg"
+        }
+      ],
+      "promotion_time": 90,
+      "description": "Transforme seu setup em um verdadeiro espetáculo visual! Com uma ampla gama de cores e efeitos personalizáveis, você poderá criar a atmosfera perfeita para suas sessões de jogo ou trabalho.",
+      "products_sold": 100,
+      "endDate": "2025-05-01T00:00:00Z",
+      "bigsale": false,
+        "options": [
+        {
+            "create": [
+            {
+                "color": ["black"],
+                "size": ["S", "M", "L"]
+            }
+            ]
+        }
+        ],
+      "stock": 100,
+      "category": "Mouses",
+      "brand": "Redragon",
+      "tags": ["gamer","mouse"]
+    }
+
+title:walpappaer
+price:9.99
+old_price:10.99
+promotion_time:1
+description:waallpappar para descktop
+products_sold:10
+endDate:2025-05-01T00:00:00Z
+bigsale:false
+options[0][create][0][color]:Choma
+options[0][create][0][size]:M,S,GG
+category:wallpapper
+brand:wallpapper
+tags:"gamer","mouse"

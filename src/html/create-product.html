@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cadastro de Produto</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      .form-group input[type='file'] {
+        padding: 5px;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .options-section {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+      #result {
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cadastro de Produto</h1>
+    <form id="productForm">
+      <div class="form-group">
+        <label for="title">Título do Produto</label>
+        <input type="text" id="title" name="title" required minlength="3" />
+      </div>
+
+      <div class="form-group">
+        <label for="price">Preço</label>
+        <input type="number" id="price" name="price" step="0.01" required />
+      </div>
+
+      <div class="form-group">
+        <label for="old_price">Preço Antigo</label>
+        <input type="number" id="old_price" name="old_price" step="0.01" />
+      </div>
+
+      <div class="form-group">
+        <label for="assessment">Avaliação</label>
+        <input type="number" id="assessment" name="assessment" step="0.1" />
+      </div>
+
+      <div class="form-group">
+        <label for="promotion_time">Tempo de Promoção</label>
+        <input type="number" id="promotion_time" name="promotion_time" />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          minlength="10"
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="products_sold">Produtos Vendidos</label>
+        <input type="number" id="products_sold" name="products_sold" />
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">Data Final</label>
+        <input type="date" id="endDate" name="endDate" required />
+      </div>
+
+      <div class="form-group">
+        <label for="bigsale">Grande Promoção</label>
+        <select id="bigsale" name="bigsale">
+          <option value="true">Sim</option>
+          <option value="false">Não</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Estoque</label>
+        <input type="number" id="stock" name="stock" required />
+      </div>
+
+      <div class="form-group">
+        <label for="category">Categoria</label>
+        <input type="text" id="category" name="category" required />
+      </div>
+
+      <div class="form-group">
+        <label for="brand">Marca</label>
+        <input type="text" id="brand" name="brand" required />
+      </div>
+
+      <div class="form-group">
+        <label for="tags">Tags (separadas por vírgula)</label>
+        <input
+          type="text"
+          id="tags"
+          name="tags"
+          placeholder="tag1, tag2, tag3"
+          required
+        />
+      </div>
+
+      <div class="options-section">
+        <h3>Opções de Produto</h3>
+        <div id="optionsContainer">
+          <div class="option-group">
+            <div class="form-group">
+              <label>Cores (separadas por vírgula)</label>
+              <input
+                type="text"
+                name="options_color"
+                placeholder="vermelho, azul, verde"
+              />
+            </div>
+            <div class="form-group">
+              <label>Tamanhos (separadas por vírgula)</label>
+              <input type="text" name="options_size" placeholder="P, M, G" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="images">Imagens do Produto</label>
+        <input
+          type="file"
+          id="images"
+          name="images"
+          multiple
+          accept="image/*"
+        />
+      </div>
+
+      <button type="submit">Cadastrar Produto</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+      document
+        .getElementById('productForm')
+        .addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const form = e.target;
+          const formData = new FormData(form);
+
+          // Preparar dados do produto
+          const productData = {
+            title: formData.get('title'),
+            price: parseFloat(formData.get('price')),
+            old_price: parseFloat(formData.get('old_price') || 0),
+            assessment: parseFloat(formData.get('assessment') || 0),
+            promotion_time: parseFloat(formData.get('promotion_time') || 0),
+            description: formData.get('description'),
+            products_sold: parseFloat(formData.get('products_sold') || 0),
+            endDate: new Date(formData.get('endDate')).toISOString(),
+            bigsale: formData.get('bigsale') === 'true',
+            stock: parseFloat(formData.get('stock')),
+            category: formData.get('category'),
+            brand: formData.get('brand'),
+            tags: formData
+              .get('tags')
+              .split(',')
+              .map((tag) => tag.trim()),
+            options: [],
+            images: [],
+          };
+
+          // Processar opções
+          const optionsColor =
+            formData
+              .get('options_color')
+              ?.split(',')
+              .map((color) => color.trim()) || [];
+          const optionsSize =
+            formData
+              .get('options_size')
+              ?.split(',')
+              .map((size) => size.trim()) || [];
+
+          if (optionsColor.length > 0 || optionsSize.length > 0) {
+            productData.options = [
+              {
+                create: [
+                  {
+                    color: optionsColor,
+                    size: optionsSize,
+                  },
+                ],
+              },
+            ];
+          }
+
+          try {
+            // Primeiro, criar o produto
+            const productResponse = await fetch(
+              'http://localhost:3000/products',
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(productData),
+              },
+            );
+
+            const productResult = await productResponse.json();
+
+            // Se o produto foi criado com sucesso e há imagens
+            const imageFiles = formData.getAll('images');
+            if (imageFiles.length > 0 && productResult.id) {
+              const imageFormData = new FormData();
+              imageFiles.forEach((file) => {
+                imageFormData.append('files', file);
+              });
+
+              // Upload de imagens
+              const imageResponse = await fetch(
+                `http://localhost:3000/products/${productResult.id}/upload`,
+                {
+                  method: 'POST',
+                  body: imageFormData,
+                },
+              );
+
+              const imageResult = await imageResponse.json();
+
+              document.getElementById('result').innerHTML = JSON.stringify(
+                {
+                  product: productResult,
+                  images: imageResult,
+                },
+                null,
+                2,
+              );
+            } else {
+              document.getElementById('result').innerHTML = JSON.stringify(
+                productResult,
+                null,
+                2,
+              );
+            }
+          } catch (error) {
+            document.getElementById('result').innerHTML =
+              `Erro: ${error.message}`;
+          }
+        });
+    </script>
+  </body>
+</html>

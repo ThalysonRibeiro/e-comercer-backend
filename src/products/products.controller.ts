@@ -7,6 +7,10 @@ import {
   Param,
   Delete,
   Query,
+  UploadedFiles,
+  ParseFilePipeBuilder,
+  HttpStatus,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -15,6 +19,7 @@ import { Public } from 'src/auth/decorators/public.decorator';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { AccountType } from '@prisma/client';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 
 
@@ -24,8 +29,33 @@ export class ProductsController {
 
   @Roles(AccountType.useradmin)
   @Post()
-  createProducts(@Body() createProductDto: CreateProductDto) {
+  createProduct(
+    @Body() createProductDto: CreateProductDto,
+  ) {
     return this.productsService.create(createProductDto);
+  }
+
+  @Post('image')
+  @UseInterceptors(FilesInterceptor('files', 10)) // Limita o número de arquivos para 10
+  async images(
+    @Body() body: { productId: string }, // O body contém o productId
+    @UploadedFiles(
+      new ParseFilePipeBuilder()
+        // .addFileTypeValidator({
+        //   fileType: /jpeg|jpg|png|webp/, // Validação do tipo de arquivo
+        // })
+        .addMaxSizeValidator({
+          maxSize: 6 * (1024 * 1024), // Limite de tamanho de arquivo para 6MB
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY, // Retorna erro de tipo 422
+        }),
+    )
+    files: Array<Express.Multer.File>,
+  ) {
+
+    const { productId } = body;
+    return this.productsService.uploadImageslocal(productId, files);
   }
 
   @Public()
