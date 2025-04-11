@@ -12,6 +12,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'node:path';
 import { EmailVerificationModule } from '../email-verification/email-verification.module';
 import { ProductsModule } from 'src/products/products.module';
+import { CategoryModule } from 'src/category/category.module';
+import { CartModule } from 'src/cart/cart.module';
+import { CouponModule } from 'src/coupon/coupon.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { ProductsModule } from 'src/products/products.module';
     }),
     EmailVerificationModule,
     ProductsModule,
+    CategoryModule,
+    CartModule,
+    CouponModule,
   ],
   controllers: [AppController],
   providers: [
@@ -41,4 +47,4 @@ import { ProductsModule } from 'src/products/products.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

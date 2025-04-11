@@ -19,11 +19,11 @@ Essas rotas serão protegidas e acessíveis apenas para contas de administrador.
 - `GET /admin/products`
 - [ ] Lista todos os produtos.
 - `POST /admin/products`
-- [ ] Adiciona um novo produto.
+- [x] Adiciona um novo produto.
 - `PUT /admin/products/:id`
-- [ ] Edita um produto existente.
+- [x] Edita um produto existente.
 - `DELETE /admin/products/:id`
-- [ ] Remove um produto.
+- [x] Remove um produto.
 
 #### 1.3. Gerenciamento de Pedidos
 
@@ -70,20 +70,29 @@ Essas rotas serão acessíveis para usuários comuns.
 #### 2.2. Produtos
 
 - `GET /products`
-- [ ] Lista todos os produtos disponíveis.
+- [x] Lista todos os produtos disponíveis.
 - `GET /products/:id`
-- [ ] Visualiza detalhes de um produto específico.
+- [x] Visualiza detalhes de um produto específico.
 
 #### 2.3. Carrinho de Compras
 
 - `GET /cart`
-- [ ] Visualiza os itens no carrinho.
+- [x] Visualiza os itens no carrinho.
 - `POST /cart`
-- [ ] Adiciona um item ao carrinho.
+- [x] Adiciona um item ao carrinho.
+- `PUT /cart`
+- [x] Atualizar a quantidade de um item no carrinho.
 - `DELETE /cart/:id`
-- [ ] Remove um item do carrinho.
+- [x] Remove um item do carrinho.
+- `DELETE /cart`
+- [x] Remove todos os itens do carrinho.
 
-#### 2.4. Pedidos
+#### 2.4. Carrinho de Compras
+
+- `GET /coupon/check/:code`
+- [x] Valida um cupom de desconto
+
+#### 2.5. Pedidos
 
 - `POST /orders`
 - [ ] Cria um novo pedido.
@@ -92,7 +101,7 @@ Essas rotas serão acessíveis para usuários comuns.
 - `GET /orders/:id`
 - [ ] Visualiza detalhes de um pedido específico.
 
-#### 2.5. Perfil do Usuário
+#### 2.6. Perfil do Usuário
 
 - `GET /users/profile`
 - [x] Visualiza informações do perfil do usuário.

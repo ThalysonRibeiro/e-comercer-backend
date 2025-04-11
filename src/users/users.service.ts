@@ -35,9 +35,9 @@ export class UsersService {
     });
   }
 
-  async findByCPF(cpf: string): Promise<User | null> {
+  async findByCpfOrCnpj(cpf_or_cnpj: string): Promise<User | null> {
     return this.prisma.user.findFirst({
-      where: { cpf },
+      where: { cpf_or_cnpj },
     });
   }
 
@@ -72,7 +72,7 @@ export class UsersService {
       avatar: string;
       status: AccountStatus;
       type: AccountType;
-      cpf: string;
+      cpf_or_cnpj: string;
       genero: string;
       dateOfBirth: string;
       phone: string;
@@ -92,7 +92,7 @@ export class UsersService {
     id: string,
     data: {
       name: string;
-      cpf: string;
+      cpf_or_cnpj: string;
       genero: string;
       dateOfBirth: string;
       phone: string;

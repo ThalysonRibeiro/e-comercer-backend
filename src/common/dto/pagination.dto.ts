@@ -60,5 +60,5 @@ export class PaginationDto {
   @Min(0)
   @Max(5)
   @Type(() => Number)
-  assessment?: number; // Avaliação do produto, por exemplo de 0 a 5
+  rating?: number; // Avaliação do produto, por exemplo de 0 a 5
 }

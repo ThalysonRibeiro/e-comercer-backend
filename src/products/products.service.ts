@@ -22,99 +22,99 @@ export class ProductsService {
     });
   }
 
-  async createProductWithImages(
-    createProductDto: CreateProductDto,
-    files?: Array<Express.Multer.File>,
-  ) {
-    try {
-      // Remova as imagens do DTO para não incluir na criação inicial
-      const { images, ...productData } = createProductDto;
+  // async createProductWithImages(
+  //   createProductDto: CreateProductDto,
+  //   files?: Array<Express.Multer.File>,
+  // ) {
+  //   try {
+  //     // Remova as imagens do DTO para não incluir na criação inicial
+  //     const { images, ...productData } = createProductDto;
 
-      // Cria o produto sem as imagens
-      const product = await this.prisma.product.create({
-        data: {
-          ...productData,
-          sku: `SKU-PRD-${crypto.randomInt(10000)}`,
-          category: productData.category.toLowerCase(),
-          brand: productData.brand.toLowerCase(),
-          tags: productData.tags.map((tag) => tag.toLowerCase()),
-          options:
-            productData.options && productData.options.length > 0
-              ? {
-                  create: productData.options
-                    .flatMap((optionInput) =>
-                      optionInput.create
-                        ? optionInput.create.map((option) => ({
-                            color: option.color || [],
-                            size: option.size || [],
-                          }))
-                        : [],
-                    )
-                    .filter(
-                      (option) =>
-                        option.color.length > 0 || option.size.length > 0,
-                    ),
-                }
-              : undefined,
-        },
-        include: {
-          options: true,
-        },
-      });
+  //     // Cria o produto sem as imagens
+  //     const product = await this.prisma.product.create({
+  //       data: {
+  //         ...productData,
+  //         sku: `SKU-PRD-${crypto.randomInt(10000)}`,
+  //         category: productData.category.toLowerCase(),
+  //         brand: productData.brand.toLowerCase(),
+  //         tags: productData.tags.map((tag) => tag.toLowerCase()),
+  //         options:
+  //           productData.options && productData.options.length > 0
+  //             ? {
+  //               create: productData.options
+  //                 .flatMap((optionInput) =>
+  //                   optionInput.create
+  //                     ? optionInput.create.map((option) => ({
+  //                       color: option.color || [],
+  //                       size: option.size || [],
+  //                     }))
+  //                     : [],
+  //                 )
+  //                 .filter(
+  //                   (option) =>
+  //                     option.color.length > 0 || option.size.length > 0,
+  //                 ),
+  //             }
+  //             : undefined,
+  //       },
+  //       include: {
+  //         options: true,
+  //       },
+  //     });
 
-      // Se houver arquivos, realiza o upload das imagens
-      if (files && files.length > 0) {
-        const savedImages: { id: string; image: string }[] = [];
+  //     // Se houver arquivos, realiza o upload das imagens
+  //     if (files && files.length > 0) {
+  //       const savedImages: { id: string; image: string }[] = [];
 
-        for (const file of files) {
-          const fileExtension = path
-            .extname(file.originalname)
-            .toLowerCase()
-            .substring(1);
-          const fileName = `${product.id}.${fileExtension}`;
+  //       for (const file of files) {
+  //         const fileExtension = path
+  //           .extname(file.originalname)
+  //           .toLowerCase()
+  //           .substring(1);
+  //         const fileName = `${product.id}.${fileExtension}`;
 
-          const fileDirectory = path.resolve(process.cwd(), 'files');
-          const fileLocale = path.join(fileDirectory, fileName);
+  //         const fileDirectory = path.resolve(process.cwd(), 'files');
+  //         const fileLocale = path.join(fileDirectory, fileName);
 
-          // Salva o arquivo
-          await fs.writeFile(fileLocale, file.buffer);
+  //         // Salva o arquivo
+  //         await fs.writeFile(fileLocale, file.buffer);
 
-          // Cria registro da imagem no banco de dados
-          const urlImage = await this.prisma.image.create({
-            data: {
-              productId: product.id,
-              image: `/files/${fileName}`,
-            },
-            select: {
-              id: true,
-              image: true,
-            },
-          });
+  //         // Cria registro da imagem no banco de dados
+  //         const urlImage = await this.prisma.image.create({
+  //           data: {
+  //             productId: product.id,
+  //             image: `/files/${fileName}`,
+  //           },
+  //           select: {
+  //             id: true,
+  //             image: true,
+  //           },
+  //         });
 
-          savedImages.push(urlImage);
-        }
+  //         savedImages.push(urlImage);
+  //       }
 
-        // Busca o produto atualizado com as imagens
-        const productWithImages = await this.prisma.product.findUnique({
-          where: { id: product.id },
-          include: {
-            images: true,
-            options: true,
-          },
-        });
+  //       // Busca o produto atualizado com as imagens
+  //       const productWithImages = await this.prisma.product.findUnique({
+  //         where: { id: product.id },
+  //         include: {
+  //           images: true,
+  //           options: true,
+  //         },
+  //       });
 
-        return productWithImages;
-      }
+  //       return productWithImages;
+  //     }
 
-      return product;
-    } catch (error) {
-      console.error('Erro ao criar produto com imagens:', error);
-      throw new HttpException(
-        `Falha ao criar produto: ${error.message}`,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
+  //     return product;
+  //   } catch (error) {
+  //     console.error('Erro ao criar produto com imagens:', error);
+  //     throw new HttpException(
+  //       `Falha ao criar produto: ${error.message}`,
+  //       HttpStatus.BAD_REQUEST,
+  //     );
+  //   }
+  // }
 
   async create(createProductDto: CreateProductDto) {
     if (!createProductDto) {
@@ -125,60 +125,44 @@ export class ProductsService {
       throw new Error('Product title is required');
     }
 
+    const dateFuture = new Date();
+    dateFuture.setDate(dateFuture.getDate() + createProductDto.promotion_time);
+
     try {
       const product = await this.prisma.product.create({
         data: {
           title: createProductDto.title,
           price: createProductDto.price,
           old_price: createProductDto.old_price,
-          assessment: createProductDto.assessment,
+          rating: createProductDto.rating,
           promotion_time: createProductDto.promotion_time,
           description: createProductDto.description,
           products_sold: createProductDto.products_sold,
-          endDate: createProductDto.endDate,
+          endDate: dateFuture,
           bigsale: createProductDto.bigsale,
           sku: `SKU-PRD-${crypto.randomInt(10000)}`,
           stock: createProductDto.stock,
           category: createProductDto.category.toLowerCase(),
+          categoryId: createProductDto.categoryId,
           brand: createProductDto.brand.toLowerCase(),
           tags: createProductDto.tags.map((tag) => tag.toLowerCase()),
-          options:
-            createProductDto.options && createProductDto.options.length > 0
-              ? {
-                  create: createProductDto.options
-                    .flatMap((optionInput) =>
-                      optionInput.create
-                        ? optionInput.create.map((option) => ({
-                            color: option.color || [],
-                            size: option.size || [],
-                          }))
-                        : [],
-                    )
-                    .filter(
-                      (option) =>
-                        option.color.length > 0 || option.size.length > 0,
-                    ),
-                }
-              : undefined,
-          images:
-            createProductDto.images && createProductDto.images.length > 0
-              ? {
-                  create: createProductDto.images.map((img) => ({
-                    image: img.image,
-                  })),
-                }
-              : undefined,
+          weight: createProductDto.weight,
+          width: createProductDto.width,
+          height: createProductDto.height,
+          length: createProductDto.length,
+          isActive: createProductDto.isActive,
+          featured: createProductDto.featured,
+          color: createProductDto.color || [],
+          size: createProductDto.size || [],
         },
         include: {
-          options: true,
           images: true,
         },
       });
 
       return product;
     } catch (error) {
-      console.error('Error creating product:', error);
-      throw new Error(`Failed to create product: ${error.message}`);
+      throw new Error(`Falha ao criar produto: ${error.message}`);
     }
   }
 
@@ -238,7 +222,6 @@ export class ProductsService {
       console.log('savedImages:', savedImages);
       return savedImages;
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         'Falha ao fazer o upload das imagens',
         HttpStatus.BAD_REQUEST,
@@ -271,7 +254,7 @@ export class ProductsService {
         const fileName = `${productId}.${fileExtension}`;
 
         // Verificando o nome do arquivo
-        console.log('Generated fileName:', fileName);
+        // console.log('Generated fileName:', fileName);
 
         // Enviando para o Cloudinary usando upload_stream
         const uploadedImage = await new Promise<any>((resolve, reject) => {
@@ -310,7 +293,7 @@ export class ProductsService {
         savedImages.push(urlImage);
       }
 
-      console.log('savedImages:', savedImages);
+      // console.log('savedImages:', savedImages);
       return savedImages;
     } catch (error) {
       console.log(error);
@@ -322,106 +305,118 @@ export class ProductsService {
   }
 
   async findAll(paginationDto: PaginationDto) {
-    const {
-      limit = 10,
-      offset = 0,
-      category,
-      price,
-      '-price': maxPrice,
-      brand,
-      tags,
-      bigsale,
-      assessment,
-    } = paginationDto;
+    try {
+      const {
+        limit = 10,
+        offset = 0,
+        category,
+        price,
+        '-price': maxPrice,
+        brand,
+        tags,
+        bigsale,
+        rating,
+      } = paginationDto;
 
-    // Prepara o filtro de preço
-    let priceFilter: { price?: { gte?: number; lte?: number } } = {}; // Definindo a estrutura
-    if (price) {
-      priceFilter = {
-        ...priceFilter,
-        price: { gte: parseFloat(price.toString()) },
-      };
+      // Prepara o filtro de preço
+      let priceFilter: { price?: { gte?: number; lte?: number } } = {}; // Definindo a estrutura
+      if (price) {
+        priceFilter = {
+          ...priceFilter,
+          price: { gte: parseFloat(price.toString()) },
+        };
+      }
+      if (maxPrice) {
+        priceFilter = {
+          ...priceFilter,
+          price: { ...priceFilter.price, lte: parseFloat(maxPrice.toString()) },
+        };
+      }
+
+      // Filtro para categoria
+      let categoryFilter: { category?: string } = {}; // Definindo a estrutura
+      if (category) {
+        categoryFilter = { category: category };
+      }
+
+      // Filtro para marca
+      let brandFilter: { brand?: string } = {}; // Definindo a estrutura
+      if (brand) {
+        brandFilter = { brand: brand };
+      }
+
+      // Filtro de tags (verifica se é uma string e converte para array)
+      let tagsFilter: { tags?: { hasSome: string[] } } = {};
+      if (tags) {
+        const tagArray =
+          typeof tags === 'string'
+            ? tags.split(',').map((tag) => tag.trim())
+            : tags;
+        tagsFilter = { tags: { hasSome: tagArray } };
+      }
+
+      // Função para processar o valor de bigsale como booleano
+      let bigsaleFilter: { bigsale?: boolean } = {};
+
+      if (bigsale !== undefined) {
+        // Convertendo a query string para um booleano corretamente
+        bigsaleFilter = { bigsale: bigsale === 'true' }; // ou 'false' para falso
+      }
+
+      // Filtro para avaliação
+      let assessmentFilter: { rating?: { gte: number } } = {}; // Definindo a estrutura
+      if (rating) {
+        assessmentFilter = {
+          rating: { gte: parseInt(rating.toString()) },
+        };
+      }
+
+      // Fazendo a consulta no banco com todos os filtros
+      const products = await this.prisma.product.findMany({
+        where: {
+          ...categoryFilter,
+          ...priceFilter,
+          ...brandFilter,
+          ...tagsFilter,
+          ...bigsaleFilter,
+          ...assessmentFilter,
+        },
+        take: limit,
+        skip: offset,
+        orderBy: {
+          createdAt: 'desc', // Ordena pela data de criação (ou outra opção que preferir)
+        },
+        include: {
+          images: true,
+        },
+      });
+
+      return products;
+    } catch (error) {
+      throw new HttpException(
+        `Falha ao listar produtos ${error.message}`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    if (maxPrice) {
-      priceFilter = {
-        ...priceFilter,
-        price: { ...priceFilter.price, lte: parseFloat(maxPrice.toString()) },
-      };
-    }
-
-    // Filtro para categoria
-    let categoryFilter: { category?: string } = {}; // Definindo a estrutura
-    if (category) {
-      categoryFilter = { category: category };
-    }
-
-    // Filtro para marca
-    let brandFilter: { brand?: string } = {}; // Definindo a estrutura
-    if (brand) {
-      brandFilter = { brand: brand };
-    }
-
-    // Filtro de tags (verifica se é uma string e converte para array)
-    let tagsFilter: { tags?: { hasSome: string[] } } = {};
-    if (tags) {
-      const tagArray =
-        typeof tags === 'string'
-          ? tags.split(',').map((tag) => tag.trim())
-          : tags;
-      tagsFilter = { tags: { hasSome: tagArray } };
-    }
-
-    // Função para processar o valor de bigsale como booleano
-    let bigsaleFilter: { bigsale?: boolean } = {};
-
-    if (bigsale !== undefined) {
-      // Convertendo a query string para um booleano corretamente
-      bigsaleFilter = { bigsale: bigsale === 'true' }; // ou 'false' para falso
-    }
-
-    // Filtro para avaliação
-    let assessmentFilter: { assessment?: { gte: number } } = {}; // Definindo a estrutura
-    if (assessment) {
-      assessmentFilter = {
-        assessment: { gte: parseInt(assessment.toString()) },
-      };
-    }
-
-    // Fazendo a consulta no banco com todos os filtros
-    const products = await this.prisma.product.findMany({
-      where: {
-        ...categoryFilter,
-        ...priceFilter,
-        ...brandFilter,
-        ...tagsFilter,
-        ...bigsaleFilter,
-        ...assessmentFilter,
-      },
-      take: limit,
-      skip: offset,
-      orderBy: {
-        createdAt: 'desc', // Ordena pela data de criação (ou outra opção que preferir)
-      },
-      include: {
-        options: true,
-        images: true,
-      },
-    });
-
-    return products;
   }
 
   async findOne(id: string) {
-    const product = await this.prisma.product.findFirst({
-      where: {
-        id: id,
-      },
-      include: {
-        options: true,
-        images: true,
-      },
-    });
-    return product;
+    try {
+      const product = await this.prisma.product.findFirst({
+        where: {
+          id: id,
+        },
+        include: {
+          images: true,
+        },
+      });
+      return product;
+    } catch (error) {
+      throw new HttpException(
+        `Falha ao listar produto ${error.message}`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
@@ -433,7 +428,7 @@ export class ProductsService {
         title: updateProductDto.title,
         price: updateProductDto.price,
         old_price: updateProductDto.old_price,
-        assessment: updateProductDto.assessment,
+        rating: updateProductDto.rating,
         promotion_time: updateProductDto.promotion_time,
         description: updateProductDto.description,
         products_sold: updateProductDto.products_sold,
@@ -441,37 +436,19 @@ export class ProductsService {
         bigsale: updateProductDto.bigsale,
         stock: updateProductDto.stock,
         category: updateProductDto.category?.toLowerCase(),
+        categoryId: updateProductDto.categoryId,
         brand: updateProductDto.brand?.toLowerCase(),
         tags: updateProductDto.tags?.map((tag) => tag.toLowerCase()),
-        options:
-          updateProductDto.options && updateProductDto.options.length > 0
-            ? {
-                create: updateProductDto.options
-                  .flatMap((optionInput) =>
-                    optionInput.create
-                      ? optionInput.create.map((option) => ({
-                          color: option.color || [],
-                          size: option.size || [],
-                        }))
-                      : [],
-                  )
-                  .filter(
-                    (option) =>
-                      option.color.length > 0 || option.size.length > 0,
-                  ),
-              }
-            : undefined,
-        images:
-          updateProductDto.images && updateProductDto.images.length > 0
-            ? {
-                create: updateProductDto.images.map((img) => ({
-                  image: img.image,
-                })),
-              }
-            : undefined,
+        weight: updateProductDto.weight,
+        width: updateProductDto.width,
+        height: updateProductDto.height,
+        length: updateProductDto.length,
+        isActive: updateProductDto.isActive,
+        featured: updateProductDto.featured,
+        color: updateProductDto.color || [],
+        size: updateProductDto.size || [],
       },
-      select: {
-        options: true,
+      include: {
         images: true,
       },
     });

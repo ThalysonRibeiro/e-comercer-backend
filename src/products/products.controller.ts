@@ -50,7 +50,7 @@ export class ProductsController {
     files: Array<Express.Multer.File>,
   ) {
     const { productId } = body;
-    return this.productsService.uploadImageslocal(productId, files);
+    return this.productsService.uploadImagesCloudinary(productId, files);
   }
 
   @Public()

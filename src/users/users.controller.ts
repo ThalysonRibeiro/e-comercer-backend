@@ -25,7 +25,7 @@ export class UsersController {
     @Body()
     profileData: {
       name: string;
-      cpf: string;
+      cpf_or_cnpj: string;
       genero: string;
       dateOfBirth: string;
       phone: string;

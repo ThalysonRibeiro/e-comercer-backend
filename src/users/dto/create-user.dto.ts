@@ -76,7 +76,8 @@ export class CreateUserDTO {
   type: AccountType;
 
   @IsString()
-  cpf: string;
+  @IsOptional()
+  cpf_or_cnpj: string;
 
   @IsString()
   genero: string;

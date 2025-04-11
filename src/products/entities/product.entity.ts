@@ -1,20 +1,43 @@
-import { ImageDto, OptionsDto } from '../dto/create-product.dto';
+import {
+  CartItem,
+  Category,
+  Image,
+  OrderItems,
+  Review,
+  WishlistItem,
+} from '@prisma/client';
 
 export class Product {
   id: string;
   title: string;
   price: number;
   old_price: number;
-  assessment?: number;
-  promotion_time: number;
+  rating?: number;
+  promotion_time?: number;
   description: string;
   products_sold: number;
-  endDate: Date;
+  endDate?: Date;
   bigsale: boolean;
+  sku: string;
   stock: number;
   category: string;
   brand: string;
   tags: string[];
-  options: OptionsDto[];
-  images: ImageDto[];
+  weight?: number;
+  width?: number;
+  height?: number;
+  length?: number;
+  isActive: boolean;
+  featured: boolean;
+  color: string[];
+  size: string[];
+  images: Image[];
+  OrderItems: OrderItems[];
+  reviews: Review[];
+  WishlistItem: WishlistItem[];
+  CartItem: CartItem[];
+  Category?: Category;
+  categoryId?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -11,28 +11,6 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class ImageDto {
-  @IsNotEmpty()
-  @IsString()
-  image: string;
-}
-
-export class OptionsCreateInput {
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => OptionsDto)
-  create: OptionsDto[];
-}
-export class OptionsDto {
-  @IsArray()
-  @IsString({ each: true })
-  color: string[];
-
-  @IsArray()
-  @IsString({ each: true })
-  size: string[];
-}
-
 export class CreateProductDto {
   @IsNotEmpty()
   @IsString()
@@ -48,8 +26,9 @@ export class CreateProductDto {
 
   @IsOptional()
   @IsNumber()
-  assessment?: number;
+  rating?: number;
 
+  @IsOptional()
   @IsNumber()
   promotion_time: number;
 
@@ -61,12 +40,45 @@ export class CreateProductDto {
   @IsNumber()
   products_sold: number;
 
+  @IsOptional()
   @IsDate()
   @Type(() => Date)
   endDate: Date;
 
   @IsBoolean()
   bigsale: boolean;
+
+  @IsNumber()
+  @Type(() => Number)
+  weight: number;
+
+  @IsNumber()
+  @Type(() => Number)
+  width: number;
+
+  @IsNumber()
+  @Type(() => Number)
+  height: number;
+
+  @IsNumber()
+  @Type(() => Number)
+  length: number;
+
+  @IsBoolean()
+  isActive: boolean;
+
+  @IsBoolean()
+  featured: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  color: string[];
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  size: string[];
 
   @IsNumber()
   stock: number;
@@ -77,21 +89,13 @@ export class CreateProductDto {
 
   @IsNotEmpty()
   @IsString()
+  categoryId: string;
+
+  @IsNotEmpty()
+  @IsString()
   brand: string;
 
   @IsArray()
   @IsString({ each: true })
   tags: string[];
-
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => OptionsCreateInput)
-  options: OptionsCreateInput[];
-
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => ImageDto)
-  images: ImageDto[];
 }
