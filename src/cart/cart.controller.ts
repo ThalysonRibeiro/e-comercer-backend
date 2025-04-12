@@ -22,7 +22,7 @@ export class CartController {
     return this.cartService.create(createCartDto);
   }
   @Roles(AccountType.useradmin)
-  @Get()
+  @Get('admin')
   findAll() {
     return this.cartService.findAll();
   }

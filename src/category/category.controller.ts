@@ -16,10 +16,10 @@ import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(private readonly categoryService: CategoryService) { }
 
   @Roles(AccountType.useradmin)
-  @Post()
+  @Post('admin')
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.create(createCategoryDto);
   }
@@ -37,7 +37,7 @@ export class CategoryController {
   }
 
   @Roles(AccountType.useradmin)
-  @Patch(':id')
+  @Patch('admin/:id')
   update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -46,7 +46,7 @@ export class CategoryController {
   }
 
   @Roles(AccountType.useradmin)
-  @Delete(':id')
+  @Delete('admin/:id')
   remove(@Param('id') id: string) {
     return this.categoryService.remove(id);
   }

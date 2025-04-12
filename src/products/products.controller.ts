@@ -23,15 +23,15 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Roles(AccountType.useradmin)
-  @Post()
+  @Post('admin')
   createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
-  @Post('image')
+  @Post('admin/image')
   @UseInterceptors(FilesInterceptor('files', 10)) // Limita o número de arquivos para 10
   async images(
     @Body() body: { productId: string }, // O body contém o productId
@@ -66,7 +66,7 @@ export class ProductsController {
   }
 
   @Roles(AccountType.useradmin)
-  @Patch(':id')
+  @Patch('admin/:id')
   updateProduct(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
@@ -75,7 +75,7 @@ export class ProductsController {
   }
 
   @Roles(AccountType.useradmin)
-  @Delete(':id')
+  @Delete('admin/:id')
   removeProduct(@Param('id') id: string) {
     return this.productsService.remove(id);
   }

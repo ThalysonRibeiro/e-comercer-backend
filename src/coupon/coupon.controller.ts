@@ -10,31 +10,31 @@ export class CouponController {
   constructor(private readonly couponService: CouponService) { }
 
   @Roles(AccountType.useradmin)
-  @Post()
+  @Post('admin')
   create(@Body() createCouponDto: CreateCouponDto) {
     return this.couponService.create(createCouponDto);
   }
 
   @Roles(AccountType.useradmin)
-  @Get()
+  @Get('admin')
   findAll() {
     return this.couponService.findAll();
   }
 
   @Roles(AccountType.useradmin)
-  @Get(':id')
+  @Get('admin/:id')
   findOne(@Param('id') id: string) {
     return this.couponService.findOne(id);
   }
 
   @Roles(AccountType.useradmin)
-  @Patch(':id')
+  @Patch('admin/:id')
   update(@Param('id') id: string, @Body() updateCouponDto: UpdateCouponDto) {
     return this.couponService.update(id, updateCouponDto);
   }
 
   @Roles(AccountType.useradmin)
-  @Delete(':id')
+  @Delete('admin/:id')
   remove(@Param('id') id: string) {
     return this.couponService.remove(id);
   }

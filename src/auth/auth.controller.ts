@@ -37,7 +37,7 @@ export class ResetPasswordDto {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
   //useradmin
   @Public()
   @Post('register-admin')
@@ -53,7 +53,7 @@ export class AuthController {
   }
 
   @Roles(AccountType.useradmin)
-  @Get('admin-only')
+  @Get('admin/admin-only')
   getAdminData() {
     return { message: 'Esta é uma rota protegida apenas para administradores' };
   }
