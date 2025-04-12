@@ -9,14 +9,18 @@ import {
   UploadedFile,
   ParseFilePipeBuilder,
   HttpStatus,
+  Get,
+  Param,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { AccountType } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService) { }
 
   @UseGuards(JwtAuthGuard)
   @Patch('complete-profile')
@@ -91,5 +95,11 @@ export class UsersController {
     file: Express.Multer.File,
   ) {
     return this.usersService.uploadAvatarCloudnary(req, file);
+  }
+
+  @Roles(AccountType.useradmin)
+  @Get('admin/:id')
+  async findUserById(@Param('id') id: string) {
+    return this.usersService.findById(id)
   }
 }

@@ -17,6 +17,9 @@ import { CartModule } from 'src/cart/cart.module';
 import { CouponModule } from 'src/coupon/coupon.module';
 import { WishlistModule } from 'src/wishlist/wishlist.module';
 import { ReviewModule } from 'src/review/review.module';
+import { AddressModule } from 'src/address/address.module';
+import { ValideteZipModule } from 'src/validete-zip/validete-zip.module';
+
 
 @Module({
   imports: [
@@ -37,6 +40,8 @@ import { ReviewModule } from 'src/review/review.module';
     CouponModule,
     WishlistModule,
     ReviewModule,
+    AddressModule,
+    ValideteZipModule
   ],
   controllers: [AppController],
   providers: [
@@ -51,4 +56,4 @@ import { ReviewModule } from 'src/review/review.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -50,6 +50,29 @@ export class UsersService {
   async findById(id: string): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: { id },
+      include: {
+        order: {
+          include: {
+            orderItems: true
+          }
+        },
+        addresses: true,
+        reviews: true,
+        wishlist: {
+          include: {
+            items: {
+              include: {
+                product: true
+              }
+            }
+          }
+        },
+        cart: {
+          include: {
+            items: true
+          }
+        }
+      }
     });
   }
 
