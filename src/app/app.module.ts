@@ -16,6 +16,7 @@ import { CategoryModule } from 'src/category/category.module';
 import { CartModule } from 'src/cart/cart.module';
 import { CouponModule } from 'src/coupon/coupon.module';
 import { WishlistModule } from 'src/wishlist/wishlist.module';
+import { ReviewModule } from 'src/review/review.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { WishlistModule } from 'src/wishlist/wishlist.module';
     CartModule,
     CouponModule,
     WishlistModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [
@@ -49,4 +51,4 @@ import { WishlistModule } from 'src/wishlist/wishlist.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class WishlistService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createWishlistDto: CreateWishlistDto) {
     if (!createWishlistDto.userId) {
@@ -24,7 +24,7 @@ export class WishlistService {
 
     try {
       const existingWishlistItem = await this.prisma.wishlistItem.findFirst({
-        where: { productId: createWishlistDto.productId }
+        where: { productId: createWishlistDto.productId },
       });
 
       if (existingWishlistItem) {
@@ -34,11 +34,10 @@ export class WishlistService {
       const existingWishlist = await this.prisma.wishlist.findFirst({
         where: { userId: createWishlistDto.userId },
         include: {
-          items: true
-        }
+          items: true,
+        },
       });
       if (!existingWishlist) {
-
         const wishlist = await this.prisma.wishlist.create({
           data: {
             user: {
@@ -46,33 +45,32 @@ export class WishlistService {
             },
           },
           include: {
-            items: true
-          }
+            items: true,
+          },
         });
         await this.prisma.wishlistItem.create({
           data: {
             wishlistId: wishlist.id,
-            productId: createWishlistDto.productId
-          }
+            productId: createWishlistDto.productId,
+          },
         });
-        return wishlist
+        return wishlist;
       }
 
       const wishlistItem = await this.prisma.wishlistItem.create({
         data: {
           wishlistId: existingWishlist.id,
-          productId: createWishlistDto.productId
-        }
-      })
+          productId: createWishlistDto.productId,
+        },
+      });
 
-      return wishlistItem
+      return wishlistItem;
     } catch (error) {
       throw new HttpException(
         'Erro ao criar lista de items desejos',
         HttpStatus.BAD_REQUEST,
       );
     }
-
   }
 
   async findAll() {
@@ -88,12 +86,12 @@ export class WishlistService {
               updatedAt: true,
               product: {
                 include: {
-                  images: true
-                }
-              }
-            }
-          }
-        }
+                  images: true,
+                },
+              },
+            },
+          },
+        },
       });
     } catch (error) {
       throw new HttpException(
@@ -117,12 +115,12 @@ export class WishlistService {
               updatedAt: true,
               product: {
                 include: {
-                  images: true
-                }
-              }
-            }
-          }
-        }
+                  images: true,
+                },
+              },
+            },
+          },
+        },
       });
     } catch (error) {
       throw new HttpException(
@@ -134,15 +132,12 @@ export class WishlistService {
 
   async remove(id: string) {
     if (!id) {
-      throw new HttpException(
-        'o id é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('o id é obrigatório', HttpStatus.BAD_REQUEST);
     }
     try {
       return await this.prisma.wishlistItem.delete({
-        where: { id: id }
-      })
+        where: { id: id },
+      });
     } catch (error) {
       throw new HttpException(
         'erro ao remover o item da lista de desejos',

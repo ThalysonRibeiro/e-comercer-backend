@@ -5,10 +5,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CouponService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createCouponDto: CreateCouponDto) {
-
     try {
       const dateFuture = new Date();
       dateFuture.setDate(dateFuture.getDate() + createCouponDto.start_date);
@@ -23,8 +22,8 @@ export class CouponService {
           used_count: createCouponDto.used_count,
           start_date: createCouponDto.start_date,
           end_date: dateFuture,
-          isActive: createCouponDto.isActive
-        }
+          isActive: createCouponDto.isActive,
+        },
       });
       return coupon;
     } catch (error) {
@@ -49,14 +48,13 @@ export class CouponService {
   async findOne(id: string) {
     try {
       return await this.prisma.coupon.findUnique({
-        where: { id: id }
+        where: { id: id },
       });
     } catch (error) {
       throw new HttpException(
         `Erro ao buscar cupom ${error}`,
         HttpStatus.BAD_REQUEST,
       );
-
     }
   }
 
@@ -82,8 +80,8 @@ export class CouponService {
           used_count: updateCouponDto.used_count,
           start_date: updateCouponDto.start_date,
           end_date: dateFuture,
-          isActive: updateCouponDto.isActive
-        }
+          isActive: updateCouponDto.isActive,
+        },
       });
       return coupon;
     } catch (error) {
@@ -97,7 +95,7 @@ export class CouponService {
   async remove(id: string) {
     try {
       return await this.prisma.coupon.delete({
-        where: { id: id }
+        where: { id: id },
       });
     } catch (error) {
       throw new HttpException(
@@ -116,7 +114,7 @@ export class CouponService {
     }
     try {
       return await this.prisma.coupon.findFirst({
-        where: { code: code }
+        where: { code: code },
       });
     } catch (error) {
       throw new HttpException(

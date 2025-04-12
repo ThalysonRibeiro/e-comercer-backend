@@ -7,4 +7,4 @@ import { PrismaService } from 'src/prisma/prisma.service';
   controllers: [CouponController],
   providers: [CouponService, PrismaService],
 })
-export class CouponModule { }
+export class CouponModule {}

@@ -37,7 +37,7 @@ export class ResetPasswordDto {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
   //useradmin
   @Public()
   @Post('register-admin')

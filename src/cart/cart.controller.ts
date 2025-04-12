@@ -15,7 +15,7 @@ import { AccountType } from '@prisma/client';
 
 @Controller('cart')
 export class CartController {
-  constructor(private readonly cartService: CartService) { }
+  constructor(private readonly cartService: CartService) {}
 
   @Post()
   create(@Body() createCartDto: CreateCartDto) {
