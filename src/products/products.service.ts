@@ -8,12 +8,14 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { v2 as cloudinary } from 'cloudinary';
 import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
+import { ImagesService } from 'src/images/images.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
     private prisma: PrismaService,
     private configService: ConfigService,
+    private imagesService: ImagesService
   ) {
     cloudinary.config({
       cloud_name: this.configService.get<string>('CLOUDINARY_CLOUD_NAME'),
@@ -294,6 +296,83 @@ export class ProductsService {
       }
 
       // console.log('savedImages:', savedImages);
+      return savedImages;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        'Falha ao fazer o upload das imagens',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async uploadImagesCloudinary2(
+    productId: string,
+    files: Array<Express.Multer.File>,
+  ) {
+    try {
+      const savedImages: { id: string; image: string }[] = [];
+
+      if (!files || files.length === 0) {
+        throw new Error('Nenhum arquivo foi enviado.');
+      }
+
+      // Verificação de tipo para productId
+      if (typeof productId !== 'string') {
+        throw new Error('productId deve ser uma string');
+      }
+
+      const uploadedImage = await this.imagesService.postImages(productId, files);
+      console.log("uploadedImage:", uploadedImage, typeof uploadedImage);
+
+      // Tratamento para diferentes formatos possíveis
+      let imageUrls: string[] = [];
+
+      // Caso 1: É uma string simples
+      if (typeof uploadedImage === 'string') {
+        imageUrls = [uploadedImage];
+      }
+      // Caso 2: É um array de strings
+      else if (Array.isArray(uploadedImage) && uploadedImage.every(item => typeof item === 'string')) {
+        imageUrls = uploadedImage;
+      }
+      // Caso 3: É um objeto com uma propriedade url ou secure_url (comum em respostas do Cloudinary)
+      else if (uploadedImage && typeof uploadedImage === 'object' && !Array.isArray(uploadedImage)) {
+        if ('url' in uploadedImage) imageUrls = [uploadedImage];
+        else if ('secure_url' in uploadedImage) imageUrls = [uploadedImage];
+        else if ('image' in uploadedImage) imageUrls = [uploadedImage];
+      }
+      // Caso 4: É um array de objetos com propriedades url ou secure_url
+      else if (Array.isArray(uploadedImage) && uploadedImage.length > 0 && typeof uploadedImage[0] === 'object') {
+        imageUrls = uploadedImage.map(item => {
+          if ('url' in item) return item.url;
+          if ('secure_url' in item) return item.secure_url;
+          if ('image' in item) return item.image;
+          return null;
+        }).filter(url => url !== null) as string[];
+      }
+
+      // Se não conseguimos extrair nenhuma URL
+      if (imageUrls.length === 0) {
+        console.error("Formato de resposta:", uploadedImage);
+        throw new Error('Formato de resposta inesperado do serviço de imagens');
+      }
+
+      // Salvamos cada URL no banco de dados
+      for (const imageUrl of imageUrls) {
+        const urlImage = await this.prisma.image.create({
+          data: {
+            productId: productId,
+            image: imageUrl,
+          },
+          select: {
+            id: true,
+            image: true,
+          },
+        });
+        savedImages.push(urlImage);
+      }
+
       return savedImages;
     } catch (error) {
       console.log(error);

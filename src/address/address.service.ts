@@ -5,13 +5,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { AddressType } from '@prisma/client';
 import { ValideteZipService } from 'src/validete-zip/validete-zip.service';
 
-
 @Injectable()
 export class AddressService {
   constructor(
     private prisma: PrismaService,
-    private readonly valideteZipService: ValideteZipService
-  ) { }
+    private readonly valideteZipService: ValideteZipService,
+  ) {}
 
   async create(createAddressDto: CreateAddressDto) {
     if (!createAddressDto.userId) {
@@ -22,27 +21,25 @@ export class AddressService {
     }
 
     const user = await this.prisma.user.findUnique({
-      where: { id: createAddressDto.userId }
+      where: { id: createAddressDto.userId },
     });
 
     if (!user) {
-      throw new HttpException(
-        'Usuário não encontrado',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Usuário não encontrado', HttpStatus.BAD_REQUEST);
     }
 
     let addressType;
 
-    if (createAddressDto.addressType === "frete") {
+    if (createAddressDto.addressType === 'frete') {
       addressType = AddressType.shipping;
-    } else if (createAddressDto.addressType === "faturamento") {
+    } else if (createAddressDto.addressType === 'faturamento') {
       addressType = AddressType.billing;
-    } else if (createAddressDto.addressType === "ambos") {
+    } else if (createAddressDto.addressType === 'ambos') {
       addressType = AddressType.both;
     }
 
-    const validateZip = await this.valideteZipService.validateZip(createAddressDto.zip)
+    const validateZip = await this.valideteZipService
+      .validateZip(createAddressDto.zip)
       .catch(() => {
         throw new HttpException(
           'CEP inválido ou não encontrado',
@@ -62,17 +59,14 @@ export class AddressService {
           zip: validateZip.cep,
           country: createAddressDto.country.toLowerCase(),
           complemento: createAddressDto.complemento.toLowerCase(),
-          isDefault: createAddressDto.isDefault
-        }
+          isDefault: createAddressDto.isDefault,
+        },
       });
 
-      return address
+      return address;
     } catch (error) {
       console.log(error);
-      throw new HttpException(
-        'Erro ao criar endereço',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Erro ao criar endereço', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -82,7 +76,7 @@ export class AddressService {
     }
     try {
       return await this.prisma.address.findMany({
-        where: { userId: id }
+        where: { userId: id },
       });
     } catch (error) {
       throw new HttpException(
@@ -112,8 +106,8 @@ export class AddressService {
     }
 
     const existingAddress = await this.prisma.address.findFirst({
-      where: { id: id }
-    })
+      where: { id: id },
+    });
 
     if (!existingAddress) {
       throw new HttpException(
@@ -128,15 +122,16 @@ export class AddressService {
 
     let addressType;
 
-    if (updateAddressDto.addressType === "frete") {
+    if (updateAddressDto.addressType === 'frete') {
       addressType = AddressType.shipping;
-    } else if (updateAddressDto.addressType === "faturamento") {
+    } else if (updateAddressDto.addressType === 'faturamento') {
       addressType = AddressType.billing;
-    } else if (updateAddressDto.addressType === "ambos") {
+    } else if (updateAddressDto.addressType === 'ambos') {
       addressType = AddressType.both;
     }
 
-    const validateZip = await this.valideteZipService.validateZip(updateAddressDto.zip)
+    const validateZip = await this.valideteZipService
+      .validateZip(updateAddressDto.zip)
       .catch(() => {
         throw new HttpException(
           'CEP inválido ou não encontrado',
@@ -156,11 +151,11 @@ export class AddressService {
           zip: validateZip.cep,
           country: updateAddressDto.country?.toLowerCase(),
           complemento: updateAddressDto.complemento?.toLowerCase(),
-          isDefault: updateAddressDto.isDefault
-        }
+          isDefault: updateAddressDto.isDefault,
+        },
       });
 
-      return address
+      return address;
     } catch (error) {
       console.log(error);
       throw new HttpException(
@@ -176,11 +171,11 @@ export class AddressService {
     }
     try {
       await this.prisma.address.delete({
-        where: { id: id }
+        where: { id: id },
       });
       return {
-        message: "Endereço deletado com sucesso!"
-      }
+        message: 'Endereço deletado com sucesso!',
+      };
     } catch (error) {
       throw new HttpException(
         'erro ao deletar endereço',

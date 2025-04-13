@@ -4,7 +4,7 @@ import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('validete-zip')
 export class ValideteZipController {
-  constructor(private readonly valideteZipService: ValideteZipService) { }
+  constructor(private readonly valideteZipService: ValideteZipService) {}
 
   @Public()
   @Get(':zip')

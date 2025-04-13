@@ -53,8 +53,8 @@ export class UsersService {
       include: {
         order: {
           include: {
-            orderItems: true
-          }
+            orderItems: true,
+          },
         },
         addresses: true,
         reviews: true,
@@ -62,17 +62,17 @@ export class UsersService {
           include: {
             items: {
               include: {
-                product: true
-              }
-            }
-          }
+                product: true,
+              },
+            },
+          },
         },
         cart: {
           include: {
-            items: true
-          }
-        }
-      }
+            items: true,
+          },
+        },
+      },
     });
   }
 

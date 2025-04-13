@@ -4,6 +4,6 @@ import { ValideteZipController } from './validete-zip.controller';
 
 @Module({
   providers: [ValideteZipService],
-  controllers: [ValideteZipController]
+  controllers: [ValideteZipController],
 })
 export class ValideteZipModule {}

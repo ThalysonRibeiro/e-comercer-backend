@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ReviewService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createReviewDto: CreateReviewDto) {
     if (!createReviewDto.userId && !createReviewDto.productId) {
@@ -16,7 +16,7 @@ export class ReviewService {
     }
 
     const user = await this.prisma.user.findUnique({
-      where: { id: createReviewDto.userId }
+      where: { id: createReviewDto.userId },
     });
 
     if (!user) {
@@ -30,16 +30,16 @@ export class ReviewService {
           productId: createReviewDto.productId,
           rating: createReviewDto.rating,
           comment: createReviewDto.comment,
-          title: createReviewDto.title || user?.name
+          title: createReviewDto.title || user?.name,
         },
         include: {
           user: {
             select: {
               name: true,
               avatar: true,
-            }
-          }
-        }
+            },
+          },
+        },
       });
 
       return review;
@@ -53,10 +53,7 @@ export class ReviewService {
 
   async findAllReviewUser(id: string) {
     if (!id) {
-      throw new HttpException(
-        'o ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('o ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
     try {
       return await this.prisma.review.findMany({
@@ -66,9 +63,9 @@ export class ReviewService {
             select: {
               name: true,
               avatar: true,
-            }
-          }
-        }
+            },
+          },
+        },
       });
     } catch (error) {
       throw new HttpException(
@@ -80,10 +77,7 @@ export class ReviewService {
 
   async findAllReviewProduct(id: string) {
     if (!id) {
-      throw new HttpException(
-        'o ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('o ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
     try {
       return await this.prisma.review.findMany({
@@ -93,9 +87,9 @@ export class ReviewService {
             select: {
               name: true,
               avatar: true,
-            }
-          }
-        }
+            },
+          },
+        },
       });
     } catch (error) {
       throw new HttpException(
@@ -113,9 +107,9 @@ export class ReviewService {
             select: {
               name: true,
               avatar: true,
-            }
-          }
-        }
+            },
+          },
+        },
       });
     } catch (error) {
       throw new HttpException(
@@ -127,10 +121,7 @@ export class ReviewService {
 
   async update(id: string, updateReviewDto: UpdateReviewDto) {
     if (!id) {
-      throw new HttpException(
-        'o ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('o ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
     if (!updateReviewDto.userId && !updateReviewDto.productId) {
       throw new HttpException(
@@ -140,7 +131,7 @@ export class ReviewService {
     }
 
     const user = await this.prisma.user.findUnique({
-      where: { id: updateReviewDto.userId }
+      where: { id: updateReviewDto.userId },
     });
 
     if (!user) {
@@ -148,7 +139,7 @@ export class ReviewService {
     }
 
     const existingReview = await this.prisma.review.findUnique({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!existingReview) {
@@ -163,16 +154,16 @@ export class ReviewService {
           productId: updateReviewDto.productId || existingReview.productId,
           rating: updateReviewDto.rating || existingReview.rating,
           comment: updateReviewDto.comment,
-          title: updateReviewDto.title || user?.name
+          title: updateReviewDto.title || user?.name,
         },
         include: {
           user: {
             select: {
               name: true,
               avatar: true,
-            }
-          }
-        }
+            },
+          },
+        },
       });
 
       return review;
@@ -186,20 +177,14 @@ export class ReviewService {
 
   async remove(id: string) {
     if (!id) {
-      throw new HttpException(
-        'o ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('o ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
     try {
       return await this.prisma.review.delete({
-        where: { id: id }
+        where: { id: id },
       });
     } catch (error) {
-      throw new HttpException(
-        'Erro ao deletar review',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Erro ao deletar review', HttpStatus.BAD_REQUEST);
     }
   }
 }

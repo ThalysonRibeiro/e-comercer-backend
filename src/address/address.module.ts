@@ -7,6 +7,5 @@ import { ValideteZipService } from 'src/validete-zip/validete-zip.service';
 @Module({
   controllers: [AddressController],
   providers: [AddressService, PrismaService, ValideteZipService],
-
 })
-export class AddressModule { }
+export class AddressModule {}

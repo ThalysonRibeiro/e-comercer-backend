@@ -19,7 +19,8 @@ import { WishlistModule } from 'src/wishlist/wishlist.module';
 import { ReviewModule } from 'src/review/review.module';
 import { AddressModule } from 'src/address/address.module';
 import { ValideteZipModule } from 'src/validete-zip/validete-zip.module';
-
+import { SiteContentModule } from 'src/site-content/site-content.module';
+import { ImagesModule } from 'src/images/images.module';
 
 @Module({
   imports: [
@@ -41,7 +42,9 @@ import { ValideteZipModule } from 'src/validete-zip/validete-zip.module';
     WishlistModule,
     ReviewModule,
     AddressModule,
-    ValideteZipModule
+    ValideteZipModule,
+    SiteContentModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [

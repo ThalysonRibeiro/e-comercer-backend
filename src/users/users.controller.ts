@@ -20,7 +20,7 @@ import { AccountType } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService) {}
 
   @UseGuards(JwtAuthGuard)
   @Patch('complete-profile')
@@ -100,6 +100,6 @@ export class UsersController {
   @Roles(AccountType.useradmin)
   @Get('admin/:id')
   async findUserById(@Param('id') id: string) {
-    return this.usersService.findById(id)
+    return this.usersService.findById(id);
   }
 }

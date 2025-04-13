@@ -273,11 +273,11 @@ model SiteContent {
   banner          String? // Banner principal
   video           String? // Vídeo principal
   bg_video        String? // Vídeo de fundo
-  image_logo      String // Logo do site
+  image_logo      String? // Logo do site
   title           String? // Título do site
   metaTitle       String? // Título para SEO
   metaDescription String? // Descrição para SEO
-  keywords        String? // Palavras-chave para SEO
+  keywords        String[] // Palavras-chave para SEO
   favicon         String? // Ícone do site
   footerText      String? // Texto do rodapé
   themeColor      String? // Cor principal do tema
