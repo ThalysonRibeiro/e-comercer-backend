@@ -11,6 +11,7 @@ import {
   HttpStatus,
   Get,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -101,5 +102,17 @@ export class UsersController {
   @Get('admin/:id')
   async findUserById(@Param('id') id: string) {
     return this.usersService.findById(id);
+  }
+
+  @Roles(AccountType.useradmin)
+  @Get('admin')
+  allUsers() {
+    return this.usersService.allUsers();
+  }
+
+  @Roles(AccountType.useradmin)
+  @Delete('admin/:id')
+  async remove(@Param('id') id: string) {
+    return this.usersService.deleteUser(id);
   }
 }

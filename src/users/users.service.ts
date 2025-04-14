@@ -76,6 +76,28 @@ export class UsersService {
     });
   }
 
+  async allUsers() {
+    try {
+      return await this.prisma.user.findMany({
+        orderBy: {
+          createdAt: 'asc',
+        },
+        include: {
+          addresses: true,
+          reviews: true,
+          cart: true,
+          order: true,
+          wishlist: true,
+        },
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Erro ao listar usuários',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   async createUser(data: CreateUserDTO): Promise<User> {
     if (data.password) {
       const salt = await bcrypt.genSalt();
@@ -220,6 +242,9 @@ export class UsersService {
   }
 
   async deleteUser(id: string) {
+    if (!id) {
+      throw new HttpException('O id é obrigatório', HttpStatus.BAD_REQUEST);
+    }
     try {
       return await this.prisma.user.delete({
         where: {
@@ -227,10 +252,10 @@ export class UsersService {
         },
       });
     } catch (error) {
-      // Log the error
-      console.error('Error deleting user:', error);
-      // Optionally rethrow or handle specifically
-      throw new Error('Failed to delete user');
+      throw new HttpException(
+        'falha ao deletaer usuário',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 }
