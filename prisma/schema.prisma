@@ -294,7 +294,7 @@ model SiteContent {
 model Promotions {
   id            String      @id @unique @default(uuid())
   title         String
-  slug          String      @unique
+  slug          String      @unique //para URLs amigáveis para promoções específica
   banner        String? // Imagem da promoção
   video         String? // Vídeo da promoção
   description   String? // Descrição da promoção
@@ -302,11 +302,11 @@ model Promotions {
   discountValue Float? // Valor do desconto
   couponCode    String? // Código de cupom associado
   isActive      Boolean     @default(true)
-  startDate     DateTime? // Data de início
+  startDate     Int? // Data de início
   endDate       DateTime? // Data de término
   buttonText    String? // Texto do botão CTA
   buttonLink    String? // Link do botão CTA
-  order         Int         @default(0)
+  position      String      @default("")
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   siteContentId String

@@ -8,4 +8,4 @@ import { ImagesService } from 'src/images/images.service';
   controllers: [SiteContentController],
   providers: [SiteContentService, PrismaService, ImagesService],
 })
-export class SiteContentModule { }
+export class SiteContentModule {}

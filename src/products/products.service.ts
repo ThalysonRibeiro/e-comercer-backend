@@ -15,7 +15,7 @@ export class ProductsService {
   constructor(
     private prisma: PrismaService,
     private configService: ConfigService,
-    private imagesService: ImagesService
+    private imagesService: ImagesService,
   ) {
     cloudinary.config({
       cloud_name: this.configService.get<string>('CLOUDINARY_CLOUD_NAME'),
@@ -322,8 +322,11 @@ export class ProductsService {
         throw new Error('productId deve ser uma string');
       }
 
-      const uploadedImage = await this.imagesService.postImages(productId, files);
-      console.log("uploadedImage:", uploadedImage, typeof uploadedImage);
+      const uploadedImage = await this.imagesService.postImages(
+        productId,
+        files,
+      );
+      console.log('uploadedImage:', uploadedImage, typeof uploadedImage);
 
       // Tratamento para diferentes formatos possíveis
       let imageUrls: string[] = [];
@@ -333,28 +336,41 @@ export class ProductsService {
         imageUrls = [uploadedImage];
       }
       // Caso 2: É um array de strings
-      else if (Array.isArray(uploadedImage) && uploadedImage.every(item => typeof item === 'string')) {
+      else if (
+        Array.isArray(uploadedImage) &&
+        uploadedImage.every((item) => typeof item === 'string')
+      ) {
         imageUrls = uploadedImage;
       }
       // Caso 3: É um objeto com uma propriedade url ou secure_url (comum em respostas do Cloudinary)
-      else if (uploadedImage && typeof uploadedImage === 'object' && !Array.isArray(uploadedImage)) {
+      else if (
+        uploadedImage &&
+        typeof uploadedImage === 'object' &&
+        !Array.isArray(uploadedImage)
+      ) {
         if ('url' in uploadedImage) imageUrls = [uploadedImage];
         else if ('secure_url' in uploadedImage) imageUrls = [uploadedImage];
         else if ('image' in uploadedImage) imageUrls = [uploadedImage];
       }
       // Caso 4: É um array de objetos com propriedades url ou secure_url
-      else if (Array.isArray(uploadedImage) && uploadedImage.length > 0 && typeof uploadedImage[0] === 'object') {
-        imageUrls = uploadedImage.map(item => {
-          if ('url' in item) return item.url;
-          if ('secure_url' in item) return item.secure_url;
-          if ('image' in item) return item.image;
-          return null;
-        }).filter(url => url !== null) as string[];
+      else if (
+        Array.isArray(uploadedImage) &&
+        uploadedImage.length > 0 &&
+        typeof uploadedImage[0] === 'object'
+      ) {
+        imageUrls = uploadedImage
+          .map((item) => {
+            if ('url' in item) return item.url;
+            if ('secure_url' in item) return item.secure_url;
+            if ('image' in item) return item.image;
+            return null;
+          })
+          .filter((url) => url !== null) as string[];
       }
 
       // Se não conseguimos extrair nenhuma URL
       if (imageUrls.length === 0) {
-        console.error("Formato de resposta:", uploadedImage);
+        console.error('Formato de resposta:', uploadedImage);
         throw new Error('Formato de resposta inesperado do serviço de imagens');
       }
 

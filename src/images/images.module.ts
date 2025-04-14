@@ -3,6 +3,6 @@ import { ImagesService } from './images.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Module({
-  providers: [ImagesService, PrismaService]
+  providers: [ImagesService, PrismaService],
 })
-export class ImagesModule { }
+export class ImagesModule {}

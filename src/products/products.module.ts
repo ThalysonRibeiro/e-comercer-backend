@@ -10,4 +10,4 @@ import { ImagesService } from 'src/images/images.service';
   controllers: [ProductsController],
   providers: [ProductsService, PrismaService, ImagesService],
 })
-export class ProductsModule { }
+export class ProductsModule {}

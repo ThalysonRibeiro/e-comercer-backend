@@ -8,7 +8,7 @@ import { ImagesService } from 'src/images/images.service';
 export class SiteContentService {
   constructor(
     private prisma: PrismaService,
-    private imagesService: ImagesService
+    private imagesService: ImagesService,
   ) { }
   async create(createSiteContentDto: CreateSiteContentDto) {
     if (!createSiteContentDto.image_logo) {
@@ -46,171 +46,141 @@ export class SiteContentService {
 
   async uploadBanner(id: string, file: Express.Multer.File) {
     if (!id) {
-      throw new HttpException(
-        'O ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      )
+      throw new HttpException('O ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
 
     const existingSiteLayout = await this.prisma.siteContent.findUnique({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!existingSiteLayout) {
-      throw new HttpException(
-        'Não existe SiteLayout',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Não existe SiteLayout', HttpStatus.BAD_REQUEST);
     }
     try {
       const image = await this.imagesService.postImage(id, file);
       return await this.prisma.siteContent.update({
         where: { id: existingSiteLayout.id },
         data: {
-          banner: image
-        }
+          banner: image,
+        },
       });
     } catch (error) {
       throw new HttpException(
         'Erro ao fazer uploado da imagem',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
   }
 
   async uploadVideo(id: string, file: Express.Multer.File) {
     if (!id) {
-      throw new HttpException(
-        'O ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      )
+      throw new HttpException('O ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
 
     const existingSiteLayout = await this.prisma.siteContent.findUnique({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!existingSiteLayout) {
-      throw new HttpException(
-        'Não existe SiteLayout',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Não existe SiteLayout', HttpStatus.BAD_REQUEST);
     }
     try {
       const video = await this.imagesService.postVideo(id, file);
       return await this.prisma.siteContent.update({
         where: { id: existingSiteLayout.id },
         data: {
-          video: video
-        }
+          video: video,
+        },
       });
     } catch (error) {
       throw new HttpException(
         'Erro ao fazer uploado do video',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
   }
 
   async uploadBGVideo(id: string, file: Express.Multer.File) {
     if (!id) {
-      throw new HttpException(
-        'O ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      )
+      throw new HttpException('O ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
 
     const existingSiteLayout = await this.prisma.siteContent.findUnique({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!existingSiteLayout) {
-      throw new HttpException(
-        'Não existe SiteLayout',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Não existe SiteLayout', HttpStatus.BAD_REQUEST);
     }
     try {
       const bgVideo = await this.imagesService.postVideo(id, file);
       return await this.prisma.siteContent.update({
         where: { id: existingSiteLayout.id },
         data: {
-          bg_video: bgVideo
-        }
+          bg_video: bgVideo,
+        },
       });
     } catch (error) {
       throw new HttpException(
         'Erro ao fazer uploado do video',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
   }
 
   async uploadLogo(id: string, file: Express.Multer.File) {
     if (!id) {
-      throw new HttpException(
-        'O ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      )
+      throw new HttpException('O ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
 
     const existingSiteLayout = await this.prisma.siteContent.findUnique({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!existingSiteLayout) {
-      throw new HttpException(
-        'Não existe SiteLayout',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Não existe SiteLayout', HttpStatus.BAD_REQUEST);
     }
     try {
       const logo = await this.imagesService.postImage(id, file);
       return await this.prisma.siteContent.update({
         where: { id: existingSiteLayout.id },
         data: {
-          image_logo: logo
-        }
+          image_logo: logo,
+        },
       });
     } catch (error) {
       throw new HttpException(
         'Erro ao fazer uploado da imagem',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
   }
 
   async uploadFavicon(id: string, file: Express.Multer.File) {
     if (!id) {
-      throw new HttpException(
-        'O ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      )
+      throw new HttpException('O ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
 
     const existingSiteLayout = await this.prisma.siteContent.findUnique({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!existingSiteLayout) {
-      throw new HttpException(
-        'Não existe SiteLayout',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Não existe SiteLayout', HttpStatus.BAD_REQUEST);
     }
     try {
       const favicon = await this.imagesService.postImage(id, file);
       return await this.prisma.siteContent.update({
         where: { id: existingSiteLayout.id },
         data: {
-          favicon: favicon
-        }
+          favicon: favicon,
+        },
       });
     } catch (error) {
       throw new HttpException(
         'Erro ao fazer uploado da imagem',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
   }
 

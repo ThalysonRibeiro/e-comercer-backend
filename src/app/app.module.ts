@@ -21,6 +21,7 @@ import { AddressModule } from 'src/address/address.module';
 import { ValideteZipModule } from 'src/validete-zip/validete-zip.module';
 import { SiteContentModule } from 'src/site-content/site-content.module';
 import { ImagesModule } from 'src/images/images.module';
+import { PromotionsModule } from 'src/promotions/promotions.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { ImagesModule } from 'src/images/images.module';
     ValideteZipModule,
     SiteContentModule,
     ImagesModule,
+    PromotionsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -59,4 +61,4 @@ import { ImagesModule } from 'src/images/images.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

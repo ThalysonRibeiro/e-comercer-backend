@@ -10,6 +10,7 @@ import {
   ParseFilePipeBuilder,
   UploadedFile,
   UseInterceptors,
+  Put,
 } from '@nestjs/common';
 import { SiteContentService } from './site-content.service';
 import { CreateSiteContentDto } from './dto/create-site-content.dto';
@@ -19,7 +20,6 @@ import { AccountType } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { Public } from 'src/auth/decorators/public.decorator';
-
 
 @Controller('site-content/admin')
 export class SiteContentController {
@@ -31,13 +31,13 @@ export class SiteContentController {
     return this.siteContentService.create(createSiteContentDto);
   }
 
+  @Roles(AccountType.useradmin)
   @UseInterceptors(
     FileInterceptor('file', {
       storage: memoryStorage(),
-    })
+    }),
   )
-  @Roles(AccountType.useradmin)
-  @Post('banner/:id')
+  @Put('banner/:id')
   uploadBanner(
     @Param('id') id: string,
     @UploadedFile(
@@ -54,16 +54,16 @@ export class SiteContentController {
     )
     file: Express.Multer.File,
   ) {
-    return this.siteContentService.uploadBanner(id, file)
+    return this.siteContentService.uploadBanner(id, file);
   }
 
+  @Roles(AccountType.useradmin)
   @UseInterceptors(
     FileInterceptor('file', {
       storage: memoryStorage(),
-    })
+    }),
   )
-  @Roles(AccountType.useradmin)
-  @Post('video/:id')
+  @Put('video/:id')
   uploadVideo(
     @Param('id') id: string,
     @UploadedFile(
@@ -80,16 +80,16 @@ export class SiteContentController {
     )
     file: Express.Multer.File,
   ) {
-    return this.siteContentService.uploadVideo(id, file)
+    return this.siteContentService.uploadVideo(id, file);
   }
 
+  @Roles(AccountType.useradmin)
   @UseInterceptors(
     FileInterceptor('file', {
       storage: memoryStorage(),
-    })
+    }),
   )
-  @Roles(AccountType.useradmin)
-  @Post('bg_video/:id')
+  @Put('bg_video/:id')
   uploadBGVideo(
     @Param('id') id: string,
     @UploadedFile(
@@ -106,16 +106,16 @@ export class SiteContentController {
     )
     file: Express.Multer.File,
   ) {
-    return this.siteContentService.uploadBGVideo(id, file)
+    return this.siteContentService.uploadBGVideo(id, file);
   }
 
+  @Roles(AccountType.useradmin)
   @UseInterceptors(
     FileInterceptor('file', {
       storage: memoryStorage(),
-    })
+    }),
   )
-  @Roles(AccountType.useradmin)
-  @Post('logo/:id')
+  @Put('logo/:id')
   uploadLogo(
     @Param('id') id: string,
     @UploadedFile(
@@ -132,16 +132,16 @@ export class SiteContentController {
     )
     file: Express.Multer.File,
   ) {
-    return this.siteContentService.uploadLogo(id, file)
+    return this.siteContentService.uploadLogo(id, file);
   }
 
+  @Roles(AccountType.useradmin)
   @UseInterceptors(
     FileInterceptor('file', {
       storage: memoryStorage(),
-    })
+    }),
   )
-  @Roles(AccountType.useradmin)
-  @Post('favicon/:id')
+  @Put('favicon/:id')
   uploadFavicon(
     @Param('id') id: string,
     @UploadedFile(
@@ -158,7 +158,7 @@ export class SiteContentController {
     )
     file: Express.Multer.File,
   ) {
-    return this.siteContentService.uploadFavicon(id, file)
+    return this.siteContentService.uploadFavicon(id, file);
   }
 
   @Public()
