@@ -9,7 +9,7 @@ export class SiteContentService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) { }
+  ) {}
   async create(createSiteContentDto: CreateSiteContentDto) {
     if (!createSiteContentDto.image_logo) {
       throw new HttpException(

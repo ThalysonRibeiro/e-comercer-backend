@@ -25,7 +25,7 @@ import { AllPromotions } from 'src/common/dto/all-promotions.dto';
 
 @Controller('promotions/')
 export class PromotionsController {
-  constructor(private readonly promotionsService: PromotionsService) { }
+  constructor(private readonly promotionsService: PromotionsService) {}
 
   @Roles(AccountType.useradmin)
   @Post('admin')

@@ -9,7 +9,7 @@ import { AllPromotions } from 'src/common/dto/all-promotions.dto';
 export class PromotionsService {
   constructor(
     private prisma: PrismaService,
-    private imagesService: ImagesService
+    private imagesService: ImagesService,
   ) { }
 
   async create(createPromotionDto: CreatePromotionDto) {
@@ -27,7 +27,7 @@ export class PromotionsService {
     }
 
     const existingSiteContent = await this.prisma.siteContent.findUnique({
-      where: { id: createPromotionDto.siteContentId }
+      where: { id: createPromotionDto.siteContentId },
     });
 
     if (!existingSiteContent) {
@@ -53,18 +53,14 @@ export class PromotionsService {
           endDate: dateFuture,
           buttonLink: createPromotionDto.buttonLink,
           buttonText: createPromotionDto.buttonText,
-          position: createPromotionDto.position
-        }
+          position: createPromotionDto.position,
+        },
       });
       return promotion;
     } catch (error) {
-      throw new HttpException(
-        'Erro ao criar promoção',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Erro ao criar promoção', HttpStatus.BAD_REQUEST);
     }
   }
-
 
   async uploadBanner(id: string, file: Express.Multer.File) {
     if (!id) {
@@ -104,7 +100,10 @@ export class PromotionsService {
     });
 
     if (!existingPromoton) {
-      throw new HttpException('Não existe ProexistingPromoton', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Não existe ProexistingPromoton',
+        HttpStatus.BAD_REQUEST,
+      );
     }
     try {
       const video = await this.imagesService.postVideo(id, file);
@@ -122,39 +121,45 @@ export class PromotionsService {
     }
   }
 
-
   async findAll(allPromotions: AllPromotions) {
     const { limit, offset, active, position } = allPromotions;
 
     let checkActive: boolean | undefined;
     switch (active?.toLowerCase()) {
       case 'true':
-        checkActive = true
+        checkActive = true;
         break;
       case 'false':
-        checkActive = false
+        checkActive = false;
         break;
       default:
         checkActive = undefined;
         break;
     }
 
-    return await this.prisma.promotions.findMany({
-      where: {
-        ...(checkActive !== undefined && { isActive: checkActive }),
-        ...(position && { position: position.toLowerCase() }),
-      },
-      take: limit,
-      skip: offset,
-      orderBy: {
-        createdAt: 'desc'
-      }
-    });
+    try {
+      return await this.prisma.promotions.findMany({
+        where: {
+          ...(checkActive !== undefined && { isActive: checkActive }),
+          ...(position && { position: position.toLowerCase() }),
+        },
+        take: limit,
+        skip: offset,
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Erro ao listar',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async findOne(id: string) {
     return await this.prisma.promotions.findUnique({
-      where: { id: id }
+      where: { id: id },
     });
   }
 
@@ -168,8 +173,8 @@ export class PromotionsService {
 
     const existingPromotions = await this.prisma.promotions.findUnique({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
 
     if (!existingPromotions) {
@@ -186,9 +191,10 @@ export class PromotionsService {
         where: { id: existingPromotions.id },
         data: {
           title: updatePromotionDto.title,
-          slug: updatePromotionDto.slug === existingPromotions.slug
-            ? existingPromotions.slug
-            : updatePromotionDto.slug,
+          slug:
+            updatePromotionDto.slug === existingPromotions.slug
+              ? existingPromotions.slug
+              : updatePromotionDto.slug,
           description: updatePromotionDto.description,
           discountType: updatePromotionDto.discountType,
           discountValue: updatePromotionDto.discountValue,
@@ -197,8 +203,8 @@ export class PromotionsService {
           endDate: dateFuture,
           buttonLink: updatePromotionDto.buttonLink,
           buttonText: updatePromotionDto.buttonText,
-          position: updatePromotionDto.position
-        }
+          position: updatePromotionDto.position,
+        },
       });
       return promotion;
     } catch (error) {
@@ -213,23 +219,20 @@ export class PromotionsService {
 
   async remove(id: string) {
     if (!id) {
-      throw new HttpException(
-        'O id é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('O id é obrigatório', HttpStatus.BAD_REQUEST);
     }
     try {
       await this.prisma.promotions.delete({
-        where: { id: id }
+        where: { id: id },
       });
       return {
-        message: "Deletado com sucesso!"
-      }
+        message: 'Deletado com sucesso!',
+      };
     } catch (error) {
       throw new HttpException(
         'Erro ao deletar promoção',
         HttpStatus.BAD_REQUEST,
       );
-    };
+    }
   }
 }

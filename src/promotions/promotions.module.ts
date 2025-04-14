@@ -8,4 +8,4 @@ import { ImagesService } from 'src/images/images.service';
   controllers: [PromotionsController],
   providers: [PromotionsService, PrismaService, ImagesService],
 })
-export class PromotionsModule { }
+export class PromotionsModule {}

@@ -319,7 +319,7 @@ model PromotionHero {
   subTitle        String // Subtítulo
   sale            String // Texto de oferta/desconto
   description     String // Descrição
-  image           String // Imagem de destaque
+  image           String? // Imagem de destaque
   buttonText      String? // Texto do botão CTA
   buttonLink      String? // Link do botão CTA
   backgroundColor String? // Cor de fundo (para personalização)
@@ -327,7 +327,7 @@ model PromotionHero {
   position        String? // Posição no site (top, middle, bottom)
   isActive        Boolean     @default(true)
   order           Int         @default(0)
-  startDate       DateTime? // Data de início
+  startDate       Int? // Data de início
   endDate         DateTime? // Data de término
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt

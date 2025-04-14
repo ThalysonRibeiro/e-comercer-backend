@@ -22,6 +22,7 @@ import { ValideteZipModule } from 'src/validete-zip/validete-zip.module';
 import { SiteContentModule } from 'src/site-content/site-content.module';
 import { ImagesModule } from 'src/images/images.module';
 import { PromotionsModule } from 'src/promotions/promotions.module';
+import { PromotionHeroModule } from 'src/promotion-hero/promotion-hero.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { PromotionsModule } from 'src/promotions/promotions.module';
     SiteContentModule,
     ImagesModule,
     PromotionsModule,
+    PromotionHeroModule,
   ],
   controllers: [AppController],
   providers: [
@@ -61,4 +63,4 @@ import { PromotionsModule } from 'src/promotions/promotions.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsBoolean, IsInt, IsOptional, IsString, Min } from 'class-validator';
 
-export class AllPromotions {
+export class AllPromotionHero {
   @IsOptional()
   @IsInt()
   @Min(1)
@@ -17,6 +17,12 @@ export class AllPromotions {
   @IsOptional()
   @IsString()
   position?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Type(() => Number)
+  order?: number;
 
   @IsOptional()
   @IsString()
