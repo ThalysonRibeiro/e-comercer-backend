@@ -24,6 +24,7 @@ import { ImagesModule } from 'src/images/images.module';
 import { PromotionsModule } from 'src/promotions/promotions.module';
 import { PromotionHeroModule } from 'src/promotion-hero/promotion-hero.module';
 import { SocialMediaModule } from 'src/social-media/social-media.module';
+import { ContactInfoModule } from 'src/contact-info/contact-info.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { SocialMediaModule } from 'src/social-media/social-media.module';
     PromotionsModule,
     PromotionHeroModule,
     SocialMediaModule,
+    ContactInfoModule,
   ],
   controllers: [AppController],
   providers: [
@@ -65,4 +67,4 @@ import { SocialMediaModule } from 'src/social-media/social-media.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
