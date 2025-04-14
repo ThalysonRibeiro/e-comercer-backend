@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ContactInfoService } from './contact-info.service';
 import { CreateContactInfoDto } from './dto/create-contact-info.dto';
 import { UpdateContactInfoDto } from './dto/update-contact-info.dto';
@@ -8,7 +16,7 @@ import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('contact-info')
 export class ContactInfoController {
-  constructor(private readonly contactInfoService: ContactInfoService) { }
+  constructor(private readonly contactInfoService: ContactInfoService) {}
 
   @Roles(AccountType.useradmin)
   @Post('admin')
@@ -30,7 +38,10 @@ export class ContactInfoController {
 
   @Roles(AccountType.useradmin)
   @Patch('admin/:id')
-  update(@Param('id') id: string, @Body() updateContactInfoDto: UpdateContactInfoDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateContactInfoDto: UpdateContactInfoDto,
+  ) {
     return this.contactInfoService.update(id, updateContactInfoDto);
   }
 

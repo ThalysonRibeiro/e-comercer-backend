@@ -7,4 +7,4 @@ import { PrismaService } from 'src/prisma/prisma.service';
   controllers: [ContactInfoController],
   providers: [ContactInfoService, PrismaService],
 })
-export class ContactInfoModule { }
+export class ContactInfoModule {}

@@ -5,9 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ContactInfoService {
-  constructor(private prisma: PrismaService) {
-
-  }
+  constructor(private prisma: PrismaService) {}
 
   async create(createContactInfoDto: CreateContactInfoDto) {
     if (!createContactInfoDto.siteContentId) {
@@ -32,8 +30,8 @@ export class ContactInfoService {
           siteContentId: existingSiteContent.id,
           type: createContactInfoDto.type,
           value: createContactInfoDto.value,
-          label: createContactInfoDto.label
-        }
+          label: createContactInfoDto.label,
+        },
       });
       return contactInfo;
     } catch (error) {
@@ -57,29 +55,20 @@ export class ContactInfoService {
 
   async findOne(id: string) {
     if (!id) {
-      throw new HttpException(
-        'ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
     try {
       return await this.prisma.contactInfo.findUnique({
-        where: { id: id }
+        where: { id: id },
       });
     } catch (error) {
-      throw new HttpException(
-        'Erro ao listar contato',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Erro ao listar contato', HttpStatus.BAD_REQUEST);
     }
   }
 
   async update(id: string, updateContactInfoDto: UpdateContactInfoDto) {
     if (!id) {
-      throw new HttpException(
-        'ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
     if (!updateContactInfoDto.siteContentId) {
       throw new HttpException(
@@ -92,10 +81,7 @@ export class ContactInfoService {
     });
 
     if (!existingContactInfo) {
-      throw new HttpException(
-        'contato não encontrado',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('contato não encontrado', HttpStatus.BAD_REQUEST);
     }
     try {
       const contactInfo = await this.prisma.contactInfo.update({
@@ -103,8 +89,8 @@ export class ContactInfoService {
         data: {
           type: updateContactInfoDto.type,
           value: updateContactInfoDto.value,
-          label: updateContactInfoDto.label
-        }
+          label: updateContactInfoDto.label,
+        },
       });
       return contactInfo;
     } catch (error) {
@@ -117,18 +103,15 @@ export class ContactInfoService {
 
   async remove(id: string) {
     if (!id) {
-      throw new HttpException(
-        'ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
     try {
       await this.prisma.contactInfo.delete({
-        where: { id: id }
+        where: { id: id },
       });
       return {
-        message: "Item deletado com sucesso!"
-      }
+        message: 'Item deletado com sucesso!',
+      };
     } catch (error) {
       throw new HttpException(
         'Erro ao deletar contato',

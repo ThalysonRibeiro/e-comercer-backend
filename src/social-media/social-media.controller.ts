@@ -16,7 +16,7 @@ import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('social-media')
 export class SocialMediaController {
-  constructor(private readonly socialMediaService: SocialMediaService) { }
+  constructor(private readonly socialMediaService: SocialMediaService) {}
 
   @Roles(AccountType.useradmin)
   @Post('admin')

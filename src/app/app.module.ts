@@ -67,4 +67,4 @@ import { ContactInfoModule } from 'src/contact-info/contact-info.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
