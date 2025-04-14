@@ -23,6 +23,7 @@ import { SiteContentModule } from 'src/site-content/site-content.module';
 import { ImagesModule } from 'src/images/images.module';
 import { PromotionsModule } from 'src/promotions/promotions.module';
 import { PromotionHeroModule } from 'src/promotion-hero/promotion-hero.module';
+import { SocialMediaModule } from 'src/social-media/social-media.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { PromotionHeroModule } from 'src/promotion-hero/promotion-hero.module';
     ImagesModule,
     PromotionsModule,
     PromotionHeroModule,
+    SocialMediaModule,
   ],
   controllers: [AppController],
   providers: [
@@ -63,4 +65,4 @@ import { PromotionHeroModule } from 'src/promotion-hero/promotion-hero.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

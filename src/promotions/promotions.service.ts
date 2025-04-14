@@ -10,7 +10,7 @@ export class PromotionsService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) { }
+  ) {}
 
   async create(createPromotionDto: CreatePromotionDto) {
     if (!createPromotionDto.siteContentId) {
@@ -150,10 +150,7 @@ export class PromotionsService {
         },
       });
     } catch (error) {
-      throw new HttpException(
-        'Erro ao listar',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Erro ao listar', HttpStatus.BAD_REQUEST);
     }
   }
 

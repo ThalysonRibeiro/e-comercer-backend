@@ -1,4 +1,4 @@
-import { IsBoolean, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreatePromotionHeroDto {
   @IsString()
@@ -39,7 +39,6 @@ export class CreatePromotionHeroDto {
 
   @IsBoolean()
   isActive: boolean;
-
 
   @IsNumber()
   order: number;

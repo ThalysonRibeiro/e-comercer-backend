@@ -10,7 +10,7 @@ export class PromotionHeroService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) { }
+  ) {}
 
   async create(createPromotionHeroDto: CreatePromotionHeroDto) {
     if (!createPromotionHeroDto.siteContentId) {
@@ -55,8 +55,8 @@ export class PromotionHeroService {
           isActive: createPromotionHeroDto.isActive,
           order: createPromotionHeroDto.order,
           startDate: createPromotionHeroDto.startDate,
-          endDate: dateFuture
-        }
+          endDate: dateFuture,
+        },
       });
       return promotionHero;
     } catch (error) {
@@ -125,23 +125,17 @@ export class PromotionHeroService {
         },
       });
     } catch (error) {
-      throw new HttpException(
-        'Erro ao listar',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Erro ao listar', HttpStatus.BAD_REQUEST);
     }
   }
 
   async findOne(id: string) {
     try {
       return await this.prisma.promotionHero.findUnique({
-        where: { id: id }
+        where: { id: id },
       });
     } catch (error) {
-      throw new HttpException(
-        'Erro ao lista item',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Erro ao lista item', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -153,7 +147,7 @@ export class PromotionHeroService {
       );
     }
     const existingPromotionHero = await this.prisma.promotionHero.findUnique({
-      where: { id: id }
+      where: { id: id },
     });
     if (!existingPromotionHero) {
       throw new HttpException(
@@ -198,8 +192,8 @@ export class PromotionHeroService {
           isActive: updatePromotionHeroDto.isActive,
           order: updatePromotionHeroDto.order,
           startDate: updatePromotionHeroDto.startDate,
-          endDate: dateFuture
-        }
+          endDate: dateFuture,
+        },
       });
       return promotionHero;
     } catch (error) {
@@ -216,11 +210,11 @@ export class PromotionHeroService {
     }
     try {
       await this.prisma.promotionHero.delete({
-        where: { id: id }
+        where: { id: id },
       });
       return {
-        message: "Item deletado com sucesso!"
-      }
+        message: 'Item deletado com sucesso!',
+      };
     } catch (error) {
       throw new HttpException(
         'erro ao tentar deletar o item',
