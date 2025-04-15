@@ -23,7 +23,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Roles(AccountType.useradmin)
   @Post('admin')
@@ -31,15 +31,16 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
-  @Post('admin/image')
+
   @UseInterceptors(FilesInterceptor('files', 10)) // Limita o número de arquivos para 10
+  @Post('admin/image')
   async images(
     @Body() body: { productId: string }, // O body contém o productId
     @UploadedFiles(
       new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: /jpeg|jpg|png|webp/, // Validação do tipo de arquivo
-        })
+        // .addFileTypeValidator({
+        //   fileType: /jpeg|jpg|png|webp/, // Validação do tipo de arquivo
+        // })
         .addMaxSizeValidator({
           maxSize: 6 * (1024 * 1024), // Limite de tamanho de arquivo para 6MB
         })
@@ -50,7 +51,7 @@ export class ProductsController {
     files: Array<Express.Multer.File>,
   ) {
     const { productId } = body;
-    return this.productsService.uploadImagesCloudinary2(productId, files);
+    return this.productsService.uploadImagesCloudinary(productId, files);
   }
 
   @Public()

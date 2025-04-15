@@ -1,5 +1,6 @@
 import { AccountStatus, AccountType } from '@prisma/client';
 import {
+  IsDate,
   IsEmail,
   IsNotEmpty,
   IsOptional,
@@ -82,8 +83,9 @@ export class CreateUserDTO {
   @IsString()
   genero: string;
 
-  @IsString()
-  dateOfBirth: string;
+  @IsOptional()
+  @IsDate()
+  dateOfBirth?: Date | null;
 
   @IsString()
   phone: string;

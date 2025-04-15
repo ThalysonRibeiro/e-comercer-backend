@@ -192,14 +192,9 @@ export class ProductsService {
           .substring(1);
         const fileName = `${productId}.${fileExtension}`;
 
-        // Verificando o nome do arquivo
-        console.log('Generated fileName:', fileName);
-
         const fileDirectory = path.resolve(process.cwd(), 'files');
-        console.log('fileDirectory:', fileDirectory);
 
         const fileLocale = path.join(fileDirectory, fileName);
-        console.log('fileLocale:', fileLocale);
 
         if (!file.buffer) {
           throw new Error('O arquivo não contém buffer válido');
@@ -221,7 +216,6 @@ export class ProductsService {
         savedImages.push(urlImage);
       }
 
-      console.log('savedImages:', savedImages);
       return savedImages;
     } catch (error) {
       throw new HttpException(
@@ -253,10 +247,7 @@ export class ProductsService {
           .extname(file.originalname)
           .toLowerCase()
           .substring(1);
-        const fileName = `${productId}.${fileExtension}`;
-
-        // Verificando o nome do arquivo
-        // console.log('Generated fileName:', fileName);
+        const fileName = `${crypto.randomInt(1000) + productId}.${fileExtension}`;
 
         // Enviando para o Cloudinary usando upload_stream
         const uploadedImage = await new Promise<any>((resolve, reject) => {

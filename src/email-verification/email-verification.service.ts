@@ -11,13 +11,16 @@ export class EmailVerificationService {
     private prisma: PrismaService,
     private emailService: EmailService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   async sendVerificationEmail(userId: string): Promise<{ success: boolean }> {
     // Buscar o usuário
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
     });
+
+    console.log(user);
+
 
     if (!user) {
       throw new Error('Usuário não encontrado');

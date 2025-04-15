@@ -14,10 +14,11 @@ import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('email-verification')
 export class EmailVerificationController {
-  constructor(private emailVerificationService: EmailVerificationService) {}
+  constructor(private emailVerificationService: EmailVerificationService) { }
 
+  @Public()
   @Post('send')
-  @UseGuards(JwtAuthGuard) // Se quiser proteger a rota (opcional)
+  // @UseGuards(JwtAuthGuard) // Se quiser proteger a rota (opcional)
   async sendVerification(@Body() body: { userId: string }) {
     return this.emailVerificationService.sendVerificationEmail(body.userId);
   }

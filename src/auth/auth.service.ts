@@ -491,6 +491,7 @@ export class AuthService {
 
       return payload;
     } catch (error) {
+      console.error("Erro ao verificar token do Google:", error);
       throw new UnauthorizedException('Falha na verificação do token Google');
     }
   }
@@ -526,7 +527,6 @@ export class AuthService {
           type: AccountType.userdefault,
           cpf_or_cnpj: '',
           genero: '',
-          dateOfBirth: '',
           phone: '',
         });
       }
@@ -556,6 +556,11 @@ export class AuthService {
         type: user.type,
         status: user.status,
         isProfileComplete: this.isProfileComplete(user),
+        cpf_or_cnpj: user.cpf_or_cnpj,
+        genero: user.genero,
+        dateOfBirth: user.dateOfBirth,
+        phone: user.phone,
+        emailVerified: user.emailVerified,
       },
       accessToken: this.jwtService.sign(jwtPayload),
     };

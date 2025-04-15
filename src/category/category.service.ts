@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CategoryService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
   async create(createCategoryDto: CreateCategoryDto) {
     try {
       const newCategory = await this.prisma.category.create({
@@ -17,6 +17,8 @@ export class CategoryService {
       });
       return newCategory;
     } catch (error) {
+      console.log(error);
+
       throw new HttpException(
         `Falha ao criar categoria ou subcategoria ${error.message}`,
         HttpStatus.BAD_REQUEST,
@@ -24,22 +26,42 @@ export class CategoryService {
     }
   }
 
-  async findAll() {
+  async findAll({
+    hasChildren,
+    limit,
+    offset,
+  }: {
+    hasChildren?: boolean;
+    limit?: number;
+    offset?: number;
+  }) {
     try {
       const allCategory = await this.prisma.category.findMany({
+        where: {
+          ...(hasChildren === true && {
+            children: { some: {} },
+          }),
+          ...(hasChildren === false && {
+            children: { none: {} },
+          }),
+        },
         include: {
           children: true,
-          products: true,
+          // products: true,
         },
+        take: limit,
+        skip: offset,
       });
+
       return allCategory;
     } catch (error) {
       throw new HttpException(
-        `Falha ao listar categorias ou subcategorias ${error.message}`,
+        `Falha ao listar categorias ou subcategorias: ${error.message}`,
         HttpStatus.BAD_REQUEST,
       );
     }
   }
+
 
   async findOne(id: string) {
     try {

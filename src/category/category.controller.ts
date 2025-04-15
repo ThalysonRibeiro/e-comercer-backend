@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -13,10 +14,11 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { AccountType } from '@prisma/client';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { AllCategoryDto } from 'src/common/dto/all-category.dto';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(private readonly categoryService: CategoryService) { }
 
   @Roles(AccountType.useradmin)
   @Post('admin')
@@ -26,8 +28,20 @@ export class CategoryController {
 
   @Public()
   @Get()
-  findAll() {
-    return this.categoryService.findAll();
+  @Get()
+  async findAll(@Query() query: AllCategoryDto) {
+    const hasChildrenBool =
+      query.hasChildren === 'true'
+        ? true
+        : query.hasChildren === 'false'
+          ? false
+          : undefined;
+
+    return this.categoryService.findAll({
+      hasChildren: hasChildrenBool,
+      limit: query.limit,
+      offset: query.offset,
+    });
   }
 
   @Public()
