@@ -12,6 +12,7 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { INVALID_EMAIL_DOMAINS } from './invalid-email-domains';
+import { Type } from 'class-transformer';
 
 @ValidatorConstraint({ name: 'isValidEmail', async: false })
 export class IsValidEmailConstraint implements ValidatorConstraintInterface {
@@ -86,6 +87,7 @@ export class CreateUserDTO {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   dateOfBirth?: Date | null;
 
   @IsString()
