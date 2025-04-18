@@ -119,7 +119,7 @@ export class UsersService {
       type: AccountType;
       cpf_or_cnpj: string;
       genero: string;
-      dateOfBirth: string;
+      dateOfBirth: Date | null;
       phone: string;
       password: string;
       emailVerified: Date;

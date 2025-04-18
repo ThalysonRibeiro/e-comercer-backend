@@ -14,7 +14,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      // transform: true, // Habilita a transformação de tipos (de string para number, etc)
+      transform: true, // Habilita a transformação de tipos (de string para number, etc)
       whitelist: true, // Remove propriedades não declaradas no DTO
     }),
   );

@@ -212,6 +212,7 @@ export class AuthService {
         if (newUser) {
           await this.usersService.deleteUser(newUser.id);
         }
+
         throw new HttpException(
           'Erro ao enviar email de confirmação:',
           HttpStatus.BAD_REQUEST,
