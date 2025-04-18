@@ -125,6 +125,9 @@ export class UsersService {
       emailVerified: Date;
       resetPasswordToken: string | null;
       resetPasswordExpires: Date | null;
+      acceptOffers: boolean | null;
+      acceptTerms: boolean | null;
+      documentType: string | null
     }>,
   ): Promise<User> {
     return this.prisma.user.update({

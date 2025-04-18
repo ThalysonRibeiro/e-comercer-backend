@@ -1,5 +1,6 @@
 import { AccountStatus, AccountType } from '@prisma/client';
 import {
+  IsBoolean,
   IsDate,
   IsEmail,
   IsNotEmpty,
@@ -97,6 +98,18 @@ export class CreateUserDTO {
   @IsString()
   @IsOptional()
   emailVerificationToken?: string | undefined;
+
+  @IsBoolean()
+  @IsOptional()
+  acceptOffers?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  acceptTerms?: boolean;
+
+  @IsString()
+  @IsOptional()
+  documentType?: string;
 }
 
 export class CreateUserAdminDTO extends CreateUserDTO {

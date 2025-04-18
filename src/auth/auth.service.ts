@@ -66,6 +66,9 @@ export class AuthService {
         dateOfBirth: createUserDTO.dateOfBirth,
         phone: createUserDTO.phone,
         emailVerificationToken, // Adicionar o token ao criar o usuário
+        acceptOffers: createUserDTO.acceptOffers,
+        acceptTerms: createUserDTO.acceptTerms,
+        documentType: createUserDTO.documentType,
       });
 
       // Criar URL de confirmação
@@ -296,6 +299,9 @@ export class AuthService {
         dateOfBirth: createUserAdminDTO.dateOfBirth,
         phone: createUserAdminDTO.phone,
         emailVerificationToken, // Adicionar o token ao criar o usuário
+        acceptOffers: createUserAdminDTO.acceptOffers,
+        acceptTerms: createUserAdminDTO.acceptTerms,
+        documentType: createUserAdminDTO.documentType,
       });
 
       // Criar URL de confirmação

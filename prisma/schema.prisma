@@ -47,12 +47,16 @@ model User {
   emailVerificationToken String?
   googleId               String?       @unique
   avatar                 String?
-  orderItems             OrderItems[]
-  order                  Order[]
-  addresses              Address[]
-  reviews                Review[]
-  wishlist               Wishlist?
-  cart                   Cart?
+  acceptOffers           Boolean?      @default(false)
+  acceptTerms            Boolean?      @default(false)
+  documentType           String?
+
+  orderItems OrderItems[]
+  order      Order[]
+  addresses  Address[]
+  reviews    Review[]
+  wishlist   Wishlist?
+  cart       Cart?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
