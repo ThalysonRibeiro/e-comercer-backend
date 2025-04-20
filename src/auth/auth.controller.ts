@@ -9,6 +9,7 @@ import {
   HttpStatus,
   NotFoundException,
   Query,
+  Param,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
@@ -18,6 +19,7 @@ import {
   CreateUserAdminDTO,
   CreateUserDTO,
 } from '../users/dto/create-user.dto';
+import { UsersService } from 'src/users/users.service';
 
 // DTOs
 
@@ -37,7 +39,10 @@ export class ResetPasswordDto {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService
+  ) { }
   //useradmin
   @Public()
   @Post('register-admin')
@@ -81,10 +86,11 @@ export class AuthController {
     return this.authService.loginWithCredentials(login, password);
   }
 
-  @Get('profile')
-  getProfile(@Req() req) {
+  @Public()
+  @Get('profile/:id')
+  getProfile(@Param('id') id: string) {
     // req.user já contém o usuário autenticado graças ao JwtStrategy
-    return req.user;
+    return this.usersService.userById(id);
   }
 
   // Alterar senha (requer autenticação)

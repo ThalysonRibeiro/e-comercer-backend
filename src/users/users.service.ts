@@ -76,6 +76,55 @@ export class UsersService {
     });
   }
 
+  async userById(id: string) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        status: true,
+        type: true,
+        name: true,
+        cpf_or_cnpj: true,
+        genero: true,
+        dateOfBirth: true,
+        email: true,
+        phone: true,
+        resetPasswordToken: true,
+        resetPasswordExpires: true,
+        emailVerified: true,
+        emailVerificationToken: true,
+        googleId: true,
+        avatar: true,
+        acceptTerms: true,
+        acceptOffers: true,
+        documentType: true,
+        createdAt: true,
+        updatedAt: true,
+        order: {
+          include: {
+            orderItems: true,
+          },
+        },
+        addresses: true,
+        reviews: true,
+        wishlist: {
+          include: {
+            items: {
+              include: {
+                product: true,
+              },
+            },
+          },
+        },
+        cart: {
+          include: {
+            items: true,
+          },
+        },
+      },
+    });
+  }
+
   async allUsers() {
     try {
       return await this.prisma.user.findMany({
