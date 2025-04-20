@@ -15,7 +15,7 @@ import { AccountType } from '@prisma/client';
 
 @Controller('wishlist')
 export class WishlistController {
-  constructor(private readonly wishlistService: WishlistService) {}
+  constructor(private readonly wishlistService: WishlistService) { }
 
   @Post()
   create(@Body() createWishlistDto: CreateWishlistDto) {
@@ -26,6 +26,10 @@ export class WishlistController {
   @Get('admin')
   findAll() {
     return this.wishlistService.findAll();
+  }
+  @Get('user/:id')
+  findAllWishUser(@Param('id') id: string) {
+    return this.wishlistService.findAllWishListByUser(id);
   }
 
   @Get(':id')

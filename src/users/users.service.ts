@@ -111,7 +111,11 @@ export class UsersService {
           include: {
             items: {
               include: {
-                product: true,
+                product: {
+                  include: {
+                    images: true,
+                  }
+                },
               },
             },
           },
