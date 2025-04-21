@@ -23,7 +23,7 @@ import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('site-content/admin')
 export class SiteContentController {
-  constructor(private readonly siteContentService: SiteContentService) {}
+  constructor(private readonly siteContentService: SiteContentService) { }
 
   @Roles(AccountType.useradmin)
   @Post()
@@ -133,6 +133,32 @@ export class SiteContentController {
     file: Express.Multer.File,
   ) {
     return this.siteContentService.uploadLogo(id, file);
+  }
+
+  @Roles(AccountType.useradmin)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: memoryStorage(),
+    }),
+  )
+  @Put('image_openGraph/:id')
+  upImageOpenGrap(
+    @Param('id') id: string,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: /jpeg|jpg|png|webp/g,
+        })
+        .addMaxSizeValidator({
+          maxSize: 6 * (1024 * 1024), // 6MB
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.siteContentService.uploadImageOpenGrap(id, file);
   }
 
   @Roles(AccountType.useradmin)

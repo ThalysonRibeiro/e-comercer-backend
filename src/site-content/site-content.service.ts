@@ -156,6 +156,34 @@ export class SiteContentService {
     }
   }
 
+  async uploadImageOpenGrap(id: string, file: Express.Multer.File) {
+    if (!id) {
+      throw new HttpException('O ID é obrigatório', HttpStatus.BAD_REQUEST);
+    }
+
+    const existingSiteLayout = await this.prisma.siteContent.findUnique({
+      where: { id: id },
+    });
+
+    if (!existingSiteLayout) {
+      throw new HttpException('Não existe SiteLayout', HttpStatus.BAD_REQUEST);
+    }
+    try {
+      const image_openGrap = await this.imagesService.postImage(id, file);
+      return await this.prisma.siteContent.update({
+        where: { id: existingSiteLayout.id },
+        data: {
+          image_openGraph: image_openGrap,
+        },
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Erro ao fazer uploado da imagem',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   async uploadFavicon(id: string, file: Express.Multer.File) {
     if (!id) {
       throw new HttpException('O ID é obrigatório', HttpStatus.BAD_REQUEST);

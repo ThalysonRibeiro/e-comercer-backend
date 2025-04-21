@@ -282,6 +282,7 @@ model SiteContent {
   metaTitle       String? // Título para SEO
   metaDescription String? // Descrição para SEO
   keywords        String[] // Palavras-chave para SEO
+  image_openGraph String? // Ícone do site
   favicon         String? // Ícone do site
   footerText      String? // Texto do rodapé
   themeColor      String? // Cor principal do tema

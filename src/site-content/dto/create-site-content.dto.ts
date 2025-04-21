@@ -35,6 +35,10 @@ export class CreateSiteContentDto {
 
   @IsOptional()
   @IsString()
+  image_openGraph: string;
+
+  @IsOptional()
+  @IsString()
   favicon?: string;
 
   @IsOptional()
