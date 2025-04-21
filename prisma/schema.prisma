@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "./node_modules/.prisma/client"
 }
 
 datasource db {
@@ -285,8 +286,6 @@ model SiteContent {
   image_openGraph String? // Ícone do site
   favicon         String? // Ícone do site
   footerText      String? // Texto do rodapé
-  themeColor      String? // Cor principal do tema
-  secondaryColor  String? // Cor secundária do tema
   isActive        Boolean         @default(true)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
@@ -294,6 +293,7 @@ model SiteContent {
   promotionHero   PromotionHero[]
   socialMedia     SocialMedia[]
   contactInfo     ContactInfo[]
+  themeColors     ThemeColors[]
 }
 
 model Promotions {
@@ -361,4 +361,27 @@ model ContactInfo {
   siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+}
+
+model ThemeColors {
+  id             String      @id @unique @default(uuid())
+  siteContentId  String
+  primaryColor   String?
+  secondaryColor String?
+  hover          String?
+  star           String?
+  danger         String?
+  price          String?
+  title          String?
+  textColor      String?
+  oldPrice       String?
+  borderColor    String?
+  textButton     String?
+  bgCard         String?
+  themeColor     String?
+  themeSelected  Boolean     @default(false)
+  siteContent    SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

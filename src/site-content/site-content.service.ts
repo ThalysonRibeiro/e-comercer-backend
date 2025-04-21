@@ -30,8 +30,6 @@ export class SiteContentService {
           keywords: createSiteContentDto.keywords,
           favicon: createSiteContentDto.favicon,
           footerText: createSiteContentDto.footerText,
-          themeColor: createSiteContentDto.themeColor,
-          secondaryColor: createSiteContentDto.secondaryColor,
           isActive: createSiteContentDto.isActive,
         },
       });
@@ -223,6 +221,7 @@ export class SiteContentService {
           promotionHero: true,
           socialMedia: true,
           contactInfo: true,
+          themeColors: true,
         },
       });
     } catch (error) {
@@ -242,6 +241,7 @@ export class SiteContentService {
           promotionHero: true,
           socialMedia: true,
           contactInfo: true,
+          themeColors: true,
         },
       });
     } catch (error) {
@@ -277,8 +277,6 @@ export class SiteContentService {
           keywords: updateSiteContentDto.keywords,
           favicon: updateSiteContentDto.favicon,
           footerText: updateSiteContentDto.footerText,
-          themeColor: updateSiteContentDto.themeColor,
-          secondaryColor: updateSiteContentDto.secondaryColor,
           isActive: updateSiteContentDto.isActive,
         },
         include: {

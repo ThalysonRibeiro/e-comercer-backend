@@ -21,7 +21,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { Public } from 'src/auth/decorators/public.decorator';
 
-@Controller('site-content/admin')
+@Controller('site-content')
 export class SiteContentController {
   constructor(private readonly siteContentService: SiteContentService) { }
 
@@ -37,7 +37,7 @@ export class SiteContentController {
       storage: memoryStorage(),
     }),
   )
-  @Put('banner/:id')
+  @Put('banner/admin/:id')
   uploadBanner(
     @Param('id') id: string,
     @UploadedFile(
@@ -63,7 +63,7 @@ export class SiteContentController {
       storage: memoryStorage(),
     }),
   )
-  @Put('video/:id')
+  @Put('video/admin/:id')
   uploadVideo(
     @Param('id') id: string,
     @UploadedFile(
@@ -89,7 +89,7 @@ export class SiteContentController {
       storage: memoryStorage(),
     }),
   )
-  @Put('bg_video/:id')
+  @Put('bg_video/admin/:id')
   uploadBGVideo(
     @Param('id') id: string,
     @UploadedFile(
@@ -115,7 +115,7 @@ export class SiteContentController {
       storage: memoryStorage(),
     }),
   )
-  @Put('logo/:id')
+  @Put('logo/admin/:id')
   uploadLogo(
     @Param('id') id: string,
     @UploadedFile(
@@ -141,7 +141,7 @@ export class SiteContentController {
       storage: memoryStorage(),
     }),
   )
-  @Put('image_openGraph/:id')
+  @Put('image_openGraph/admin/:id')
   upImageOpenGrap(
     @Param('id') id: string,
     @UploadedFile(
@@ -167,7 +167,7 @@ export class SiteContentController {
       storage: memoryStorage(),
     }),
   )
-  @Put('favicon/:id')
+  @Put('favicon/admin/:id')
   uploadFavicon(
     @Param('id') id: string,
     @UploadedFile(
@@ -200,7 +200,7 @@ export class SiteContentController {
   }
 
   @Roles(AccountType.useradmin)
-  @Patch(':id')
+  @Patch('admin/:id')
   update(
     @Param('id') id: string,
     @Body() updateSiteContentDto: UpdateSiteContentDto,
@@ -209,7 +209,7 @@ export class SiteContentController {
   }
 
   @Roles(AccountType.useradmin)
-  @Delete(':id')
+  @Delete('admin/:id')
   remove(@Param('id') id: string) {
     return this.siteContentService.remove(id);
   }

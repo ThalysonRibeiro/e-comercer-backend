@@ -46,14 +46,6 @@ export class CreateSiteContentDto {
   footerText?: string;
 
   @IsOptional()
-  @IsString()
-  themeColor?: string;
-
-  @IsOptional()
-  @IsString()
-  secondaryColor?: string;
-
-  @IsOptional()
   @IsBoolean()
   isActive?: boolean;
 }
