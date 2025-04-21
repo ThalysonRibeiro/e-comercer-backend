@@ -39,12 +39,13 @@ export class ThemeColorService {
           price: createThemeColorDto.price,
           title: createThemeColorDto.title,
           textColor: createThemeColorDto.textColor,
+          textHover: createThemeColorDto.textHover,
           oldPrice: createThemeColorDto.oldPrice,
           borderColor: createThemeColorDto.borderColor,
           textButton: createThemeColorDto.textButton,
           bgCard: createThemeColorDto.bgCard,
           themeColor: createThemeColorDto.themeColor,
-          themeSelected: createThemeColorDto.themeSelected
+          themeSelected: createThemeColorDto.themeSelected,
         }
       });
       return themeColor;
@@ -131,6 +132,7 @@ export class ThemeColorService {
           price: updateThemeColorDto.price,
           title: updateThemeColorDto.title,
           textColor: updateThemeColorDto.textColor,
+          textHover: updateThemeColorDto.textHover,
           oldPrice: updateThemeColorDto.oldPrice,
           borderColor: updateThemeColorDto.borderColor,
           textButton: updateThemeColorDto.textButton,

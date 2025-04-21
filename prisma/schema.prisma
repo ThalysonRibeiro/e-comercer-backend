@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "./node_modules/.prisma/client"
 }
 
 datasource db {
@@ -8,35 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum AccountType {
-  useradmin
-  userdefault
-}
-
-enum AccountStatus {
-  ativo
-  inativo
-}
-
-enum OrderStatus {
-  pending
-  sent
-  completed
-  cancel
-}
-
-enum AddressType {
-  shipping
-  billing
-  both
-}
-
 model User {
   id                     String        @id @default(cuid())
   status                 AccountStatus
   type                   AccountType
   name                   String?
-  cpf_or_cnpj            String?
   genero                 String
   dateOfBirth            DateTime?
   email                  String        @unique
@@ -48,19 +23,18 @@ model User {
   emailVerificationToken String?
   googleId               String?       @unique
   avatar                 String?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+  cpf_or_cnpj            String?
   acceptOffers           Boolean?      @default(false)
   acceptTerms            Boolean?      @default(false)
   documentType           String?
-
-  orderItems OrderItems[]
-  order      Order[]
-  addresses  Address[]
-  reviews    Review[]
-  wishlist   Wishlist?
-  cart       Cart?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  addresses              Address[]
+  cart                   Cart?
+  order                  Order[]
+  orderItems             OrderItems[]
+  reviews                Review[]
+  wishlist               Wishlist?
 }
 
 model Product {
@@ -85,19 +59,18 @@ model Product {
   length         Float?
   isActive       Boolean        @default(true)
   featured       Boolean        @default(false)
+  categoryId     String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   emphasis       Boolean        @default(false)
   color          String[]
   size           String[]
+  cartItem       CartItem[]
   images         Image[]
   orderItems     OrderItems[]
+  Category       Category?      @relation(fields: [categoryId], references: [id])
   reviews        Review[]
   wishlistItem   WishlistItem[]
-  cartItem       CartItem[]
-  categoryId     String?
-  Category       Category?      @relation(fields: [categoryId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Image {
@@ -119,12 +92,12 @@ model Address {
   addressType AddressType @default(shipping)
   isDefault   Boolean     @default(false)
   userId      String?
-  order       Order[]
   user        User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order       Order[]
 }
 
 model Order {
-  id                 String       @id @unique @default(uuid())
+  id                 String         @id @unique @default(uuid())
   userId             String
   total_amount       Float
   status             OrderStatus
@@ -136,32 +109,28 @@ model Order {
   notes              String?
   coupon_code        String?
   discount_amount    Float?
-  orderItems         OrderItems[]
   paymentDetailsId   String?
-
-  address       Address        @relation(fields: [addressId], references: [id], onDelete: Cascade)
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  paymentDetail PaymentDetail? @relation(fields: [paymentDetailsId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  address            Address        @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  paymentDetail      PaymentDetail? @relation(fields: [paymentDetailsId], references: [id])
+  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems         OrderItems[]
 }
 
 model OrderItems {
-  id        String @id @unique @default(uuid())
+  id        String   @id @unique @default(uuid())
   orderId   String
   productId String
   userId    String
   quantity  Int
   price     Float
   options   Json?
-
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Review {
@@ -172,28 +141,25 @@ model Review {
   comment   String?
   title     String?
   images    String[]
-
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Coupon {
   id             String   @id @unique @default(uuid())
   code           String   @unique
   discount_value Int
-  discount_type  Int // percentage or fixed
   min_purchase   Float?
   max_usage      Int?
   used_count     Int      @default(0)
-  start_date     Int
   end_date       DateTime
   isActive       Boolean  @default(true)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  discount_type  Int
+  start_date     Int
 }
 
 model Category {
@@ -202,45 +168,41 @@ model Category {
   description String?
   image       String?
   parentId    String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   parent      Category?  @relation("SubCategories", fields: [parentId], references: [id])
   children    Category[] @relation("SubCategories")
   products    Product[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Wishlist {
-  id     String         @id @unique @default(uuid())
-  userId String         @unique
-  user   User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items  WishlistItem[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String         @id @unique @default(uuid())
+  userId    String         @unique
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     WishlistItem[]
 }
 
 model WishlistItem {
   id         String   @id @unique @default(uuid())
   wishlistId String
   productId  String
-  wishlist   Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  wishlist   Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
 
   @@unique([wishlistId, productId])
 }
 
 model Cart {
-  id     String     @id @unique @default(uuid())
-  userId String     @unique
-  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items  CartItem[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String     @id @unique @default(uuid())
+  userId    String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
 }
 
 model CartItem {
@@ -248,119 +210,115 @@ model CartItem {
   cartId    String
   productId String
   quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   color     String[]
   size      String[]
   cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model PaymentDetail {
-  id             String  @id @unique @default(uuid())
-  provider       String // stripe, paypal, etc.
+  id             String   @id @unique @default(uuid())
+  provider       String
   transaction_id String?
   status         String
   last_four      String?
   card_type      String?
   amount         Float
-  currency       String  @default("BRL")
+  currency       String   @default("BRL")
   receipt_url    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
   orders         Order[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model SiteContent {
   id              String          @id @unique @default(uuid())
-  banner          String? // Banner principal
-  video           String? // Vídeo principal
-  bg_video        String? // Vídeo de fundo
-  image_logo      String? // Logo do site
-  title           String? // Título do site
-  metaTitle       String? // Título para SEO
-  metaDescription String? // Descrição para SEO
-  keywords        String[] // Palavras-chave para SEO
-  image_openGraph String? // Ícone do site
-  favicon         String? // Ícone do site
-  footerText      String? // Texto do rodapé
+  banner          String?
+  video           String?
+  bg_video        String?
+  image_logo      String?
+  title           String?
+  metaTitle       String?
+  metaDescription String?
+  favicon         String?
+  footerText      String?
   isActive        Boolean         @default(true)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  promotions      Promotions[]
-  promotionHero   PromotionHero[]
-  socialMedia     SocialMedia[]
+  keywords        String[]
+  image_openGraph String?
   contactInfo     ContactInfo[]
+  promotionHero   PromotionHero[]
+  promotions      Promotions[]
+  socialMedia     SocialMedia[]
   themeColors     ThemeColors[]
 }
 
 model Promotions {
   id            String      @id @unique @default(uuid())
   title         String
-  slug          String      @unique //para URLs amigáveis para promoções específica
-  banner        String? // Imagem da promoção
-  video         String? // Vídeo da promoção
-  description   String? // Descrição da promoção
-  discountType  String? // Percentual, valor fixo, etc.
-  discountValue Float? // Valor do desconto
-  couponCode    String? // Código de cupom associado
+  slug          String      @unique
+  banner        String?
+  video         String?
+  description   String?
+  discountType  String?
+  discountValue Float?
+  couponCode    String?
   isActive      Boolean     @default(true)
-  startDate     Int? // Data de início
-  endDate       DateTime? // Data de término
-  buttonText    String? // Texto do botão CTA
-  buttonLink    String? // Link do botão CTA
-  position      String      @default("")
+  endDate       DateTime?
+  buttonText    String?
+  buttonLink    String?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   siteContentId String
+  startDate     Int?
+  position      String      @default("")
   siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
 model PromotionHero {
   id              String      @id @unique @default(uuid())
-  title           String // Título principal
-  subTitle        String // Subtítulo
-  sale            String // Texto de oferta/desconto
-  description     String // Descrição
-  image           String? // Imagem de destaque
-  buttonText      String? // Texto do botão CTA
-  buttonLink      String? // Link do botão CTA
-  backgroundColor String? // Cor de fundo (para personalização)
-  textColor       String? // Cor do texto
-  position        String? // Posição no site (top, middle, bottom)
+  title           String
+  subTitle        String
+  sale            String
+  description     String
+  image           String?
+  buttonText      String?
+  buttonLink      String?
+  backgroundColor String?
+  textColor       String?
+  position        String?
   isActive        Boolean     @default(true)
   order           Int         @default(0)
-  startDate       Int? // Data de início
-  endDate         DateTime? // Data de término
+  endDate         DateTime?
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   siteContentId   String
+  startDate       Int?
   siteContent     SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
 model SocialMedia {
-  id            String @id @unique @default(uuid())
+  id            String      @id @unique @default(uuid())
   siteContentId String
   name          String
   link          String
-
-  siteContent SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
 model ContactInfo {
   id            String      @id @unique @default(uuid())
   siteContentId String
-  type          String // email, phone, whatsapp, address
+  type          String
   value         String
-  label         String? // ex: "Suporte", "Vendas", etc.
-  siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
+  label         String?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+  siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
 model ThemeColors {
@@ -379,9 +337,32 @@ model ThemeColors {
   textButton     String?
   bgCard         String?
   themeColor     String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
   themeSelected  Boolean     @default(false)
+  textHover      String?
   siteContent    SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum AccountType {
+  useradmin
+  userdefault
+}
+
+enum AccountStatus {
+  ativo
+  inativo
+}
+
+enum OrderStatus {
+  pending
+  sent
+  completed
+  cancel
+}
+
+enum AddressType {
+  shipping
+  billing
+  both
 }

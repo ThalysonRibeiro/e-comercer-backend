@@ -4,59 +4,63 @@ export class CreateThemeColorDto {
 
   @IsOptional()
   @IsString()
-  siteContentId: string
+  siteContentId: string;
 
   @IsOptional()
   @IsString()
-  primaryColor: string
+  primaryColor: string;
 
   @IsOptional()
   @IsString()
-  secondaryColor: string
+  secondaryColor: string;
 
   @IsOptional()
   @IsString()
-  hover: string
+  hover: string;
 
   @IsOptional()
   @IsString()
-  star: string
+  star: string;
 
   @IsOptional()
   @IsString()
-  danger: string
+  danger: string;
 
   @IsOptional()
   @IsString()
-  price: string
+  price: string;
 
   @IsOptional()
   @IsString()
-  title: string
+  title: string;
 
   @IsOptional()
   @IsString()
-  textColor: string
+  textColor: string;
 
   @IsOptional()
   @IsString()
-  oldPrice: string
+  textHover: string;
 
   @IsOptional()
   @IsString()
-  borderColor: string
+  oldPrice: string;
 
   @IsOptional()
   @IsString()
-  textButton: string
+  borderColor: string;
 
   @IsOptional()
   @IsString()
-  bgCard: string
+  textButton: string;
 
   @IsOptional()
   @IsString()
-  themeColor: string
+  bgCard: string;
+
+  @IsOptional()
+  @IsString()
+  themeColor: string;
 
   @IsOptional()
   @IsBoolean()
