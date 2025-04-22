@@ -8,6 +8,10 @@ export class CreateThemeColorDto {
 
   @IsOptional()
   @IsString()
+  nameTheme: string;
+
+  @IsOptional()
+  @IsString()
   primaryColor: string;
 
   @IsOptional()
@@ -25,6 +29,22 @@ export class CreateThemeColorDto {
   @IsOptional()
   @IsString()
   danger: string;
+
+  @IsOptional()
+  @IsBoolean()
+  isDarkTheme: boolean;
+
+  @IsOptional()
+  @IsString()
+  shadowColor: string;
+
+  @IsOptional()
+  @IsString()
+  success: string;
+
+  @IsOptional()
+  @IsString()
+  warning: string;
 
   @IsOptional()
   @IsString()

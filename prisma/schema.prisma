@@ -324,11 +324,16 @@ model ContactInfo {
 model ThemeColors {
   id             String      @id @unique @default(uuid())
   siteContentId  String
+  nameTheme      String?
   primaryColor   String?
   secondaryColor String?
   hover          String?
   star           String?
   danger         String?
+  success        String? //Cor para mensagens de sucesso
+  warning        String? //Cor para alertas ou avisos
+  shadowColor    String? //Cor das sombras, se aplicável
+  isDarkTheme    Boolean?    @default(false)
   price          String?
   title          String?
   textColor      String?

@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateThemeColorDto } from './dto/create-theme-color.dto';
 import { UpdateThemeColorDto } from './dto/update-theme-color.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ThemeFilters } from 'src/common/dto/all-theme-filter.dto';
 
 @Injectable()
 export class ThemeColorService {
@@ -31,11 +32,16 @@ export class ThemeColorService {
       const themeColor = await this.prisma.themeColors.create({
         data: {
           siteContentId: existingSiteContent?.id || createThemeColorDto.siteContentId,
+          nameTheme: createThemeColorDto.nameTheme,
           primaryColor: createThemeColorDto.primaryColor,
           secondaryColor: createThemeColorDto.secondaryColor,
           hover: createThemeColorDto.hover,
           star: createThemeColorDto.star,
           danger: createThemeColorDto.danger,
+          success: createThemeColorDto.success,
+          warning: createThemeColorDto.warning,
+          shadowColor: createThemeColorDto.shadowColor,
+          isDarkTheme: createThemeColorDto.isDarkTheme,
           price: createThemeColorDto.price,
           title: createThemeColorDto.title,
           textColor: createThemeColorDto.textColor,
@@ -57,11 +63,24 @@ export class ThemeColorService {
     }
   }
 
-  async findAll() {
+  async findAll(themeFilters: ThemeFilters) {
     try {
+      const { isDarkTheme } = themeFilters;
+
+      let isDarkThemeFilter: { isDarkTheme?: boolean } = {};
+
+      if (isDarkTheme !== undefined) {
+        // Convertendo a query string para um booleano corretamente
+        isDarkThemeFilter = { isDarkTheme: isDarkTheme === 'true' }; // ou 'false' para falso
+      }
+
       return await this.prisma.themeColors.findFirst({
-        where: { themeSelected: true }
+        where: {
+          ...isDarkThemeFilter,
+          themeSelected: true
+        }
       });
+      // return theme
     } catch (error) {
       throw new HttpException(
         'themeColors não encontrado',
@@ -108,7 +127,7 @@ export class ThemeColorService {
       );
     }
 
-    const existingThemeColor = await this.prisma.themeColors.findUnique({
+    const existingThemeColor = await this.prisma.themeColors.findFirst({
       where: { id: id }
     });
 
@@ -124,11 +143,16 @@ export class ThemeColorService {
         where: { id: existingThemeColor.id },
         data: {
           siteContentId: updateThemeColorDto.siteContentId,
+          nameTheme: updateThemeColorDto.nameTheme,
           primaryColor: updateThemeColorDto.primaryColor,
           secondaryColor: updateThemeColorDto.secondaryColor,
           hover: updateThemeColorDto.hover,
           star: updateThemeColorDto.star,
           danger: updateThemeColorDto.danger,
+          success: updateThemeColorDto.success,
+          warning: updateThemeColorDto.warning,
+          shadowColor: updateThemeColorDto.shadowColor,
+          isDarkTheme: updateThemeColorDto.isDarkTheme,
           price: updateThemeColorDto.price,
           title: updateThemeColorDto.title,
           textColor: updateThemeColorDto.textColor,

@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ThemeColorService } from './theme-color.service';
 import { CreateThemeColorDto } from './dto/create-theme-color.dto';
 import { UpdateThemeColorDto } from './dto/update-theme-color.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { AccountType } from '@prisma/client';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { ThemeFilters } from 'src/common/dto/all-theme-filter.dto';
 
 @Controller('theme-color')
 export class ThemeColorController {
@@ -18,8 +19,8 @@ export class ThemeColorController {
 
   @Public()
   @Get()
-  findAll() {
-    return this.themeColorService.findAll();
+  findAll(@Query() themeFilters: ThemeFilters) {
+    return this.themeColorService.findAll(themeFilters);
   }
 
   @Public()
