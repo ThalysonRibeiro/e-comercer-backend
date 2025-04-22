@@ -74,7 +74,7 @@ export class ThemeColorService {
         isDarkThemeFilter = { isDarkTheme: isDarkTheme === 'true' }; // ou 'false' para falso
       }
 
-      return await this.prisma.themeColors.findFirst({
+      return await this.prisma.themeColors.findMany({
         where: {
           ...isDarkThemeFilter,
           themeSelected: true
