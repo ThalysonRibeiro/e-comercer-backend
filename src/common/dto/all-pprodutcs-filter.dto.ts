@@ -12,7 +12,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class PaginationDto {
+export class ProductsFilterDto {
   @IsOptional()
   @IsInt()
   @Min(1)
@@ -61,4 +61,29 @@ export class PaginationDto {
   @Max(5)
   @Type(() => Number)
   rating?: number; // Avaliação do produto, por exemplo de 0 a 5
+
+  @IsOptional()
+  @IsString()
+  @Type(() => String)
+  endDate?: string;
+
+  @IsOptional()
+  @IsString()
+  @Type(() => String)
+  isActive?: string;
+
+  @IsOptional()
+  @IsString()
+  @Type(() => String)
+  featured?: string;
+
+  @IsOptional()
+  @IsString()
+  @Type(() => String)
+  stock?: string;
+
+  @IsOptional()
+  @IsString()
+  @Type(() => String)
+  emphasis?: string;
 }

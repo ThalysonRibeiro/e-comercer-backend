@@ -16,7 +16,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ProductsFilterDto } from 'src/common/dto/all-pprodutcs-filter.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { AccountType } from '@prisma/client';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -56,8 +56,8 @@ export class ProductsController {
 
   @Public()
   @Get()
-  findAllProducts(@Query() paginationDto: PaginationDto) {
-    return this.productsService.findAll(paginationDto);
+  findAllProducts(@Query() productsFilterDto: ProductsFilterDto) {
+    return this.productsService.findAll(productsFilterDto);
   }
 
   @Public()
