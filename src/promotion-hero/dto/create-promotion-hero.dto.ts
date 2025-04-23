@@ -1,4 +1,4 @@
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreatePromotionHeroDto {
   @IsString()
@@ -24,14 +24,6 @@ export class CreatePromotionHeroDto {
   @IsOptional()
   @IsString()
   buttonLink?: string;
-
-  @IsOptional()
-  @IsString()
-  backgroundColor?: string;
-
-  @IsOptional()
-  @IsString()
-  textColor?: string;
 
   @IsOptional()
   @IsString()

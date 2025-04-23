@@ -10,7 +10,7 @@ export class PromotionHeroService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) {}
+  ) { }
 
   async create(createPromotionHeroDto: CreatePromotionHeroDto) {
     if (!createPromotionHeroDto.siteContentId) {
@@ -49,8 +49,6 @@ export class PromotionHeroService {
           description: createPromotionHeroDto.description,
           buttonText: createPromotionHeroDto.buttonText,
           buttonLink: createPromotionHeroDto.buttonLink,
-          backgroundColor: createPromotionHeroDto.backgroundColor,
-          textColor: createPromotionHeroDto.textColor,
           position: createPromotionHeroDto.position,
           isActive: createPromotionHeroDto.isActive,
           order: createPromotionHeroDto.order,
@@ -186,8 +184,6 @@ export class PromotionHeroService {
           description: updatePromotionHeroDto.description,
           buttonText: updatePromotionHeroDto.buttonText,
           buttonLink: updatePromotionHeroDto.buttonLink,
-          backgroundColor: updatePromotionHeroDto.backgroundColor,
-          textColor: updatePromotionHeroDto.textColor,
           position: updatePromotionHeroDto.position,
           isActive: updatePromotionHeroDto.isActive,
           order: updatePromotionHeroDto.order,

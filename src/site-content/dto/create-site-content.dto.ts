@@ -42,6 +42,10 @@ export class CreateSiteContentDto {
   favicon?: string;
 
   @IsOptional()
+  @IsArray()
+  service: string[];
+
+  @IsOptional()
   @IsString()
   footerText?: string;
 

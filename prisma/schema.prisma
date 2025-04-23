@@ -243,6 +243,7 @@ model SiteContent {
   metaTitle       String?
   metaDescription String?
   favicon         String?
+  service         String[]
   footerText      String?
   isActive        Boolean         @default(true)
   createdAt       DateTime        @default(now())
@@ -279,25 +280,23 @@ model Promotions {
 }
 
 model PromotionHero {
-  id              String      @id @unique @default(uuid())
-  title           String
-  subTitle        String
-  sale            String
-  description     String
-  image           String?
-  buttonText      String?
-  buttonLink      String?
-  backgroundColor String?
-  textColor       String?
-  position        String?
-  isActive        Boolean     @default(true)
-  order           Int         @default(0)
-  endDate         DateTime?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  siteContentId   String
-  startDate       Int?
-  siteContent     SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
+  id            String      @id @unique @default(uuid())
+  title         String
+  subTitle      String
+  sale          String
+  description   String
+  image         String?
+  buttonText    String?
+  buttonLink    String?
+  position      String?
+  isActive      Boolean     @default(true)
+  order         Int         @default(0)
+  endDate       DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  siteContentId String
+  startDate     Int?
+  siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
 model SocialMedia {
