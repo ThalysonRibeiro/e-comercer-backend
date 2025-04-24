@@ -313,7 +313,7 @@ export class ProductsService {
         isActive,
         featured,
         stock,
-        emphasis
+        emphasis,
       } = productsFilterDto;
 
       // Prepara o filtro de preço
@@ -375,13 +375,10 @@ export class ProductsService {
       // Filtro para endDate - se endDate for "true", filtra produtos expirados
       let endDateQueryFilter = {};
 
-      if (endDate === 'true' || endDate === "true") {
+      if (endDate === 'true' || endDate === 'true') {
         // Se endDate for "true", mostrar apenas produtos não expirados
         endDateQueryFilter = {
-          OR: [
-            { endDate: { gt: currentDate } },
-            { endDate: null }
-          ]
+          OR: [{ endDate: { gt: currentDate } }, { endDate: null }],
         };
       } else if (endDate) {
         // Se endDate for uma data específica, filtra por aquele dia
@@ -393,7 +390,7 @@ export class ProductsService {
           endDate: {
             gte: inicioDoDia,
             lte: fimDoDia,
-          }
+          },
         };
       }
 
@@ -443,7 +440,7 @@ export class ProductsService {
           ...isActiveFilter,
           ...featuredFilter,
           ...whereClause,
-          ...emphasisFilter
+          ...emphasisFilter,
           // stock: {
           //   gt: 0, // "gt" significa "greater than"
           // },

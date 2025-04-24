@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class WishlistService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createWishlistDto: CreateWishlistDto) {
     if (!createWishlistDto.userId) {
@@ -105,7 +105,7 @@ export class WishlistService {
     try {
       const wishlist = await this.prisma.wishlist.findFirst({
         where: {
-          userId: id
+          userId: id,
         },
         include: {
           items: {
@@ -171,8 +171,8 @@ export class WishlistService {
         where: { id: id },
       });
       return {
-        message: "Item removido com sucesso!"
-      }
+        message: 'Item removido com sucesso!',
+      };
     } catch (error) {
       console.log(error);
 

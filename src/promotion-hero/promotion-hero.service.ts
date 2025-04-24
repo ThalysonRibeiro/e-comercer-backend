@@ -10,7 +10,7 @@ export class PromotionHeroService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) { }
+  ) {}
 
   async create(createPromotionHeroDto: CreatePromotionHeroDto) {
     if (!createPromotionHeroDto.siteContentId) {

@@ -498,7 +498,7 @@ export class AuthService {
 
       return payload;
     } catch (error) {
-      console.error("Erro ao verificar token do Google:", error);
+      console.error('Erro ao verificar token do Google:', error);
       throw new UnauthorizedException('Falha na verificação do token Google');
     }
   }

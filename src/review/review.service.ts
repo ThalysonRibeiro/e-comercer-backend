@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ReviewService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createReviewDto: CreateReviewDto) {
     if (!createReviewDto.userId || !createReviewDto.productId) {
@@ -30,7 +30,7 @@ export class ReviewService {
       where: { id: createReviewDto.productId },
       include: {
         reviews: true,
-      }
+      },
     });
 
     if (!existingProduct) {
@@ -44,8 +44,8 @@ export class ReviewService {
     const existingReview = await this.prisma.review.findFirst({
       where: {
         userId: createReviewDto.userId,
-        productId: createReviewDto.productId
-      }
+        productId: createReviewDto.productId,
+      },
     });
 
     if (existingReview) {
@@ -76,14 +76,17 @@ export class ReviewService {
 
       // Calcular a nova média incluindo a review recém-criada
       const allReviews = [...existingProduct.reviews, review];
-      const totalRating = allReviews.reduce((sum, review) => sum + review.rating, 0);
+      const totalRating = allReviews.reduce(
+        (sum, review) => sum + review.rating,
+        0,
+      );
       const totalReviews = allReviews.length;
 
       await this.prisma.product.update({
         where: { id: createReviewDto.productId },
         data: {
-          rating: (totalRating / totalReviews) * 10
-        }
+          rating: (totalRating / totalReviews) * 10,
+        },
       });
 
       return review;

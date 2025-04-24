@@ -25,7 +25,7 @@ import { AllPromotionHero } from 'src/common/dto/all-promotions-hero.dto';
 
 @Controller('promotion-hero')
 export class PromotionHeroController {
-  constructor(private readonly promotionHeroService: PromotionHeroService) { }
+  constructor(private readonly promotionHeroService: PromotionHeroService) {}
 
   @Post('admin')
   create(@Body() createPromotionHeroDto: CreatePromotionHeroDto) {

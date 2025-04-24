@@ -6,10 +6,9 @@ import { ThemeFilters } from 'src/common/dto/all-theme-filter.dto';
 
 @Injectable()
 export class ThemeColorService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createThemeColorDto: CreateThemeColorDto) {
-
     if (!createThemeColorDto.siteContentId) {
       throw new HttpException(
         'SiteContentId é necessário',
@@ -18,7 +17,7 @@ export class ThemeColorService {
     }
 
     const existingSiteContent = await this.prisma.siteContent.findUnique({
-      where: { id: createThemeColorDto.siteContentId }
+      where: { id: createThemeColorDto.siteContentId },
     });
 
     if (!existingSiteContent) {
@@ -31,7 +30,8 @@ export class ThemeColorService {
     try {
       const themeColor = await this.prisma.themeColors.create({
         data: {
-          siteContentId: existingSiteContent?.id || createThemeColorDto.siteContentId,
+          siteContentId:
+            existingSiteContent?.id || createThemeColorDto.siteContentId,
           nameTheme: createThemeColorDto.nameTheme,
           primaryColor: createThemeColorDto.primaryColor,
           secondaryColor: createThemeColorDto.secondaryColor,
@@ -52,7 +52,7 @@ export class ThemeColorService {
           bgCard: createThemeColorDto.bgCard,
           themeColor: createThemeColorDto.themeColor,
           themeSelected: createThemeColorDto.themeSelected,
-        }
+        },
       });
       return themeColor;
     } catch (error) {
@@ -77,37 +77,31 @@ export class ThemeColorService {
       return await this.prisma.themeColors.findMany({
         where: {
           ...isDarkThemeFilter,
-          themeSelected: true
-        }
+          themeSelected: true,
+        },
       });
       // return theme
     } catch (error) {
       throw new HttpException(
         'themeColors não encontrado',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
   }
 
   async findOne(id: string) {
     try {
       return await this.prisma.themeColors.findUnique({
-        where: { id: id }
+        where: { id: id },
       });
     } catch (error) {
-      throw new HttpException(
-        'theme não encontrado',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('theme não encontrado', HttpStatus.BAD_REQUEST);
     }
   }
 
   async update(id: string, updateThemeColorDto: UpdateThemeColorDto) {
     if (!id) {
-      throw new HttpException(
-        'Id é necessário',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Id é necessário', HttpStatus.BAD_REQUEST);
     }
     if (!updateThemeColorDto.siteContentId) {
       throw new HttpException(
@@ -117,7 +111,7 @@ export class ThemeColorService {
     }
 
     const existingSiteContent = await this.prisma.siteContent.findUnique({
-      where: { id: updateThemeColorDto.siteContentId }
+      where: { id: updateThemeColorDto.siteContentId },
     });
 
     if (!existingSiteContent) {
@@ -128,14 +122,11 @@ export class ThemeColorService {
     }
 
     const existingThemeColor = await this.prisma.themeColors.findFirst({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!existingThemeColor) {
-      throw new HttpException(
-        'theme não encontrado!',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('theme não encontrado!', HttpStatus.BAD_REQUEST);
     }
 
     try {
@@ -162,8 +153,8 @@ export class ThemeColorService {
           textButton: updateThemeColorDto.textButton,
           bgCard: updateThemeColorDto.bgCard,
           themeColor: updateThemeColorDto.themeColor,
-          themeSelected: updateThemeColorDto.themeSelected
-        }
+          themeSelected: updateThemeColorDto.themeSelected,
+        },
       });
       return themeColor;
     } catch (error) {
@@ -176,23 +167,17 @@ export class ThemeColorService {
 
   async remove(id: string) {
     if (!id) {
-      throw new HttpException(
-        'Id é necessário',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Id é necessário', HttpStatus.BAD_REQUEST);
     }
     try {
       await this.prisma.themeColors.delete({
-        where: { id: id }
+        where: { id: id },
       });
       return {
-        message: "Deletado com sucesso!"
-      }
+        message: 'Deletado com sucesso!',
+      };
     } catch (error) {
-      throw new HttpException(
-        'Error ao deletar',
-        HttpStatus.BAD_REQUEST,
-      )
+      throw new HttpException('Error ao deletar', HttpStatus.BAD_REQUEST);
     }
   }
 }

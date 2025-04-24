@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { ThemeColorService } from './theme-color.service';
 import { CreateThemeColorDto } from './dto/create-theme-color.dto';
 import { UpdateThemeColorDto } from './dto/update-theme-color.dto';
@@ -9,7 +18,7 @@ import { ThemeFilters } from 'src/common/dto/all-theme-filter.dto';
 
 @Controller('theme-color')
 export class ThemeColorController {
-  constructor(private readonly themeColorService: ThemeColorService) { }
+  constructor(private readonly themeColorService: ThemeColorService) {}
 
   @Roles(AccountType.useradmin)
   @Post('admin')
@@ -31,7 +40,10 @@ export class ThemeColorController {
 
   @Roles(AccountType.useradmin)
   @Patch('admin/:id')
-  update(@Param('id') id: string, @Body() updateThemeColorDto: UpdateThemeColorDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateThemeColorDto: UpdateThemeColorDto,
+  ) {
     return this.themeColorService.update(id, updateThemeColorDto);
   }
 

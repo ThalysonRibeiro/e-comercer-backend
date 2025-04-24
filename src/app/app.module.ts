@@ -54,7 +54,7 @@ import { ThemeColorModule } from 'src/theme-color/theme-color.module';
     PromotionHeroModule,
     SocialMediaModule,
     ContactInfoModule,
-    ThemeColorModule
+    ThemeColorModule,
   ],
   controllers: [AppController],
   providers: [
@@ -69,4 +69,4 @@ import { ThemeColorModule } from 'src/theme-color/theme-color.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

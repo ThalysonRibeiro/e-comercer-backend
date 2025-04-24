@@ -114,7 +114,7 @@ export class UsersService {
                 product: {
                   include: {
                     images: true,
-                  }
+                  },
                 },
               },
             },
@@ -180,7 +180,7 @@ export class UsersService {
       resetPasswordExpires: Date | null;
       acceptOffers: boolean | null;
       acceptTerms: boolean | null;
-      documentType: string | null
+      documentType: string | null;
     }>,
   ): Promise<User> {
     return this.prisma.user.update({

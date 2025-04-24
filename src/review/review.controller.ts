@@ -16,7 +16,7 @@ import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('review')
 export class ReviewController {
-  constructor(private readonly reviewService: ReviewService) { }
+  constructor(private readonly reviewService: ReviewService) {}
 
   @Post()
   create(@Body() createReviewDto: CreateReviewDto) {

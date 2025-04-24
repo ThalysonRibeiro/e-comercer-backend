@@ -18,7 +18,7 @@ import { AllCategoryDto } from 'src/common/dto/all-category.dto';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) { }
+  constructor(private readonly categoryService: CategoryService) {}
 
   @Roles(AccountType.useradmin)
   @Post('admin')

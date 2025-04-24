@@ -9,7 +9,7 @@ export class SiteContentService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) { }
+  ) {}
   async create(createSiteContentDto: CreateSiteContentDto) {
     if (!createSiteContentDto.image_logo) {
       throw new HttpException(
@@ -215,7 +215,7 @@ export class SiteContentService {
     try {
       return await this.prisma.siteContent.findMany({
         where: {
-          isActive: true
+          isActive: true,
         },
         include: {
           promotions: true,

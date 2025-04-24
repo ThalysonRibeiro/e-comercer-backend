@@ -23,14 +23,13 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) { }
+  constructor(private readonly productsService: ProductsService) {}
 
   @Roles(AccountType.useradmin)
   @Post('admin')
   createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
-
 
   @UseInterceptors(FilesInterceptor('files', 10)) // Limita o número de arquivos para 10
   @Post('admin/image')

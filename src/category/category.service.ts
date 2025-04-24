@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CategoryService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
   async create(createCategoryDto: CreateCategoryDto) {
     try {
       const newCategory = await this.prisma.category.create({
@@ -61,7 +61,6 @@ export class CategoryService {
       );
     }
   }
-
 
   async findOne(id: string) {
     try {

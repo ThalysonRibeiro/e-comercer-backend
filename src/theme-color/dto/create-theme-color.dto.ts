@@ -1,7 +1,6 @@
-import { IsBoolean, IsOptional, IsString } from "class-validator"
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class CreateThemeColorDto {
-
   @IsOptional()
   @IsString()
   siteContentId: string;
@@ -86,4 +85,3 @@ export class CreateThemeColorDto {
   @IsBoolean()
   themeSelected: boolean;
 }
-

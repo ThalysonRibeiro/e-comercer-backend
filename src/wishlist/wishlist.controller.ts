@@ -15,7 +15,7 @@ import { AccountType } from '@prisma/client';
 
 @Controller('wishlist')
 export class WishlistController {
-  constructor(private readonly wishlistService: WishlistService) { }
+  constructor(private readonly wishlistService: WishlistService) {}
 
   @Post()
   create(@Body() createWishlistDto: CreateWishlistDto) {

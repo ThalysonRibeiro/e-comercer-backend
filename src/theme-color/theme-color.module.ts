@@ -7,4 +7,4 @@ import { PrismaService } from 'src/prisma/prisma.service';
   controllers: [ThemeColorController],
   providers: [ThemeColorService, PrismaService],
 })
-export class ThemeColorModule { }
+export class ThemeColorModule {}
