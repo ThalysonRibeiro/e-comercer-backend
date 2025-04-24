@@ -45,7 +45,7 @@ model Product {
   rating         Int?
   promotion_time Int?
   description    String
-  products_sold  Int
+  products_sold  Int?
   endDate        DateTime?
   bigsale        Boolean        @default(false)
   sku            String         @unique

@@ -60,6 +60,7 @@ export class ProductsService {
           length: createProductDto.length,
           isActive: createProductDto.isActive,
           featured: createProductDto.featured,
+          emphasis: createProductDto.emphasis,
           color: createProductDto.color || [],
           size: createProductDto.size || [],
         },
@@ -454,6 +455,7 @@ export class ProductsService {
         },
         include: {
           images: true,
+          reviews: true,
         },
       });
 
@@ -474,6 +476,7 @@ export class ProductsService {
         },
         include: {
           images: true,
+          reviews: true,
         },
       });
       return product;
@@ -511,6 +514,7 @@ export class ProductsService {
         length: updateProductDto.length,
         isActive: updateProductDto.isActive,
         featured: updateProductDto.featured,
+        emphasis: updateProductDto.emphasis,
         color: updateProductDto.color || [],
         size: updateProductDto.size || [],
       },

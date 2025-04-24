@@ -98,4 +98,7 @@ export class CreateProductDto {
   @IsArray()
   @IsString({ each: true })
   tags: string[];
+
+  @IsBoolean()
+  emphasis: boolean;
 }

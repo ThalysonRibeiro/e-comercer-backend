@@ -5,22 +5,54 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ReviewService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(createReviewDto: CreateReviewDto) {
-    if (!createReviewDto.userId && !createReviewDto.productId) {
+    if (!createReviewDto.userId || !createReviewDto.productId) {
       throw new HttpException(
-        'O userId e o productId é necessário para criar uma avaliação',
+        'O userId e o productId são necessários para criar uma avaliação',
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    const user = await this.prisma.user.findUnique({
+    const existingUser = await this.prisma.user.findUnique({
       where: { id: createReviewDto.userId },
     });
 
-    if (!user) {
-      return;
+    if (!existingUser) {
+      throw new HttpException(
+        'Usuário não encontrado.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const existingProduct = await this.prisma.product.findUnique({
+      where: { id: createReviewDto.productId },
+      include: {
+        reviews: true,
+      }
+    });
+
+    if (!existingProduct) {
+      throw new HttpException(
+        'Produto não encontrado.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    // Verificar se o usuário já avaliou este produto
+    const existingReview = await this.prisma.review.findFirst({
+      where: {
+        userId: createReviewDto.userId,
+        productId: createReviewDto.productId
+      }
+    });
+
+    if (existingReview) {
+      throw new HttpException(
+        'Você já avaliou este produto anteriormente.',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     try {
@@ -30,7 +62,7 @@ export class ReviewService {
           productId: createReviewDto.productId,
           rating: createReviewDto.rating,
           comment: createReviewDto.comment,
-          title: createReviewDto.title || user?.name,
+          title: createReviewDto.title || existingUser?.name,
         },
         include: {
           user: {
@@ -40,6 +72,18 @@ export class ReviewService {
             },
           },
         },
+      });
+
+      // Calcular a nova média incluindo a review recém-criada
+      const allReviews = [...existingProduct.reviews, review];
+      const totalRating = allReviews.reduce((sum, review) => sum + review.rating, 0);
+      const totalReviews = allReviews.length;
+
+      await this.prisma.product.update({
+        where: { id: createReviewDto.productId },
+        data: {
+          rating: (totalRating / totalReviews) * 10
+        }
       });
 
       return review;
