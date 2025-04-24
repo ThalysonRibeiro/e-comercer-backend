@@ -10,7 +10,7 @@ export class PromotionsService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) {}
+  ) { }
 
   async create(createPromotionDto: CreatePromotionDto) {
     if (!createPromotionDto.siteContentId) {
@@ -58,6 +58,8 @@ export class PromotionsService {
       });
       return promotion;
     } catch (error) {
+      console.log(error);
+
       throw new HttpException('Erro ao criar promoção', HttpStatus.BAD_REQUEST);
     }
   }
