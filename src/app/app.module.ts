@@ -26,6 +26,7 @@ import { PromotionHeroModule } from 'src/promotion-hero/promotion-hero.module';
 import { SocialMediaModule } from 'src/social-media/social-media.module';
 import { ContactInfoModule } from 'src/contact-info/contact-info.module';
 import { ThemeColorModule } from 'src/theme-color/theme-color.module';
+import { InstitutionalLinkModule } from 'src/institutional-link/institutional-link.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { ThemeColorModule } from 'src/theme-color/theme-color.module';
     SocialMediaModule,
     ContactInfoModule,
     ThemeColorModule,
+    InstitutionalLinkModule,
   ],
   controllers: [AppController],
   providers: [
@@ -69,4 +71,4 @@ import { ThemeColorModule } from 'src/theme-color/theme-color.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

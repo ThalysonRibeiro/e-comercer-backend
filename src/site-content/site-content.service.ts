@@ -11,9 +11,9 @@ export class SiteContentService {
     private imagesService: ImagesService,
   ) { }
   async create(createSiteContentDto: CreateSiteContentDto) {
-    if (!createSiteContentDto.image_logo) {
+    if (!createSiteContentDto) {
       throw new HttpException(
-        'image_logo é obrigatório',
+        'Não pode ser vazio',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -223,6 +223,7 @@ export class SiteContentService {
           promotionHero: true,
           socialMedia: true,
           contactInfo: true,
+          institutionalLink: true,
           themeColors: true,
         },
       });

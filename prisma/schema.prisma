@@ -234,28 +234,29 @@ model PaymentDetail {
 }
 
 model SiteContent {
-  id              String          @id @unique @default(uuid())
-  banner          String?
-  video           String?
-  bg_video        String?
-  image_logo      String?
-  title           String?
-  metaTitle       String?
-  metaDescription String?
-  favicon         String?
-  service         String[]
-  footerText      String?
-  openingHours    String?
-  isActive        Boolean         @default(true)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  keywords        String[]
-  image_openGraph String?
-  contactInfo     ContactInfo[]
-  promotionHero   PromotionHero[]
-  promotions      Promotions[]
-  socialMedia     SocialMedia[]
-  themeColors     ThemeColors[]
+  id                String              @id @unique @default(uuid())
+  banner            String?
+  video             String?
+  bg_video          String?
+  image_logo        String?
+  title             String?
+  metaTitle         String?
+  metaDescription   String?
+  favicon           String?
+  service           String[]
+  footerText        String?
+  openingHours      String?
+  isActive          Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  keywords          String[]
+  image_openGraph   String?
+  contactInfo       ContactInfo[]
+  promotionHero     PromotionHero[]
+  promotions        Promotions[]
+  socialMedia       SocialMedia[]
+  themeColors       ThemeColors[]
+  institutionalLink InstitutionalLink[]
 }
 
 model Promotions {
@@ -347,6 +348,16 @@ model ThemeColors {
   themeSelected  Boolean     @default(false)
   textHover      String?
   siteContent    SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
+}
+
+model InstitutionalLink {
+  id            String      @id @unique @default(uuid())
+  siteContentId String
+  name          String
+  link          String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
 enum AccountType {
