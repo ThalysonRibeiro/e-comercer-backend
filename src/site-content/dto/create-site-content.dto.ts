@@ -50,6 +50,10 @@ export class CreateSiteContentDto {
   footerText?: string;
 
   @IsOptional()
+  @IsString()
+  openingHours?: string;
+
+  @IsOptional()
   @IsBoolean()
   isActive?: boolean;
 }

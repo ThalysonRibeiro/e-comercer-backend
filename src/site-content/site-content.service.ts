@@ -9,7 +9,7 @@ export class SiteContentService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) {}
+  ) { }
   async create(createSiteContentDto: CreateSiteContentDto) {
     if (!createSiteContentDto.image_logo) {
       throw new HttpException(
@@ -31,6 +31,7 @@ export class SiteContentService {
           favicon: createSiteContentDto.favicon,
           service: createSiteContentDto.service,
           footerText: createSiteContentDto.footerText,
+          openingHours: createSiteContentDto.openingHours,
           isActive: createSiteContentDto.isActive,
         },
       });
@@ -257,9 +258,9 @@ export class SiteContentService {
     if (!id) {
       throw new HttpException('o ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
-    if (!updateSiteContentDto.image_logo) {
+    if (!id) {
       throw new HttpException(
-        'image_logo é obrigatório',
+        'o ID é obrigatório',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -279,6 +280,7 @@ export class SiteContentService {
           favicon: updateSiteContentDto.favicon,
           service: updateSiteContentDto.service,
           footerText: updateSiteContentDto.footerText,
+          openingHours: updateSiteContentDto.openingHours,
           isActive: updateSiteContentDto.isActive,
         },
         include: {

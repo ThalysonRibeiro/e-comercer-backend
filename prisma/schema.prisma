@@ -245,6 +245,7 @@ model SiteContent {
   favicon         String?
   service         String[]
   footerText      String?
+  openingHours    String?
   isActive        Boolean         @default(true)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
@@ -260,7 +261,7 @@ model SiteContent {
 model Promotions {
   id            String      @id @unique @default(uuid())
   title         String
-  slug          String      @unique
+  slug          String      @unique //para url amigavel
   banner        String?
   video         String?
   description   String?
