@@ -21,4 +21,9 @@ export class AllPromotions {
   @IsOptional()
   @IsString()
   active?: string;
+
+  @IsOptional()
+  @IsString()
+  @Type(() => String)
+  endDate?: string;
 }

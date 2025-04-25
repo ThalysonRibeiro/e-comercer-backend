@@ -124,7 +124,7 @@ export class PromotionsService {
   }
 
   async findAll(allPromotions: AllPromotions) {
-    const { limit, offset, active, position } = allPromotions;
+    const { limit, offset, active, position, endDate } = allPromotions;
 
     let checkActive: boolean | undefined;
     switch (active?.toLowerCase()) {
@@ -139,11 +139,36 @@ export class PromotionsService {
         break;
     }
 
+    // Data atual
+    const currentDate = new Date();
+    // Filtro para endDate - se endDate for "true", filtra produtos expirados
+    let endDateQueryFilter = {};
+
+    if (endDate === 'true' || endDate === 'true') {
+      // Se endDate for "true", mostrar apenas produtos não expirados
+      endDateQueryFilter = {
+        OR: [{ endDate: { gt: currentDate } }, { endDate: null }],
+      };
+    } else if (endDate) {
+      // Se endDate for uma data específica, filtra por aquele dia
+      const data = new Date(endDate);
+      const inicioDoDia = new Date(data.setHours(0, 0, 0, 0));
+      const fimDoDia = new Date(data.setHours(23, 59, 59, 999));
+
+      endDateQueryFilter = {
+        endDate: {
+          gte: inicioDoDia,
+          lte: fimDoDia,
+        },
+      };
+    }
+
     try {
       return await this.prisma.promotions.findMany({
         where: {
           ...(checkActive !== undefined && { isActive: checkActive }),
           ...(position && { position: position.toLowerCase() }),
+          ...(endDateQueryFilter),
         },
         take: limit,
         skip: offset,
