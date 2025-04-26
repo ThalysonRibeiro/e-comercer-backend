@@ -83,6 +83,7 @@ export class CreateProductDto {
   @IsNumber()
   stock: number;
 
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   category: string;

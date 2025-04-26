@@ -33,6 +33,10 @@ export class ProductsService {
       throw new Error('Product title is required');
     }
 
+    const category = await this.prisma.category.findUnique({
+      where: { id: createProductDto.categoryId }
+    });
+
     const dateFuture = new Date();
     dateFuture.setDate(dateFuture.getDate() + createProductDto.promotion_time);
 
@@ -50,7 +54,7 @@ export class ProductsService {
           bigsale: createProductDto.bigsale,
           sku: `SKU-PRD-${crypto.randomInt(10000)}`,
           stock: createProductDto.stock,
-          category: createProductDto.category.toLowerCase(),
+          category: category?.name ? category?.name.toLowerCase() : createProductDto.category,
           categoryId: createProductDto.categoryId,
           brand: createProductDto.brand.toLowerCase(),
           tags: createProductDto.tags.map((tag) => tag.toLowerCase()),
