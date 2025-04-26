@@ -304,8 +304,8 @@ export class ProductsService {
   async findAll(productsFilterDto: ProductsFilterDto) {
     try {
       const {
-        limit = 10,
-        offset = 0,
+        limit,
+        offset,
         category,
         price,
         '-price': maxPrice,
@@ -460,7 +460,23 @@ export class ProductsService {
         },
       });
 
-      return products;
+      const total = await this.prisma.product.count({
+        where: {
+          ...categoryFilter,
+          ...priceFilter,
+          ...brandFilter,
+          ...tagsFilter,
+          ...bigsaleFilter,
+          ...assessmentFilter,
+          ...endDateQueryFilter,
+          ...isActiveFilter,
+          ...featuredFilter,
+          ...whereClause,
+          ...emphasisFilter,
+        }
+      });
+
+      return { products, total };
     } catch (error) {
       throw new HttpException(
         `Falha ao listar produtos ${error.message}`,
@@ -468,6 +484,7 @@ export class ProductsService {
       );
     }
   }
+
 
   async findOne(id: string) {
     try {
