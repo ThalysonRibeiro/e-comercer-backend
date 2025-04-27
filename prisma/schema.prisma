@@ -258,6 +258,7 @@ model SiteContent {
   socialMedia       SocialMedia[]
   themeColors       ThemeColors[]
   institutionalLink InstitutionalLink[]
+  movingTextHero    MovingTextHero[]
 }
 
 model Promotions {
@@ -284,14 +285,9 @@ model Promotions {
 
 model PromotionHero {
   id            String      @id @unique @default(uuid())
-  title         String
-  subTitle      String
-  sale          String
-  description   String
   image         String?
-  buttonText    String?
-  buttonLink    String?
   position      String?
+  promotionLink String?
   isActive      Boolean     @default(true)
   order         Int         @default(0)
   endDate       DateTime?
@@ -299,6 +295,17 @@ model PromotionHero {
   updatedAt     DateTime    @updatedAt
   siteContentId String
   startDate     Int?
+  siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
+}
+
+model MovingTextHero {
+  id            String      @id @unique @default(uuid())
+  title         String?
+  description   String?
+  siteContentId String
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
