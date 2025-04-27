@@ -8,26 +8,26 @@ datasource db {
 }
 
 model User {
-  id                     String        @id @default(cuid())
+  id                     String          @id @default(cuid())
   status                 AccountStatus
   type                   AccountType
   name                   String?
   genero                 String
   dateOfBirth            DateTime?
-  email                  String        @unique
+  email                  String          @unique
   phone                  String
   password               String?
   resetPasswordToken     String?
   resetPasswordExpires   DateTime?
   emailVerified          DateTime?
   emailVerificationToken String?
-  googleId               String?       @unique
+  googleId               String?         @unique
   avatar                 String?
-  createdAt              DateTime      @default(now())
-  updatedAt              DateTime      @updatedAt
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
   cpf_or_cnpj            String?
-  acceptOffers           Boolean?      @default(false)
-  acceptTerms            Boolean?      @default(false)
+  acceptOffers           Boolean?        @default(false)
+  acceptTerms            Boolean?        @default(false)
   documentType           String?
   addresses              Address[]
   cart                   Cart?
@@ -35,6 +35,7 @@ model User {
   orderItems             OrderItems[]
   reviews                Review[]
   wishlist               Wishlist?
+  notifications          Notifications[]
 }
 
 model Product {
@@ -360,9 +361,21 @@ model InstitutionalLink {
   siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
+model Notifications {
+  id        String   @id @unique @default(uuid())
+  title     String
+  message   String
+  is_read   Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum AccountType {
   useradmin
   userdefault
+  usermoderator
 }
 
 enum AccountStatus {
