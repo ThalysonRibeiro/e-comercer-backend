@@ -7,17 +7,6 @@ import {
 } from 'class-validator';
 
 export class CreatePromotionHeroDto {
-  @IsString()
-  title: string;
-
-  @IsString()
-  subTitle: string;
-
-  @IsString()
-  sale: string;
-
-  @IsString()
-  description: string;
 
   @IsOptional()
   @IsString()
@@ -25,11 +14,7 @@ export class CreatePromotionHeroDto {
 
   @IsOptional()
   @IsString()
-  buttonText?: string;
-
-  @IsOptional()
-  @IsString()
-  buttonLink?: string;
+  promotionLink?: string;
 
   @IsOptional()
   @IsString()

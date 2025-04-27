@@ -10,7 +10,7 @@ export class PromotionHeroService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) {}
+  ) { }
 
   async create(createPromotionHeroDto: CreatePromotionHeroDto) {
     if (!createPromotionHeroDto.siteContentId) {
@@ -43,12 +43,7 @@ export class PromotionHeroService {
       const promotionHero = await this.prisma.promotionHero.create({
         data: {
           siteContentId: existingSiteContent.id,
-          title: createPromotionHeroDto.title,
-          subTitle: createPromotionHeroDto.subTitle,
-          sale: createPromotionHeroDto.sale,
-          description: createPromotionHeroDto.description,
-          buttonText: createPromotionHeroDto.buttonText,
-          buttonLink: createPromotionHeroDto.buttonLink,
+          promotionLink: createPromotionHeroDto.promotionLink,
           position: createPromotionHeroDto.position,
           isActive: createPromotionHeroDto.isActive,
           order: createPromotionHeroDto.order,
@@ -178,12 +173,7 @@ export class PromotionHeroService {
         where: { id: existingPromotionHero.id },
         data: {
           siteContentId: existingSiteContent.id,
-          title: updatePromotionHeroDto.title,
-          subTitle: updatePromotionHeroDto.subTitle,
-          sale: updatePromotionHeroDto.sale,
-          description: updatePromotionHeroDto.description,
-          buttonText: updatePromotionHeroDto.buttonText,
-          buttonLink: updatePromotionHeroDto.buttonLink,
+          promotionLink: updatePromotionHeroDto.promotionLink,
           position: updatePromotionHeroDto.position,
           isActive: updatePromotionHeroDto.isActive,
           order: updatePromotionHeroDto.order,
