@@ -318,6 +318,7 @@ export class ProductsService {
         featured,
         stock,
         emphasis,
+        sort
       } = productsFilterDto;
 
       // Prepara o filtro de preço
@@ -431,6 +432,42 @@ export class ProductsService {
         emphasisFilter = { emphasis: emphasis === 'true' }; // ou 'false' para falso
       }
 
+      // Mapeando o tipo de ordenação
+      let orderBy: { [key: string]: 'asc' | 'desc' } = { createdAt: 'desc' };
+
+      if (sort) {
+        switch (sort) {
+          case 'az':
+            orderBy = { title: 'asc' };
+            break;
+          case 'za':
+            orderBy = { title: 'desc' };
+            break;
+          case 'priceAsc':
+            orderBy = { price: 'asc' };
+            break;
+          case 'priceDesc':
+            orderBy = { price: 'desc' };
+            break;
+          case 'topRated':
+            orderBy = { rating: 'desc' };
+            break;
+          case 'bestSelling':
+            orderBy = { products_sold: 'desc' };
+            break;
+          case 'newest':
+            orderBy = { createdAt: 'desc' };
+            break;
+          case 'oldest':
+            orderBy = { createdAt: 'asc' };
+            break;
+          default:
+            orderBy = { createdAt: 'desc' };
+            break;
+        }
+      }
+
+
       // Fazendo a consulta no banco com todos os filtros
       const products = await this.prisma.product.findMany({
         where: {
@@ -445,15 +482,10 @@ export class ProductsService {
           ...featuredFilter,
           ...whereClause,
           ...emphasisFilter,
-          // stock: {
-          //   gt: 0, // "gt" significa "greater than"
-          // },
         },
         take: limit,
         skip: offset,
-        orderBy: {
-          createdAt: 'desc', // Ordena pela data de criação (ou outra opção que preferir)
-        },
+        orderBy: orderBy,
         include: {
           images: true,
           reviews: true,

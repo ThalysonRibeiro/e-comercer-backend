@@ -58,7 +58,6 @@ export class ProductsFilterDto {
   @IsOptional()
   @IsInt()
   @Min(0)
-  @Max(5)
   @Type(() => Number)
   rating?: number; // Avaliação do produto, por exemplo de 0 a 5
 
@@ -86,4 +85,9 @@ export class ProductsFilterDto {
   @IsString()
   @Type(() => String)
   emphasis?: string;
+
+  @IsOptional()
+  @IsString()
+  @Type(() => String)
+  sort?: string;
 }
