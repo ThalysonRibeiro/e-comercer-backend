@@ -23,7 +23,15 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
+
+  //Como proteger uma rota com escopo:
+  // @UseGuards(ApiKeyGuard)
+  // @Scopes('admin') // exige escopo de admin
+  // @Get('admin-only')
+  // getAdminStuff() {
+  //   return { msg: 'Acesso autorizado ao admin' };
+  // }
 
   @Roles(AccountType.useradmin)
   @Post('admin')

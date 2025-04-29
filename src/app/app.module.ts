@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
@@ -27,6 +27,7 @@ import { SocialMediaModule } from 'src/social-media/social-media.module';
 import { ContactInfoModule } from 'src/contact-info/contact-info.module';
 import { ThemeColorModule } from 'src/theme-color/theme-color.module';
 import { InstitutionalLinkModule } from 'src/institutional-link/institutional-link.module';
+import { ApiKeyUrlMiddleware } from 'src/common/middleware/api-key-url.middleware';
 
 @Module({
   imports: [
@@ -71,4 +72,10 @@ import { InstitutionalLinkModule } from 'src/institutional-link/institutional-li
     },
   ],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ApiKeyUrlMiddleware)
+      .forRoutes('*'); // aplica em todas as rotas
+  }
+}
