@@ -128,94 +128,62 @@ Integração com APIs de Pagamento: Se você ainda não fez isso, adicione uma i
 Implementação de SEO e performance: Como você está usando o Next.js, explore as funcionalidades de otimização de SEO e performance (SSR, geração de sitemap, etc.) para melhorar a visibilidade nos motores de busca e a velocidade do site.
 Deploy em Produção: Coloque seu projeto online! Faça o deploy do seu e-commerce (pode ser na Vercel para o frontend e Heroku ou DigitalOcean para o backend) e mostre aos recrutadores que você sabe como colocar um projeto em produção.
 
-- [ ] [Nest]` {/users/complete-profile, PATCH}`
-- [ ] [Nest]` {/users/avatar, POST}`
-- [ ] [Nest]` {/users/avatar-Cloudnary, POST}`
-- [ ] [Nest]` {/users/admin/:id, GET}`
-- [ ] [Nest]` {/users/admin, GET}`
-- [ ] [Nest]` {/users/admin/:id, DELETE}`
-- [ ] [Nest]` {/auth/register-admin, POST}`
-- [ ] [Nest]` {/auth/login-admin, POST}`
-- [ ] [Nest]` {/auth/admin/admin-only, GET}`
-- [ ] [Nest]` {/auth/register, POST}`
-- [ ] [Nest]` {/auth/google, POST}`
-- [ ] [Nest]` {/auth/login, POST}`
-- [ ] [Nest]` {/auth/profile, GET}`
-- [ ] [Nest]` {/auth/password, PATCH}`
-- [ ] [Nest]` {/auth/forgot-password, POST}`
-- [ ] [Nest]` {/auth/reset-password, POST}`
-- [ ] [Nest]` {/email-verification/send, POST}`
-- [ ] [Nest]` {/email-verification/verify-email, GET}`
-- [ ] [Nest]` {/email-verification/confirm-email, POST}`
-- [ ] [Nest]` {/products/admin, POST}`
-- [ ] [Nest]` {/products/admin/image, POST}`
-- [ ] [Nest]` {/products, GET}`
-- [ ] [Nest]` {/products/:id, GET}`
-- [ ] [Nest]` {/products/admin/:id, PATCH}`
-- [ ] [Nest]` {/products/admin/:id, DELETE}`
-- [ ] [Nest]` {/category/admin, POST}`
-- [ ] [Nest]` {/category, GET}`
-- [ ] [Nest]` {/category/:id, GET}`
-- [ ] [Nest]` {/category/admin/:id, PATCH}`
-- [ ] [Nest]` {/category/admin/:id, DELETE}`
-- [ ] [Nest]` {/cart, POST}`
-- [ ] [Nest]` {/cart/admin, GET}`
-- [ ] [Nest]` {/cart/:id, GET}`
-- [ ] [Nest]` {/cart, PATCH}`
-- [ ] [Nest]` {/cart/:id, DELETE}`
-- [ ] [Nest]` {/cart/all/:id, DELETE}`
-- [ ] [Nest]` {/coupon/admin, POST}`
-- [ ] [Nest]` {/coupon/admin, GET}`
-- [ ] [Nest]` {/coupon/admin/:id, GET}`
-- [ ] [Nest]` {/coupon/admin/:id, PATCH}`
-- [ ] [Nest]` {/coupon/admin/:id, DELETE}`
-- [ ] [Nest]` {/coupon/check/:code, GET}`
-- [ ] [Nest]` {/wishlist, POST}`
-- [ ] [Nest]` {/wishlist/admin, GET}`
-- [ ] [Nest]` {/wishlist/:id, GET}`
-- [ ] [Nest]` {/wishlist/:id, DELETE}`
-- [ ] [Nest]` {/review, POST}`
-- [ ] [Nest]` {/review/user/:id, GET}`
-- [ ] [Nest]` {/review/product/:id, GET}`
-- [ ] [Nest]` {/review, GET}`
-- [ ] [Nest]` {/review/:id, PATCH}`
-- [ ] [Nest]` {/review/admin/:id, DELETE}`
-- [ ] [Nest]` {/address, POST}`
-- [ ] [Nest]` {/address/admin, GET}`
-- [ ] [Nest]` {/address/user/:id, GET}`
-- [ ] [Nest]` {/address/:id, PATCH}`
-- [ ] [Nest]` {/address/:id, DELETE}`
-- [ ] [Nest]` {/validete-zip/:zip, GET}`
-- [ ] [Nest]` {/site-content/admin, POST}`
-- [ ] [Nest]` {/site-content/admin/banner/:id, PUT}`
-- [ ] [Nest]` {/site-content/admin/video/:id, PUT}`
-- [ ] [Nest]` {/site-content/admin/bg_video/:id, PUT}`
-- [ ] [Nest]` {/site-content/admin/logo/:id, PUT}`
-- [ ] [Nest]` {/site-content/admin/favicon/:id, PUT}`
-- [ ] [Nest]` {/site-content/admin, GET}`
-- [ ] [Nest]` {/site-content/admin/:id, GET}`
-- [ ] [Nest]` {/site-content/admin/:id, PATCH}`
-- [ ] [Nest]` {/site-content/admin/:id, DELETE}`
-- [ ] [Nest]` {/promotions/admin, POST}`
-- [ ] [Nest]` {/promotions/banner/admin/:id, PUT}`
-- [ ] [Nest]` {/promotions/video/admin/:id, PUT}`
-- [ ] [Nest]` {/promotions, GET}`
-- [ ] [Nest]` {/promotions/:id, GET}`
-- [ ] [Nest]` {/promotions/admin/:id, PATCH}`
-- [ ] [Nest]` {/promotions/admin/:id, DELETE}`
-- [ ] [Nest]` {/promotion-hero/admin, POST}`
-- [ ] [Nest]` {/promotion-hero/image/admin/:id, PUT}`
-- [ ] [Nest]` {/promotion-hero, GET}`
-- [ ] [Nest]` {/promotion-hero/:id, GET}`
-- [ ] [Nest]` {/promotion-hero/admin:id, PATCH}`
-- [ ] [Nest]` {/promotion-hero/admin/:id, DELETE}`
-- [ ] [Nest]` {/social-media/admin, POST}`
-- [ ] [Nest]` {/social-media, GET}`
-- [ ] [Nest]` {/social-media/:id, GET}`
-- [ ] [Nest]` {/social-media/admin/:id, PATCH}`
-- [ ] [Nest]` {/social-media/admin/:id, DELETE}`
-- [ ] [Nest]` {/contact-info/admin, POST}`
-- [ ] [Nest]` {/contact-info, GET}`
-- [ ] [Nest]` {/contact-info/:id, GET}`
-- [ ] [Nest]` {/contact-info/admin/:id, PATCH}`
-- [ ] [Nest]` {/contact-info/admin/:id, DELETE}`
+checklist_content = """
+
+1. Controle de Acesso por API Key
+
+- [x] Criar um ApiKeyGuard para validar requisições.
+- [x] Usar @SkipApiKey() para rotas que não precisam da key.
+- [x] Proteger até rotas públicas com a key (site principal, app mobile, etc.).
+- [ ] Rotacionar (mudar) as keys periodicamente.
+- [ ] Salvar as API Keys em variável ambiente (.env).
+
+2. Autenticação e Autorização
+
+- [x] Usar JWT com tempo de expiração curto.
+- [x] Usar Guards separados: público, autenticado e por roles (user, admin, etc.).
+- [x] Criar @Roles() e RolesGuard para proteger rotas específicas.
+- [ ] Usar refresh token (opcional, para manter login sem estender token de acesso).
+
+3. Proteções de Rede e Transporte
+
+- [ ] Obrigar HTTPS no ambiente de produção (SSL).
+- [ ] Configurar CORS corretamente (liberar só domínios confiáveis).
+- [ ] Ocultar headers sensíveis (X-Powered-By, etc.).
+
+4. Rate Limiting / DDoS Protection
+
+- [ ] Instalar @nestjs/throttler:
+      npm i @nestjs/throttler
+- [ ] Aplicar limite global:
+      ThrottlerModule.forRoot({ ttl: 60, limit: 20 }) // 20 req/min
+
+5. Validação e Sanitização de Dados
+
+- [x] Usar class-validator + ValidationPipe.
+- [ ] Ativar forbidNonWhitelisted: true e whitelist: true no main.ts.
+- [ ] Usar DTOs sempre que possível.
+
+6. Monitoramento e Logs
+
+- [ ] Adicionar logs de requisição (com IP e headers principais).
+- [ ] Monitorar uso de cada API Key (via log, dashboard, ou banco).
+- [ ] Configurar alertas para erros suspeitos (via Sentry, LogRocket, etc.).
+
+7. Banco de Dados
+
+- [ ] Usar ORM com query builder (TypeORM, Drizzle, Prisma) para evitar SQL Injection.
+- [ ] Criar roles e permissões no banco (evitar acesso total com 1 único usuário).
+
+8. Ambiente e DevOps
+
+- [x] Esconder .env e nunca subir no Git.
+- [ ] Usar secrets diferentes por ambiente (.env.production, .env.staging, etc.).
+- [ ] Atualizar dependências com frequência (corrigir falhas conhecidas).
+
+9. Extras (opcional, avançado)
+
+- [ ] Autenticação mútua entre serviços (ex: Backend → Microserviço).
+- [ ] Token JWT assinado com chave privada (RS256) em vez de segredo simétrico (HS256).
+- [ ] Web Application Firewall (WAF) se estiver em cloud pública.
+      """
