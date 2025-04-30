@@ -342,10 +342,18 @@ export class ProductsService {
         categoryFilter = { category: category };
       }
 
-      // Filtro para marca
-      let brandFilter: { brand?: string } = {}; // Definindo a estrutura
+      // MODIFICADO: Filtro para múltiplas marcas
+      let brandFilter: { brand?: { in: string[] } } = {}; // Nova estrutura para array de marcas
       if (brand) {
-        brandFilter = { brand: brand };
+        // Verifica se brand é uma string e converte para array
+        const brandArray = typeof brand === 'string'
+          ? brand.split(',').filter(Boolean).map(b => b.trim())
+          : brand;
+
+        // Só adiciona o filtro se houver marcas válidas
+        if (brandArray && brandArray.length > 0) {
+          brandFilter = { brand: { in: brandArray } };
+        }
       }
 
       // Filtro de tags (verifica se é uma string e converte para array)
@@ -467,7 +475,6 @@ export class ProductsService {
         }
       }
 
-
       // Fazendo a consulta no banco com todos os filtros
       const products = await this.prisma.product.findMany({
         where: {
@@ -516,7 +523,6 @@ export class ProductsService {
       );
     }
   }
-
 
   async findOne(id: string) {
     try {

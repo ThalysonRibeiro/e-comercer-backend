@@ -12,7 +12,7 @@ export class BrandsService {
   ) { }
 
   async create(createBrandDto: CreateBrandDto) {
-    if (!createBrandDto.name) {
+    if (!createBrandDto.name) {//max 21 caracteres
       throw new HttpException(
         'O nome da marca é obrigatório!',
         HttpStatus.BAD_REQUEST,
