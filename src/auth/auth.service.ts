@@ -308,7 +308,7 @@ export class AuthService {
       // Criar URL de confirmação
       const frontendUrl =
         this.configService.get<string>('FRONTEND_URL') ||
-        'http://localhost:3001';
+        'http://localhost:3000';
       const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
 
       // Enviar um email de confirmação
@@ -540,7 +540,7 @@ export class AuthService {
     }
 
     // Verificar se o usuário está ativo
-    if (user.status === AccountStatus.active) {
+    if (user.status === AccountStatus.inactive) {
       throw new UnauthorizedException(
         'Conta inativa. Entre em contato com o administrador.',
       );

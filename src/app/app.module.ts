@@ -27,7 +27,6 @@ import { SocialMediaModule } from 'src/social-media/social-media.module';
 import { ContactInfoModule } from 'src/contact-info/contact-info.module';
 import { ThemeColorModule } from 'src/theme-color/theme-color.module';
 import { InstitutionalLinkModule } from 'src/institutional-link/institutional-link.module';
-import { ApiKeyUrlMiddleware } from 'src/common/middleware/api-key-url.middleware';
 import { BrandsModule } from 'src/brands/brands.module';
 
 @Module({
@@ -74,10 +73,4 @@ import { BrandsModule } from 'src/brands/brands.module';
     },
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ApiKeyUrlMiddleware)
-      .forRoutes('*'); // aplica em todas as rotas
-  }
-}
+export class AppModule { }
