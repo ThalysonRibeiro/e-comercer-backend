@@ -7,14 +7,6 @@ export class CreateSiteContentDto {
 
   @IsOptional()
   @IsString()
-  video?: string;
-
-  @IsOptional()
-  @IsString()
-  bg_video?: string;
-
-  @IsOptional()
-  @IsString()
   image_logo?: string;
 
   @IsOptional()

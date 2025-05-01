@@ -246,8 +246,6 @@ model PaymentDetail {
 model SiteContent {
   id                String              @id @unique @default(uuid())
   banner            String?
-  video             String?
-  bg_video          String?
   image_logo        String?
   title             String?
   metaTitle         String?

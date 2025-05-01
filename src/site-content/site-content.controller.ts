@@ -23,7 +23,7 @@ import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('site-content')
 export class SiteContentController {
-  constructor(private readonly siteContentService: SiteContentService) {}
+  constructor(private readonly siteContentService: SiteContentService) { }
 
   @Roles(AccountType.useradmin)
   @Post()
@@ -55,58 +55,6 @@ export class SiteContentController {
     file: Express.Multer.File,
   ) {
     return this.siteContentService.uploadBanner(id, file);
-  }
-
-  @Roles(AccountType.useradmin)
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: memoryStorage(),
-    }),
-  )
-  @Put('video/admin/:id')
-  uploadVideo(
-    @Param('id') id: string,
-    @UploadedFile(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: /mp4/g,
-        })
-        .addMaxSizeValidator({
-          maxSize: 50 * (1024 * 1024), // 50MB
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
-    )
-    file: Express.Multer.File,
-  ) {
-    return this.siteContentService.uploadVideo(id, file);
-  }
-
-  @Roles(AccountType.useradmin)
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: memoryStorage(),
-    }),
-  )
-  @Put('bg_video/admin/:id')
-  uploadBGVideo(
-    @Param('id') id: string,
-    @UploadedFile(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: /mp4/g,
-        })
-        .addMaxSizeValidator({
-          maxSize: 50 * (1024 * 1024), // 50MB
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
-    )
-    file: Express.Multer.File,
-  ) {
-    return this.siteContentService.uploadBGVideo(id, file);
   }
 
   @Roles(AccountType.useradmin)
