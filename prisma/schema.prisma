@@ -8,26 +8,26 @@ datasource db {
 }
 
 model User {
-  id                     String          @id @default(cuid())
+  id                     String            @id @default(cuid())
   status                 AccountStatus
   type                   AccountType
   name                   String?
   genero                 String
   dateOfBirth            DateTime?
-  email                  String          @unique
+  email                  String            @unique
   phone                  String
   password               String?
   resetPasswordToken     String?
   resetPasswordExpires   DateTime?
   emailVerified          DateTime?
   emailVerificationToken String?
-  googleId               String?         @unique
+  googleId               String?           @unique
   avatar                 String?
-  createdAt              DateTime        @default(now())
-  updatedAt              DateTime        @updatedAt
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
   cpf_or_cnpj            String?
-  acceptOffers           Boolean?        @default(false)
-  acceptTerms            Boolean?        @default(false)
+  acceptOffers           Boolean?          @default(false)
+  acceptTerms            Boolean?          @default(false)
   documentType           String?
   addresses              Address[]
   cart                   Cart?
@@ -36,13 +36,17 @@ model User {
   reviews                Review[]
   wishlist               Wishlist?
   notifications          Notifications[]
+  userMetrics            UserMetric[]
+  dashboardConfigs       DashboardConfig[]
 }
 
 model Product {
   id             String         @id @unique @default(uuid())
   title          String
-  price          Float
-  old_price      Float
+  price          Decimal        @db.Decimal(10, 2)
+  old_price      Decimal        @db.Decimal(10, 2)
+  cost_price     Decimal        @default(0) @db.Decimal(10, 2) // preço de custo
+  profit_margin  Decimal?       @db.Decimal(10, 2) // margem de lucro
   rating         Int?
   promotion_time Int?
   description    String
@@ -72,6 +76,7 @@ model Product {
   Category       Category?      @relation(fields: [categoryId], references: [id])
   reviews        Review[]
   wishlistItem   WishlistItem[]
+  stockEvents    StockEvent[]
 }
 
 model Image {
@@ -109,16 +114,17 @@ model Address {
 model Order {
   id                 String         @id @unique @default(uuid())
   userId             String
-  total_amount       Float
+  total_amount       Decimal        @db.Decimal(10, 2)
   status             OrderStatus
+  payment_status     PaymentStatus  @default(pending)
   payment_method     String
-  total_quantity     Float
+  total_quantity     Int
   addressId          String
   tracking_number    String?
   estimated_delivery DateTime?
   notes              String?
   coupon_code        String?
-  discount_amount    Float?
+  discount_amount    Decimal        @db.Decimal(10, 2)
   paymentDetailsId   String?
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
@@ -126,6 +132,7 @@ model Order {
   paymentDetail      PaymentDetail? @relation(fields: [paymentDetailsId], references: [id])
   user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   orderItems         OrderItems[]
+  transactions       Transaction[]
 }
 
 model OrderItems {
@@ -134,7 +141,7 @@ model OrderItems {
   productId String
   userId    String
   quantity  Int
-  price     Float
+  price     Decimal  @db.Decimal(10, 2)
   options   Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -158,17 +165,17 @@ model Review {
 }
 
 model Coupon {
-  id             String   @id @unique @default(uuid())
-  code           String   @unique
+  id             String     @id @unique @default(uuid())
+  code           String     @unique
   discount_value Int
-  min_purchase   Float?
+  min_purchase   Decimal?   @db.Decimal(10, 2)
   max_usage      Int?
-  used_count     Int      @default(0)
+  used_count     Int        @default(0)
   end_date       DateTime
-  isActive       Boolean  @default(true)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  discount_type  Int
+  isActive       Boolean    @default(true)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  discount_type  CouponType
   start_date     Int
 }
 
@@ -207,25 +214,32 @@ model WishlistItem {
 }
 
 model Cart {
-  id        String     @id @unique @default(uuid())
-  userId    String     @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items     CartItem[]
+  id             String     @id @unique @default(uuid())
+  userId         String     @unique
+  totalAmount    Decimal    @default(0) @db.Decimal(10, 2)
+  totalItems     Int        @default(0)
+  hasDiscount    Boolean    @default(false)
+  discountAmount Decimal    @default(0) @db.Decimal(10, 2)
+  appliedCoupon  String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items          CartItem[]
 }
 
 model CartItem {
-  id        String   @id @unique @default(uuid())
-  cartId    String
-  productId String
-  quantity  Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  color     String[]
-  size      String[]
-  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id         String   @id @unique @default(uuid())
+  cartId     String
+  productId  String
+  quantity   Int
+  price      Decimal  @db.Decimal(10, 2) // Preço unitário no momento da adição
+  totalPrice Decimal  @db.Decimal(10, 2) // Preço × quantidade
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  color      String[]
+  size       String[]
+  cart       Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model PaymentDetail {
@@ -235,7 +249,7 @@ model PaymentDetail {
   status         String
   last_four      String?
   card_type      String?
-  amount         Float
+  amount         Decimal  @db.Decimal(10, 2)
   currency       String   @default("BRL")
   receipt_url    String?
   createdAt      DateTime @default(now())
@@ -386,6 +400,149 @@ model Notifications {
   updatedAt DateTime @updatedAt
 }
 
+// NOVOS MODELOS PARA DASHBOARD E BALANÇO
+
+model Transaction {
+  id          String          @id @unique @default(uuid())
+  amount      Decimal         @db.Decimal(10, 2)
+  type        TransactionType
+  description String?
+  category    String?
+  orderId     String?
+  order       Order?          @relation(fields: [orderId], references: [id])
+  date        DateTime        @default(now())
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model BalanceSummary {
+  id          String     @id @unique @default(uuid())
+  periodType  PeriodType
+  periodValue String // "2024", "2024-05", "2024-W18", "2024-05-01", "all"
+  startDate   DateTime
+  endDate     DateTime
+  totalSales  Decimal    @db.Decimal(12, 2)
+  totalCost   Decimal    @db.Decimal(12, 2)
+  profit      Decimal    @db.Decimal(12, 2)
+  orderCount  Int
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model SalesStat {
+  id                String     @id @unique @default(uuid())
+  date              DateTime   @default(now()) // Data de referência
+  periodType        PeriodType
+  totalRevenue      Decimal    @db.Decimal(12, 2)
+  totalOrders       Int
+  averageOrderValue Decimal    @db.Decimal(10, 2)
+  conversionRate    Decimal?   @db.Decimal(5, 2) // Porcentagem
+  visits            Int? // Visitas ao site
+  newCustomers      Int? // Novos clientes no período
+  topProducts       Json? // Lista dos produtos mais vendidos
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model OperationalCost {
+  id          String        @id @unique @default(uuid())
+  name        String
+  amount      Decimal       @db.Decimal(10, 2)
+  type        CostType
+  frequency   CostFrequency
+  date        DateTime
+  description String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model StockEvent {
+  id          String         @id @unique @default(uuid())
+  productId   String
+  product     Product        @relation(fields: [productId], references: [id])
+  quantity    Int // Positivo para entrada, negativo para saída
+  type        StockEventType
+  reference   String? // Referência para pedido, ajuste manual, etc.
+  notes       String?
+  costPerUnit Decimal?       @db.Decimal(10, 2)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model MarketingCampaign {
+  id          String         @id @unique @default(uuid())
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  budget      Decimal        @db.Decimal(10, 2)
+  spent       Decimal        @default(0) @db.Decimal(10, 2)
+  revenue     Decimal        @default(0) @db.Decimal(10, 2)
+  orders      Int            @default(0)
+  clicks      Int            @default(0)
+  conversions Int            @default(0)
+  status      CampaignStatus
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model UserMetric {
+  id                String          @id @unique @default(uuid())
+  userId            String
+  user              User            @relation(fields: [userId], references: [id])
+  totalSpent        Decimal         @default(0) @db.Decimal(12, 2)
+  orderCount        Int             @default(0)
+  averageOrderValue Decimal         @default(0) @db.Decimal(10, 2)
+  lastPurchaseDate  DateTime?
+  segment           CustomerSegment @default(NEW)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model Tax {
+  id          String            @id @unique @default(uuid())
+  name        String
+  rate        Decimal           @db.Decimal(5, 2) // Porcentagem
+  description String?
+  isActive    Boolean           @default(true)
+  appliesTo   ProductCategory[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model ProductCategory {
+  id        String   @id @unique @default(uuid())
+  taxId     String
+  tax       Tax      @relation(fields: [taxId], references: [id])
+  category  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DashboardConfig {
+  id          String   @id @unique @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  layout      Json // Configuração do layout do dashboard
+  favorites   String[] // Métricas favoritas
+  hiddenItems String[] // Itens ocultos
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FinancialLog {
+  id          String   @id @unique @default(uuid())
+  type        String // "sale", "refund", "expense", etc.
+  amount      Decimal  @db.Decimal(10, 2)
+  description String?
+  date        DateTime @default(now())
+  reference   String? // ID da ordem, produto, etc.
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ENUMS
+
 enum AccountType {
   useradmin
   userdefault
@@ -393,8 +550,8 @@ enum AccountType {
 }
 
 enum AccountStatus {
-  ativo
-  inativo
+  active
+  inactive
 }
 
 enum OrderStatus {
@@ -404,8 +561,78 @@ enum OrderStatus {
   cancel
 }
 
+enum PaymentStatus {
+  pending
+  paid
+  refunded
+  partially_refunded
+  failed
+}
+
 enum AddressType {
   shipping
   billing
   both
+}
+
+enum TransactionType {
+  SALE
+  REFUND
+  EXPENSE
+  OTHER_INCOME
+}
+
+enum PeriodType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  ANNUAL
+  ALL_TIME
+}
+
+enum CostType {
+  FIXED // Custos fixos como aluguel, salários
+  VARIABLE // Custos que variam como marketing
+  SHIPPING // Custos de envio
+  TAX // Impostos
+  OTHER
+}
+
+enum CostFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  ANNUAL
+  ONE_TIME
+}
+
+enum StockEventType {
+  PURCHASE
+  SALE
+  RETURN
+  ADJUSTMENT
+  LOSS
+}
+
+enum CampaignStatus {
+  PLANNED
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum CustomerSegment {
+  NEW
+  RETURNING
+  LOYAL
+  VIP
+  AT_RISK
+  INACTIVE
+}
+
+enum CouponType {
+  FIXED
+  PERCENTAGE
 }

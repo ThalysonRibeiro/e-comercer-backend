@@ -1,9 +1,17 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateCartDto {
   @IsNotEmpty()
   @IsString()
   userId: string;
+
+  @IsOptional()
+  @IsNumber()
+  price: number;
+
+  @IsOptional()
+  @IsNumber()
+  totalPrice: number;
 
   @IsOptional()
   @IsString()
@@ -22,4 +30,25 @@ export class CreateCartDto {
 
   @IsOptional()
   size: string[];
+
+
+  @IsOptional()
+  @IsNumber()
+  totalAmount: number;
+
+  @IsOptional()
+  @IsNumber()
+  totalItems: number;
+
+  @IsOptional()
+  @IsBoolean()
+  hasDiscount: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  discountAmount: number;
+
+  @IsOptional()
+  @IsString()
+  appliedCoupon: string;
 }

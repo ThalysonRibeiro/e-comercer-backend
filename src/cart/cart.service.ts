@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CartService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(createCartDto: CreateCartDto) {
     if (!createCartDto.userId) {
@@ -67,9 +67,9 @@ export class CartService {
         (item) =>
           item.productId === createCartDto.productId &&
           JSON.stringify(item.color) ===
-            JSON.stringify(createCartDto.color || []) &&
+          JSON.stringify(createCartDto.color || []) &&
           JSON.stringify(item.size) ===
-            JSON.stringify(createCartDto.size || []),
+          JSON.stringify(createCartDto.size || []),
       );
 
       if (!existingItem) {
@@ -81,6 +81,8 @@ export class CartService {
             quantity: createCartDto.quantity || 1,
             color: createCartDto.color || [],
             size: createCartDto.size || [],
+            price: createCartDto.price,
+            totalPrice: createCartDto.totalPrice,
           },
         });
       } else {

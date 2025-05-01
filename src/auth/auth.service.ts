@@ -59,7 +59,7 @@ export class AuthService {
         email: createUserDTO.email.trim(),
         name: createUserDTO.name,
         password: createUserDTO.password, // Idealmente, o password deve ser hashado
-        status: AccountStatus.ativo,
+        status: AccountStatus.active,
         type: AccountType.userdefault,
         cpf_or_cnpj: createUserDTO.cpf_or_cnpj.trim(),
         genero: createUserDTO.genero.trim(),
@@ -293,7 +293,7 @@ export class AuthService {
         email: createUserAdminDTO.email.trim(),
         name: createUserAdminDTO.name,
         password: createUserAdminDTO.password, // Idealmente, o password deve ser hashado
-        status: AccountStatus.ativo,
+        status: AccountStatus.active,
         type: AccountType.useradmin,
         cpf_or_cnpj: createUserAdminDTO.cpf_or_cnpj.trim(),
         genero: createUserAdminDTO.genero.trim(),
@@ -530,7 +530,7 @@ export class AuthService {
           name,
           googleId: sub,
           avatar: picture,
-          status: AccountStatus.ativo,
+          status: AccountStatus.active,
           type: AccountType.userdefault,
           cpf_or_cnpj: '',
           genero: '',
@@ -540,7 +540,7 @@ export class AuthService {
     }
 
     // Verificar se o usuário está ativo
-    if (user.status === AccountStatus.inativo) {
+    if (user.status === AccountStatus.active) {
       throw new UnauthorizedException(
         'Conta inativa. Entre em contato com o administrador.',
       );

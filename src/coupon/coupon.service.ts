@@ -2,10 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CouponType } from '@prisma/client';
 
 @Injectable()
 export class CouponService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(createCouponDto: CreateCouponDto) {
     try {
@@ -16,7 +17,9 @@ export class CouponService {
         data: {
           code: createCouponDto.code?.toLowerCase(),
           discount_value: createCouponDto.discount_value,
-          discount_type: createCouponDto.discount_type,
+          discount_type: createCouponDto.discount_type === 'FIXED'
+            ? CouponType.FIXED
+            : CouponType.PERCENTAGE,
           min_purchase: createCouponDto.min_purchase,
           max_usage: createCouponDto.max_usage,
           used_count: createCouponDto.used_count,
@@ -74,7 +77,9 @@ export class CouponService {
         data: {
           code: updateCouponDto.code?.toLowerCase(),
           discount_value: updateCouponDto.discount_value,
-          discount_type: updateCouponDto.discount_type,
+          discount_type: updateCouponDto.discount_type === 'FIXED'
+            ? CouponType.FIXED
+            : CouponType.PERCENTAGE,
           min_purchase: updateCouponDto.min_purchase,
           max_usage: updateCouponDto.max_usage,
           used_count: updateCouponDto.used_count,

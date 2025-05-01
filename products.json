@@ -1,0 +1,819 @@
+{
+  "products": [
+    {
+      "id": "8e5d44a3-6659-43b6-bd47-8075239ef287",
+      "title": "Playstation 4 + 2 Controles + Fc 25 + Fortinite + Efootball (Recondicionado)",
+      "price": 239000,
+      "old_price": 245099,
+      "rating": 0,
+      "promotion_time": 50,
+      "description": "Com seu console PlayStation 4 você terá entretenimento garantido todos os dias. Sua tecnologia foi criada para colocar novos desafios para jogadores novatos e especialistas. Com o console PlayStation 4, líder mundial de vendas por anos, você poderá desfrutar de horas de jogo e excelente navegabilidade para desfrutar de filmes, séries e conteúdo online. Não só isso, o controle DualShock combina recursos revolucionários e sem precedentes, preservando a precisão, conforto e exatidão em cada movimento. Adaptado às suas necessidades Salve as suas aplicações, fotos, vídeos e muito mais no disco rígido, que tem uma capacidade de 500 GB. Por ter um processador de 8 núcleos e um gráfico, fornecem uma experiência dinâmica, respostas ágeis e transições suaves de imagens de alta definição. Por outro lado, tem uma porta USB e saída HDMI, que permitem conectar acessórios e carregar a bateria do controle enquanto você joga.",
+      "products_sold": 5,
+      "endDate": "2025-06-15T11:18:53.010Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-2269",
+      "stock": 15,
+      "category": "ps4",
+      "brand": "sony",
+      "tags": ["gamer", "ps4"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "46d42b13-4af7-4c79-952e-4c81c18ab2d3",
+      "createdAt": "2025-04-26T11:18:53.012Z",
+      "updatedAt": "2025-04-26T13:49:45.054Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "bc9cd24d-0d05-457d-80c0-3ca52e88202d",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745666376/6008e5d44a3-6659-43b6-bd47-8075239ef287.webp.webp",
+          "productId": "8e5d44a3-6659-43b6-bd47-8075239ef287"
+        },
+        {
+          "id": "7e7a8bad-cf65-4d76-81db-c2bd17b66e5b",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745666376/1108e5d44a3-6659-43b6-bd47-8075239ef287.webp.webp",
+          "productId": "8e5d44a3-6659-43b6-bd47-8075239ef287"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "d270b87d-f0c8-4494-9616-0b9bb42aeac2",
+      "title": "Memórias Ram Sp Silicon Power, 2 X 8 Gb, Ddr4 3200mhz, Cl16",
+      "price": 38999,
+      "old_price": 45099,
+      "rating": 0,
+      "promotion_time": 50,
+      "description": "INFORMAÇÕES DO PRODUTO: - Produto: Memorias RAM SP Silicon Power, 2 x 8 GB, DDR4 3200mhz, CL16 - Marca: SP Silicon Power - Modelo: FBE-SU016GXLZU320BDBED CARACTERÍSTICAS: CONTEÚDO DO PACOTE: Se você precisar de mais informações ou estiver procurando por algum produto específico, faça sua consulta através desta publicação e um de nossos consultores lhe assistirá. Nossos produtos são novos e originais. Envio: de Miami, Flórida, EUA. Se já realizou seu pedido, lembre-se que pode nos contatar através da mensageria da plataforma. Para acompanhar o envio, acesse os detalhes da compra. Nosso horário de atendimento é: de segunda a sábado, das 8:00 às 20:00 (Horário de Miami).",
+      "products_sold": 5,
+      "endDate": "2025-06-15T11:14:23.680Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-8877",
+      "stock": 15,
+      "category": "memoria ram",
+      "brand": "x power",
+      "tags": ["gamer", "momoria ram"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "63a4b8b1-faf0-4791-a3eb-cdce350e203a",
+      "createdAt": "2025-04-26T11:14:23.682Z",
+      "updatedAt": "2025-04-26T11:32:25.250Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "9556a441-167c-4f7f-80f7-f9efa9c1075b",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745666095/377d270b87d-f0c8-4494-9616-0b9bb42aeac2.webp.webp",
+          "productId": "d270b87d-f0c8-4494-9616-0b9bb42aeac2"
+        },
+        {
+          "id": "e403ea17-6817-4dd6-a40c-5988aea78586",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745666095/629d270b87d-f0c8-4494-9616-0b9bb42aeac2.webp.webp",
+          "productId": "d270b87d-f0c8-4494-9616-0b9bb42aeac2"
+        },
+        {
+          "id": "e52c5cc5-0ca6-4d9b-ae7e-2cb6d27bdc07",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745666096/125d270b87d-f0c8-4494-9616-0b9bb42aeac2.webp.webp",
+          "productId": "d270b87d-f0c8-4494-9616-0b9bb42aeac2"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "60b3253f-534a-437d-81ca-29763e57b8da",
+      "title": "Memória Ram Para Pc Ddr4 3200Mhz Cl16 16Gb 1x16gb Kingston Fury Beast Kf432c16bb/16 Dimm Black Gamer",
+      "price": 27300,
+      "old_price": 30000,
+      "rating": 0,
+      "promotion_time": 50,
+      "description": "<p>A memória Kingston FURY Beast DDR4 proporciona um poderoso aumento de performance para jogos, edição de vídeo e renderização. Ela faz o overclock automático para a especificação de maior performance do módulo que seja suportada pelo sistema* e está pronta para Intel XMP e AMD Ryzen. Com o seu dissipador de calor de perfil baixo, a memória FURY Beast DDR4 permanece fria e pronta para o seu game. 100% testada na fábrica, é a atualização definitiva para seu computador. Os processadores/chipsets da Intel até a 7ª Geração não eram desenvolvidos para suportar módulos de memória DDR4 fabricados com chips DRAM de densidade 16Gbit. Verifique com o fabricante do sistema ou placa-mãe, caso o seu sistema possua processador Intel de 7ª geração e com o chipset da série 200, para obter uma BIOS atualizada para suportar DRAM de 16Gbit. Componentes mais antigos (6ª geração ou chipsets da série 100) não são compatíveis.</p><p>*A memória FURY Plug N Play funcionará nos sistemas DDR4 até a velocidade permitida pela BIOS do sistema do fabricante. PnP não pode aumentar a velocidade da memória do sistema além do que é permitido pela BIOS do fabricante. Os produtos FURY Plug N Play DDR4 são compatíveis com as especificações XMP 2.0, desse modo o overclock também pode ser conseguido habilitando o Perfil XMP integrado.</p><p> - Dissipador de calor de perfil baixo - Upgrade de alta performance - Intel XMP-ready - Compatível com AMD Ryzen - Velocidades de até 3733MHz * e capacidades do kit de até 128GB - Funcionalidade Plug and Play a 2666MHz*</p><p> Caracteristicas: - Marca: Kingston - Modelo: KF432C16BB/16</p><p>  Destaques:  - Dissipador de calor de perfil baixo  - Upgrade de alta performance  - Intel XMP-ready  - Pronto para AMD Ryzen</p><p>  Geral:  - Fator de forma: DDR4  - Velocidades*: 3200 MHz  - Latências: CL16  - Capacidades: 16GB</p><p> Ambiente: - Temperatura de operação: 0°C a 85°C</p><p>  Dimensões:  - 133,35 x 34,1 x 7,2 mm</p><p>Conteúdo da embalagem: - 1x Memória Kingston Fury Beast 16GB</p><p>Vendido por Heidler Imports</p><p> À vista R$ 273 Chegará grátis amanhã domingo</p><p>Comprando dentro da próxima  1 h   23 min </p><p>  Mais formas de entrega  Retire grátis a partir de segunda-feira em uma agência Mercado Livre</p> <p> Ver no mapa Estoque disponível</p><p> Armazenado e enviado pelo  Full</p><p>  Quantidade:  1 unidade  (+25 disponíveis)</p> <p>Comprar agora</p> <p>Adicionar ao carrinho MercadoLíder |+1000 vendas</p> <p> Devolução grátis. Você tem 30 dias a partir da data de recebimento. Compra GarantidaVai abrir em uma nova janela, receba o produto que está esperando ou devolvemos o dinheiro. 1 anos de garantia de fábrica. +5 Produtos </p><p>MercadoLíder Gold</p><p>É um dos melhores do site!</p><p>+1000</p><p>Vendas concluídas</p><p>Oferece um bom atendimento</p> <p>Entrega os produtos dentro do prazo    Ver mais produtos do vendedor  Outras opções de compra  R$  267  Melhor preço  12x R$26,11</p> <p>Chegará grátis entre 6 e 7/mai</p> <p>Retire grátis entre 6 e 7/mai em uma agência Mercado Livre</p> <p>+1000 vendas</p> <p>Comprar agora</p> <p>Adicionar ao carrinho</p> <p>Ver mais opções a partir deR$267Opções de Usados e Recondicionados</p> <p>Ver 1 opção de compraMeios de pagamentoLinha de Crédito</p> <p> Mercado Crédito Cartões de crédito</p> <p>Pague em até 12x!</p> <p> Hipercard Elo Visa Mastercard Cartões de débito</p> <p> Caixa Pix</p> <p> Pix Boleto bancário</p>",
+      "products_sold": 5,
+      "endDate": "2025-06-15T11:01:59.733Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-2806",
+      "stock": 15,
+      "category": "memoria ram",
+      "brand": "hypex",
+      "tags": ["gamer", "momoria ram"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "63a4b8b1-faf0-4791-a3eb-cdce350e203a",
+      "createdAt": "2025-04-26T11:01:59.735Z",
+      "updatedAt": "2025-04-26T11:32:25.250Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "0fc0f577-44fd-48c8-9b7c-b9a8dc0f47ba",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745665364/95160b3253f-534a-437d-81ca-29763e57b8da.webp.webp",
+          "productId": "60b3253f-534a-437d-81ca-29763e57b8da"
+        },
+        {
+          "id": "63a311eb-d1db-4bc7-a65d-219a1d243005",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745665365/45660b3253f-534a-437d-81ca-29763e57b8da.webp.webp",
+          "productId": "60b3253f-534a-437d-81ca-29763e57b8da"
+        },
+        {
+          "id": "ea9e2bf8-25af-45df-bd1b-f2db64b5d1c9",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745665366/67260b3253f-534a-437d-81ca-29763e57b8da.webp.webp",
+          "productId": "60b3253f-534a-437d-81ca-29763e57b8da"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "a397c492-4506-4395-aefd-21856ade84d3",
+      "title": "Placa-mãe Asus P/amd Am4 B550m-plus Tuf Gaming 4xddr4 Matx",
+      "price": 79690,
+      "old_price": 115690,
+      "rating": 0,
+      "promotion_time": 50,
+      "description": "Compatível com processadores AMD. Incorpore o socket Socket AM4. Com fator de forma mATX. Compatível com memória RAM DDR4. Possui o chipset Amd b550.",
+      "products_sold": 5,
+      "endDate": "2025-06-15T10:46:18.942Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-7982",
+      "stock": 15,
+      "category": "placa mae",
+      "brand": "placa mae",
+      "tags": ["gamer", "placa mae", "amd"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "1dfaff49-fb99-4a77-8cc4-5ac8e39f86ef",
+      "createdAt": "2025-04-26T10:46:18.943Z",
+      "updatedAt": "2025-04-30T10:21:08.117Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "697c9791-a797-4944-85d6-e5e34f7cdec5",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745664474/138a397c492-4506-4395-aefd-21856ade84d3.webp.webp",
+          "productId": "a397c492-4506-4395-aefd-21856ade84d3"
+        },
+        {
+          "id": "2dfb4a08-3edd-4264-88e5-94b3804c92d7",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745664475/655a397c492-4506-4395-aefd-21856ade84d3.webp.webp",
+          "productId": "a397c492-4506-4395-aefd-21856ade84d3"
+        },
+        {
+          "id": "17b00f53-931e-4df2-b9fc-fcbd404c892e",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745664476/619a397c492-4506-4395-aefd-21856ade84d3.webp.webp",
+          "productId": "a397c492-4506-4395-aefd-21856ade84d3"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a",
+      "title": "Z370m Aorus Gaming Lga 1151 Chipset Intel Z370 Gigabyte",
+      "price": 79699,
+      "old_price": 85699,
+      "rating": 35,
+      "promotion_time": 50,
+      "description": "Compatível com processadores Intel. Incorpore o socket Socket 1151. Compatível com memória RAM DDR4.",
+      "products_sold": 5,
+      "endDate": "2025-06-15T10:42:25.585Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-2089",
+      "stock": 15,
+      "category": "placa mae",
+      "brand": "placa mae",
+      "tags": ["gamer", "placa mae", "intel"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "1dfaff49-fb99-4a77-8cc4-5ac8e39f86ef",
+      "createdAt": "2025-04-26T10:42:25.587Z",
+      "updatedAt": "2025-04-30T10:21:08.117Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "24414a4d-06e1-4ff7-b31d-0c2379cb1be2",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745664228/465d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a.webp.webp",
+          "productId": "d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a"
+        },
+        {
+          "id": "462e1e6b-698c-4b81-8239-f28abc796e4f",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745664228/237d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a.webp.webp",
+          "productId": "d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a"
+        },
+        {
+          "id": "36213621-6c2d-45ee-abe6-64b4e6e37f0d",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745664229/179d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a.webp.webp",
+          "productId": "d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a"
+        },
+        {
+          "id": "ac696bdf-ce14-4c4b-a8d2-df8fc6565817",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745664229/900d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a.webp.webp",
+          "productId": "d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a"
+        },
+        {
+          "id": "4f2f895d-beff-4c65-a970-aa466dd2e63e",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745664230/269d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a.webp.webp",
+          "productId": "d7dd3dc9-8dc1-4158-80ef-cb88ba0e150a"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "80b123fa-6ac8-436d-b7bf-7dd0617c4f5f",
+      "title": "VGA Gigabyte Geforce Rtx 5070 Ti Aero Oc 16 GB Gdr7",
+      "price": 990600,
+      "old_price": 1090000,
+      "rating": 0,
+      "promotion_time": 50,
+      "description": "Esse componente eletrônico processa as informações que chegam ao dispositivo e as transforma em imagens ou vídeos para serem exibidos visualmente. É ideal para trabalhar com aplicativos gráficos, pois permite obter imagens mais nítidas. A Nvidia é a fabricante líder de placas de vídeo; sua qualidade garante uma experiência positiva no desenvolvimento do mecanismo gráfico do seu computador. Além disso, seus processadores usam tecnologia de ponta para que você possa desfrutar de um produto rápido e durável.",
+      "products_sold": 5,
+      "endDate": "2025-06-15T10:37:23.557Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-2079",
+      "stock": 15,
+      "category": "placa de video",
+      "brand": "placa de video",
+      "tags": ["gamer", "placa de video", "rtx"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "dca515f5-1eb8-4856-ae03-1523b7a015d0",
+      "createdAt": "2025-04-26T10:37:23.559Z",
+      "updatedAt": "2025-04-26T11:32:25.250Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "3e4adc7d-5109-4ba2-8106-5912cd172fde",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745663894/50080b123fa-6ac8-436d-b7bf-7dd0617c4f5f.webp.webp",
+          "productId": "80b123fa-6ac8-436d-b7bf-7dd0617c4f5f"
+        },
+        {
+          "id": "a2472bce-5114-472b-89d5-c810aa7cb69f",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745663895/83980b123fa-6ac8-436d-b7bf-7dd0617c4f5f.webp.webp",
+          "productId": "80b123fa-6ac8-436d-b7bf-7dd0617c4f5f"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "b91fc692-d5d2-42db-ac2c-38b4b788d034",
+      "title": "Placa De Vídeo Gigabyte Geforce Rtx 5070 Ti 16gb Gddr7",
+      "price": 699470,
+      "old_price": 752119,
+      "rating": 0,
+      "promotion_time": 50,
+      "description": "A Placa de Vídeo Gigabyte GeForce RTX 5070 Ti 16GB GDDR7 é a escolha ideal para gamers e criadores de conteúdo que buscam desempenho excepcional e qualidade gráfica superior. Com 16 GB de memória GDDR7 e uma interface de 256 bits, esta placa oferece uma experiência de jogo fluida e imersiva, permitindo que você jogue em resoluções de até 8K. Equipado com a tecnologia Windforce SFF, o sistema de refrigeração a ar garante que a placa opere em temperaturas ideais, mesmo durante longas sessões de uso intenso. A compatibilidade com DirectX e OpenGL assegura que você possa aproveitar os jogos mais recentes e as aplicações gráficas mais exigentes sem compromissos. Com quatro saídas de monitor, incluindo três DisplayPort 1.4a e uma HDMI 2.1a, a conectividade é ampla, permitindo múltiplas configurações de tela. O modelo GV-N507TWF3-16GD é projetado para se integrar perfeitamente com placas-mãe que possuem interface PCI-E 5.0, garantindo uma instalação simples e eficiente. A potência gráfica total de 750 W proporciona a energia necessária para suportar os jogos mais exigentes e aplicações de renderização. A Gigabyte GeForce RTX 5070 Ti é a solução perfeita para quem busca elevar sua experiência de jogo e produtividade a um novo patamar.",
+      "products_sold": 5,
+      "endDate": "2025-06-15T10:26:04.637Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-8915",
+      "stock": 15,
+      "category": "placa de video",
+      "brand": "placa de video",
+      "tags": ["gamer", "placa de video"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "dca515f5-1eb8-4856-ae03-1523b7a015d0",
+      "createdAt": "2025-04-26T10:26:04.638Z",
+      "updatedAt": "2025-04-26T11:32:25.250Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "9c4dfe31-6734-4349-8555-7d66f6713d1d",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745663247/208b91fc692-d5d2-42db-ac2c-38b4b788d034.webp.webp",
+          "productId": "b91fc692-d5d2-42db-ac2c-38b4b788d034"
+        },
+        {
+          "id": "d1ec2e0f-e41b-4635-a6f7-81d7670541b7",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745663248/15b91fc692-d5d2-42db-ac2c-38b4b788d034.webp.webp",
+          "productId": "b91fc692-d5d2-42db-ac2c-38b4b788d034"
+        },
+        {
+          "id": "6d6548b5-60d8-4471-a95a-07bbc1968787",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745663248/3b91fc692-d5d2-42db-ac2c-38b4b788d034.webp.webp",
+          "productId": "b91fc692-d5d2-42db-ac2c-38b4b788d034"
+        },
+        {
+          "id": "8ab321cb-c04b-4448-890c-1e49f52eb57e",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745663455/883b91fc692-d5d2-42db-ac2c-38b4b788d034.webp.webp",
+          "productId": "b91fc692-d5d2-42db-ac2c-38b4b788d034"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "56f2f48f-fc57-412d-838d-01922e881e44",
+      "title": "Processador AMD Ryzen 7 5700G 100-100000263BOX de 8 núcleos e 4.6GHz de frequência com gráfica integrada",
+      "price": 119709,
+      "old_price": 129709,
+      "rating": 0,
+      "promotion_time": 50,
+      "description": "Características: * Marca: AMD * Modelo: 100-100000263BOX Especificações: * Nº de núcleos de CPU: 8 * Nº de threads: 16 * Nº de núcleos de GPU: 8 * Clock básico: 3.8GHz * Clock de Max Boost: Até 4.6GHz * Total de Cache L2: 4MB * Cachê L3 total: 16MB * Desbloqueado: Sim * CMOS: TSMC 7nm FinFET * Pacote: AM4 * Versão PCI Express: PCIe® 3.0 * Solução térmica: Wraith Stealth * TDP / TDP Padrão: 65W * cTDP: 45-65W * Temps máx: 95°C Memória: * Velocidade máxima da memória: Até 3200MHz * Tipo de memória: DDR4 * Canais de memória: 2 Especificações da placa de vídeo: * Frequência gráfica: 2000 MHz * Modelo gráfico: Radeon Graphics * Contagem de núcleos gráficos: 8",
+      "products_sold": 5,
+      "endDate": "2025-06-15T10:14:55.964Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-3323",
+      "stock": 15,
+      "category": "processador",
+      "brand": "amd",
+      "tags": ["gamer", "processador"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "7c9ad992-1c6d-45f8-a0de-d7bca0d7163b",
+      "createdAt": "2025-04-26T10:14:55.965Z",
+      "updatedAt": "2025-04-26T11:32:48.923Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "0dfc3dc5-dc4f-4a85-942a-9b548f450d72",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745662931/10856f2f48f-fc57-412d-838d-01922e881e44.webp.webp",
+          "productId": "56f2f48f-fc57-412d-838d-01922e881e44"
+        },
+        {
+          "id": "8c826ed4-c932-4183-a124-df347ce78d9c",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745662931/27856f2f48f-fc57-412d-838d-01922e881e44.webp.webp",
+          "productId": "56f2f48f-fc57-412d-838d-01922e881e44"
+        },
+        {
+          "id": "112a964f-eac9-4443-b5d1-624f523d235e",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745662932/33056f2f48f-fc57-412d-838d-01922e881e44.webp.webp",
+          "productId": "56f2f48f-fc57-412d-838d-01922e881e44"
+        },
+        {
+          "id": "0752b81c-2e1d-42c2-8fc6-0a82cd48b5c6",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745662932/99356f2f48f-fc57-412d-838d-01922e881e44.webp.webp",
+          "productId": "56f2f48f-fc57-412d-838d-01922e881e44"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "2d194b6d-0ebd-4eab-be2d-4142579d8d79",
+      "title": "Processador gamer Intel Core i7-6700 CM8066201920103 de 4 núcleos e 4GHz de frequência com gráfica integrada",
+      "price": 48709,
+      "old_price": 51509,
+      "rating": 0,
+      "promotion_time": 50,
+      "description": "Modelo: i7-6700 Produto de alto desempenho e linha exclusiva para profissionais que executam muitos programas ao mesmo tempo. Memória cache de 8 MB, rápida e volátil. Processador gráfico Intel HD Graphics 530. Suporta memória RAM DDR3L. Sua potência é de 65 W. Possui Hyper-Threading que favorece a execução de programas de maneira simultânea, ao dividir o processador físico em dois processadores lógicos. Soquetes compatíveis: FCLGA1151",
+      "products_sold": 5,
+      "endDate": "2025-06-15T09:58:48.599Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-7255",
+      "stock": 15,
+      "category": "processador",
+      "brand": "intel",
+      "tags": ["gamer", "processador"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": false,
+      "categoryId": "7c9ad992-1c6d-45f8-a0de-d7bca0d7163b",
+      "createdAt": "2025-04-26T09:58:48.607Z",
+      "updatedAt": "2025-04-26T11:32:25.250Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "fac0826f-44b4-4e9b-9add-afbda547fd88",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745661626/4652d194b6d-0ebd-4eab-be2d-4142579d8d79.webp.webp",
+          "productId": "2d194b6d-0ebd-4eab-be2d-4142579d8d79"
+        },
+        {
+          "id": "3615a81d-865e-4d86-8a84-91f94c295b0b",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745661626/2812d194b6d-0ebd-4eab-be2d-4142579d8d79.webp.webp",
+          "productId": "2d194b6d-0ebd-4eab-be2d-4142579d8d79"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "9fa4f611-042f-4650-8093-7002ced4a15a",
+      "title": "Teclado Gamer Mecanico Sem Fio RGB Attack Shark K86 com Tela Multimidia",
+      "price": 44440,
+      "old_price": 56537,
+      "rating": 40,
+      "promotion_time": 50,
+      "description": "Teclado Mecânico Sem Fio ATTACK SHARK K86 - Desempenho Superior e Estilo! Descubra o Teclado Mecânico ATTACK SHARK K86! Experimente a nova era da digitação com este teclado mecânico sem fio, projetado para elevar sua performance em jogos e trabalho. Com um design compacto de 75% e um visor colorido TFT, o K86 combina funcionalidade e elegância. Características Principais: Visor Colorido TFT Inteligente: Monitore facilmente o status do teclado, visualize GIFs personalizados e verifique informações como modo de conexão e nível de bateria. Conexões Versáteis: A tecnologia Bluetooth cinco ponto zero e a conexão de dois vírgula quatro gigahertz, além da conexão USB tipo C, garantem uma versatilidade impressionante. Com uma bateria interna de quatro mil mAh, você terá liberdade para usar por longas horas sem interrupções. Layout ANSI de Oitenta e Seis Teclas: Com um design otimizado que mantém as teclas essenciais, o K86 oferece um equilíbrio perfeito entre funcionalidade e economia de espaço. Interruptores Blue Whale: Proporcionando uma força de atuação de quarenta e dois gramas e pré-curso de um vírgula oito milímetros, esses interruptores garantem uma resposta rápida, ideal para longas sessões de uso. Montagem de Junta com Espuma de Absorção de Som: Sinta a diferença com um sistema de montagem que minimiza os ruídos, entregando um som agradável a cada tecla pressionada. Iluminação RGB Personalizável: Com dezoito modos de iluminação e efeitos laterais, o teclado K86 se adapta ao seu estilo. Personalize cores e macros facilmente com o software. Não Fique de Fora! Adquira agora o Teclado Mecânico Sem Fio ATTACK SHARK K86 eleve seu nível GAMER para o hard e transforme sua experiência de digitação! Compre Agora e descubra tudo o que este teclado pode oferecer!",
+      "products_sold": 5,
+      "endDate": "2025-06-13T07:12:07.543Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-3045",
+      "stock": 15,
+      "category": "headset",
+      "brand": "attack shark",
+      "tags": ["gamer", "teclado", "attack shark"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": true,
+      "categoryId": "c754669a-83de-413f-bffe-0cf1dd46b617",
+      "createdAt": "2025-04-24T07:12:07.546Z",
+      "updatedAt": "2025-04-26T10:08:13.559Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "87eed416-a8c1-4fc5-b856-a0b30143ca3b",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745479868/479fa4f611-042f-4650-8093-7002ced4a15a.jpg.jpg",
+          "productId": "9fa4f611-042f-4650-8093-7002ced4a15a"
+        },
+        {
+          "id": "c284862b-b450-413d-852f-f6f61969d54f",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745479868/5509fa4f611-042f-4650-8093-7002ced4a15a.jpg.jpg",
+          "productId": "9fa4f611-042f-4650-8093-7002ced4a15a"
+        },
+        {
+          "id": "a2941b5a-9863-40bb-9b81-5d41ea1256c5",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745479869/8249fa4f611-042f-4650-8093-7002ced4a15a.jpg.jpg",
+          "productId": "9fa4f611-042f-4650-8093-7002ced4a15a"
+        },
+        {
+          "id": "88db616e-0138-4784-b31e-047d5a2c3685",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1745479870/9229fa4f611-042f-4650-8093-7002ced4a15a.jpg.jpg",
+          "productId": "9fa4f611-042f-4650-8093-7002ced4a15a"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "433dbd9a-0ac9-45f4-afc5-458be628dc09",
+          "userId": "cm9ogjuq80000f84o6s4gpy9g",
+          "productId": "9fa4f611-042f-4650-8093-7002ced4a15a",
+          "rating": 4,
+          "comment": "Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais",
+          "title": "THALYSON RAFAEL BARBOSA RIBEIRO",
+          "images": [],
+          "createdAt": "2025-04-24T09:05:05.293Z",
+          "updatedAt": "2025-04-24T11:56:41.719Z"
+        }
+      ]
+    },
+    {
+      "id": "62740448-e505-49ec-8974-83e914627fcf",
+      "title": "Headset Gamer Sem Fio Logitech G733 7.1 Dolby Surround com Tecnologia Blue VO!CE, RGB LIGHTSYNC, Drivers de Áudio Avançados e Bateria Recarregável para PC e PlayStation - Branco",
+      "price": 84999,
+      "old_price": 90999,
+      "rating": 40,
+      "promotion_time": 5,
+      "description": "Conheça o G733, um Headset Gamer desenvolvido para se adequar ao seu estilo. Adote a tecnologia sem fio LIGHTSPEED de 2,4 GHz, alcance de até 20 m e até 29 horas de duração da bateria. Personalize a aparência e o som em tempo real através do software Logitech G HUB com os filtros de voz Blue VO!CE e iluminação RGB LIGHTSYNC frontal de zona dupla. O G733 possui tecnologias avançadas de áudio, incluindo drivers de áudio PRO-G de 40 mm, câmaras acústicas internas e tecnologia DTS Headphone:X 2.0*. Jogue com conforto com uma faixa de cabeça confortável e reversível, almofadas dos fones de ouvido em espuma viscoelástica de camada dupla e um headset realmente leve, que pesa apenas 278 g",
+      "products_sold": 17,
+      "endDate": "2025-04-22T03:30:27.585Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-6199",
+      "stock": 10,
+      "category": "headset",
+      "brand": "logitech",
+      "tags": ["gamer", "headset", "logitech g"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": true,
+      "categoryId": "4875fd6c-be3b-46a4-afb9-93035c1f7534",
+      "createdAt": "2025-04-17T03:30:27.591Z",
+      "updatedAt": "2025-04-24T09:04:51.717Z",
+      "emphasis": true,
+      "color": ["branco", "azul", "lilás", "preto"],
+      "size": [],
+      "images": [
+        {
+          "id": "b8a43032-1b14-402a-a93a-a2fa90a1a268",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744860694/16362740448-e505-49ec-8974-83e914627fcf.jpg.jpg",
+          "productId": "62740448-e505-49ec-8974-83e914627fcf"
+        },
+        {
+          "id": "d0ad758d-6a12-46e5-b394-a05c0b7ba59d",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744860694/61262740448-e505-49ec-8974-83e914627fcf.jpg.jpg",
+          "productId": "62740448-e505-49ec-8974-83e914627fcf"
+        },
+        {
+          "id": "4355a451-6f7b-4fdb-9c0c-4588996a3db3",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744860800/58662740448-e505-49ec-8974-83e914627fcf.jpg.jpg",
+          "productId": "62740448-e505-49ec-8974-83e914627fcf"
+        },
+        {
+          "id": "ab337dfb-a2b1-43cf-94d6-823a76ad6268",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744860800/59362740448-e505-49ec-8974-83e914627fcf.jpg.jpg",
+          "productId": "62740448-e505-49ec-8974-83e914627fcf"
+        },
+        {
+          "id": "cc451b0a-e174-4f36-9584-15d52f3e6829",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744860801/88662740448-e505-49ec-8974-83e914627fcf.jpg.jpg",
+          "productId": "62740448-e505-49ec-8974-83e914627fcf"
+        },
+        {
+          "id": "51b7dcb1-8e71-4147-8d74-14327cfc41d3",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744860802/36362740448-e505-49ec-8974-83e914627fcf.jpg.jpg",
+          "productId": "62740448-e505-49ec-8974-83e914627fcf"
+        },
+        {
+          "id": "6e9d6e44-74ea-495a-8bd2-6148a7b079e3",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744860803/1762740448-e505-49ec-8974-83e914627fcf.jpg.jpg",
+          "productId": "62740448-e505-49ec-8974-83e914627fcf"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "e4c38e84-e8c3-4402-b33a-6ace75911a85",
+          "userId": "cm9ogjuq80000f84o6s4gpy9g",
+          "productId": "62740448-e505-49ec-8974-83e914627fcf",
+          "rating": 4,
+          "comment": "Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais",
+          "title": "THALYSON RAFAEL BARBOSA RIBEIRO",
+          "images": [],
+          "createdAt": "2025-04-24T09:04:51.713Z",
+          "updatedAt": "2025-04-24T11:56:41.719Z"
+        }
+      ]
+    },
+    {
+      "id": "109617ad-e621-4d80-bdc8-62effd75e1a6",
+      "title": "Microfone Gamer Hyperx Quadcast S Hmiq1s-xx-rg/g",
+      "price": 78900,
+      "old_price": 84000,
+      "rating": 40,
+      "promotion_time": 90,
+      "description": "O QuadCast é o microfone independente ideal com todos os recursos para o streamer ou podcaster que busca um microfone com som de qualidade. O QuadCast vem com sua própria base 'shock mount' antivibração para ajudar a reduzir os ruídos do dia a dia e um filtro integrado para abafar sons percussivos desagradáveis. Saiba instantaneamente o status do seu microfone com o indicador em LED e simplesmente toque para colocá-lo em mudo para evitar interrupções na transmissão. Com quatro padrões polares selecionáveis, este microfone está preparado para quase qualquer situação de gravação e também apresenta um botão de controle de ganho localizado em local conveniente para ajustar rapidamente a sensibilidade de entrada do microfone. O adaptador de montagem incluído adapta-se a tamanhos de fio de 3/8 e 5/8 polegadas, sendo compatível com a maioria dos pedestais. O modelo QuadCast S proporciona iluminação RGB e efeitos dinâmicos personalizáveis através do software HyperX NGENUITY.",
+      "products_sold": 55,
+      "endDate": "2025-07-14T12:38:11.351Z",
+      "bigsale": true,
+      "sku": "SKU-PRD-563",
+      "stock": 10,
+      "category": "microfone",
+      "brand": "acer",
+      "tags": ["gamer", "microfone"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": true,
+      "categoryId": "2e5d0334-4c0f-4d0f-973c-df3ef11de28b",
+      "createdAt": "2025-04-15T12:38:11.353Z",
+      "updatedAt": "2025-04-26T10:20:38.851Z",
+      "emphasis": true,
+      "color": ["branco"],
+      "size": [],
+      "images": [
+        {
+          "id": "551a4976-db27-4882-be36-23f4592c79f1",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744720709/109617ad-e621-4d80-bdc8-62effd75e1a6.webp.webp",
+          "productId": "109617ad-e621-4d80-bdc8-62effd75e1a6"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "4540243a-b753-4d20-9664-f9381ba9dbe1",
+          "userId": "cm9ogjuq80000f84o6s4gpy9g",
+          "productId": "109617ad-e621-4d80-bdc8-62effd75e1a6",
+          "rating": 4,
+          "comment": "Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais",
+          "title": "THALYSON RAFAEL BARBOSA RIBEIRO",
+          "images": [],
+          "createdAt": "2025-04-24T09:04:36.763Z",
+          "updatedAt": "2025-04-24T11:56:41.719Z"
+        }
+      ]
+    },
+    {
+      "id": "a07c8168-6893-4ba1-913a-ba8fe21ea583",
+      "title": "Notebook gamer Aspire Nitro 5 AN515-57 15.6 preto/vermelho 8GB de Ram - 512GB SSD - Intel Core i5",
+      "price": 470099,
+      "old_price": 500099,
+      "rating": 40,
+      "promotion_time": 90,
+      "description": "Versão do sistema operacional: Gutta Nome do sistema operacional: Linux Capacidade de disco SSD: 512 GB Memória RAM: 8 GB Placa gráfica: NVIDIA GeForce GTX 1650 Com tela tátil: Não Resolução da tela: 1920 px x 1080 px Conexão Wi-Fi e bluetooth. Possui pad numérico. Modo de som Stereo. Com teclado retroiluminado.",
+      "products_sold": 99,
+      "endDate": "2025-07-14T12:30:48.412Z",
+      "bigsale": false,
+      "sku": "SKU-PRD-888",
+      "stock": 1,
+      "category": "notebook",
+      "brand": "acer",
+      "tags": ["gamer", "notebook"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": true,
+      "categoryId": "a98c5b98-e540-4d17-ae03-1897b0bd6932",
+      "createdAt": "2025-04-15T12:30:48.421Z",
+      "updatedAt": "2025-04-24T09:04:23.189Z",
+      "emphasis": true,
+      "color": [],
+      "size": [],
+      "images": [
+        {
+          "id": "972a5d2b-7735-4181-8156-83082d776262",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744720289/a07c8168-6893-4ba1-913a-ba8fe21ea583.png.png",
+          "productId": "a07c8168-6893-4ba1-913a-ba8fe21ea583"
+        },
+        {
+          "id": "21539816-de1a-4f82-acdb-bfd9c57612cc",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744720290/a07c8168-6893-4ba1-913a-ba8fe21ea583.webp.webp",
+          "productId": "a07c8168-6893-4ba1-913a-ba8fe21ea583"
+        },
+        {
+          "id": "5950718c-2065-4107-acba-c2e8774ecbcc",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744720442/a07c8168-6893-4ba1-913a-ba8fe21ea583.webp.webp",
+          "productId": "a07c8168-6893-4ba1-913a-ba8fe21ea583"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "f25813e6-b0ff-41db-824f-775a49579f51",
+          "userId": "cm9ogjuq80000f84o6s4gpy9g",
+          "productId": "a07c8168-6893-4ba1-913a-ba8fe21ea583",
+          "rating": 4,
+          "comment": "Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais",
+          "title": "THALYSON RAFAEL BARBOSA RIBEIRO",
+          "images": [],
+          "createdAt": "2025-04-24T09:04:23.183Z",
+          "updatedAt": "2025-04-24T11:56:41.719Z"
+        }
+      ]
+    },
+    {
+      "id": "65d14494-1249-487a-a25c-bbbbbbe0c2d0",
+      "title": "Smartphone Motorola Moto g75 5G music edition Moto Buds - 256GB 16GB (8GB RAM+8GB Ram Boost) e 50MP Sony Lytia 600 Camera Moto AI Ultrarresistencia militar - Cinza Vegan Leather",
+      "price": 79999,
+      "old_price": 85001,
+      "rating": 40,
+      "promotion_time": 90,
+      "description": "Sistema Operacional: Android 14 Processador: Snapdragon 6 Gen 3 (2,4 GHz Octa-Core) | Adreno 710 Tela de 6,8 FHD+ (1080 x 2400) | IPS | 120 Hz |1000 Nits Bateria: 5000 mAh Carregador: TurboPower 33W Sensores: Acelerômetro, Proximidade, Luz Ambiente, Giroscópio, Bússola, Desbloqueio Facial e Impressão Digital na tela. Peso: 166g Altura (mm): 165,95 Largura (mm): 77,10 Profundidade (mm): 8,04 Entradas: USB-C Câmera Principal: Sensor Sony - LYTIA™ 600 | 50 MP Câmera Híbrida Ultra-wide & Macro: 8 MP Zoom Digital: 10x Flash: Sim | LED Recurso de Câmera: | Night Vision | Captura Dupla | Câmera Lenta | Adobe Scanner | Audio Zoom | Google Auto Enhance | Cabine de Fotos | Lente Tilt-shift Câmera Frontal: 16 MP Captura de vídeo: Ultra HD 4K (30 fps) Conectividade: 5G NFC: Sim Nano SIM (4FF), e-SIM / Entrada 1: Chip 1 / Entrada 2: SD Card Wi-fi: 802.11 a/b/g/n/ac/ax | 2,4 GHz, 5 GHz e 6 GHz | Wi-Fi 6E Bluetooth 5.4 Serviços de Localização: GPS: GPS, AGPS, LTEPP, Glonass, GALILEO, Beidou, QZSS",
+      "products_sold": 98,
+      "endDate": "2025-07-07T23:24:18.513Z",
+      "bigsale": false,
+      "sku": "SKU-PRD-3472",
+      "stock": 10,
+      "category": "computadores",
+      "brand": "motorola",
+      "tags": ["gamer", "celulares"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": true,
+      "categoryId": "212cf1c7-5c08-4554-9e05-2dd516376d08",
+      "createdAt": "2025-04-08T23:24:18.515Z",
+      "updatedAt": "2025-04-24T09:03:39.360Z",
+      "emphasis": true,
+      "color": ["cinza", "azul", "preto"],
+      "size": ["S", "M", "L"],
+      "images": [
+        {
+          "id": "de28da89-85aa-433d-b338-a6f1fe6e02da",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744719605/image/65d14494-1249-487a-a25c-bbbbbbe0c2d0.webp.webp",
+          "productId": "65d14494-1249-487a-a25c-bbbbbbe0c2d0"
+        },
+        {
+          "id": "729a166a-399a-40c2-b4bf-1ff16257f00d",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744719614/image/65d14494-1249-487a-a25c-bbbbbbe0c2d0.webp.webp",
+          "productId": "65d14494-1249-487a-a25c-bbbbbbe0c2d0"
+        },
+        {
+          "id": "4ad9265c-0e3a-4324-a393-ad213ea7230f",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744719887/image/65d14494-1249-487a-a25c-bbbbbbe0c2d0.webp.webp",
+          "productId": "65d14494-1249-487a-a25c-bbbbbbe0c2d0"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "6df9b3b3-23ff-4229-8546-b1270aaf8c5f",
+          "userId": "cm9ogjuq80000f84o6s4gpy9g",
+          "productId": "65d14494-1249-487a-a25c-bbbbbbe0c2d0",
+          "rating": 4,
+          "comment": "Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais",
+          "title": "THALYSON RAFAEL BARBOSA RIBEIRO",
+          "images": [],
+          "createdAt": "2025-04-24T09:03:39.349Z",
+          "updatedAt": "2025-04-24T11:56:41.719Z"
+        }
+      ]
+    },
+    {
+      "id": "5be30669-7c7e-47ec-93d3-c5d320176527",
+      "title": "Mouse Gamer Redragon Cobra, Chroma RGB, 10000DPI, 7 Botões, Preto",
+      "price": 14999,
+      "old_price": 16000,
+      "rating": 43,
+      "promotion_time": 90,
+      "description": "Transforme seu setup em um verdadeiro espetáculo visual! Com uma ampla gama de cores e efeitos personalizáveis, você poderá criar a atmosfera perfeita para suas sessões de jogo ou trabalho.",
+      "products_sold": 39,
+      "endDate": "2025-05-01T00:00:00.000Z",
+      "bigsale": false,
+      "sku": "SKU-PRD-2643",
+      "stock": 10,
+      "category": "mouses",
+      "brand": "redragon",
+      "tags": ["gamer", "mouse"],
+      "weight": 1,
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "isActive": true,
+      "featured": true,
+      "categoryId": "212cf1c7-5c08-4554-9e05-2dd516376d08",
+      "createdAt": "2025-04-08T23:19:42.760Z",
+      "updatedAt": "2025-04-24T09:02:48.586Z",
+      "emphasis": true,
+      "color": ["cinza", "azul", "preto"],
+      "size": ["S", "M"],
+      "images": [
+        {
+          "id": "34232df0-a7cf-49d9-aa1e-837381085db8",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744719099/image/5be30669-7c7e-47ec-93d3-c5d320176527.webp.webp",
+          "productId": "5be30669-7c7e-47ec-93d3-c5d320176527"
+        },
+        {
+          "id": "400ec100-7e68-418a-9b94-3a35492e2bbc",
+          "image": "https://res.cloudinary.com/duxqtpghn/image/upload/v1744719705/image/5be30669-7c7e-47ec-93d3-c5d320176527.webp.webp",
+          "productId": "5be30669-7c7e-47ec-93d3-c5d320176527"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "a5110ea2-a63e-4856-89b9-377c7dbf1135",
+          "userId": "cm9i0niim0000f8tgubmgao1t",
+          "productId": "5be30669-7c7e-47ec-93d3-c5d320176527",
+          "rating": 5,
+          "comment": "Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais",
+          "title": "thalyson rafael",
+          "images": [],
+          "createdAt": "2025-04-24T08:54:00.215Z",
+          "updatedAt": "2025-04-24T11:56:41.719Z"
+        },
+        {
+          "id": "a5fc224b-8048-464b-93aa-b31462bf8473",
+          "userId": "cm8w3ft230003f8g42gwswkud",
+          "productId": "5be30669-7c7e-47ec-93d3-c5d320176527",
+          "rating": 4,
+          "comment": "Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais",
+          "title": "Rafinha Head",
+          "images": [],
+          "createdAt": "2025-04-24T08:54:19.091Z",
+          "updatedAt": "2025-04-24T11:56:41.719Z"
+        },
+        {
+          "id": "d04155a6-5288-4cd9-959e-d48015934fad",
+          "userId": "cm9ogjuq80000f84o6s4gpy9g",
+          "productId": "5be30669-7c7e-47ec-93d3-c5d320176527",
+          "rating": 4,
+          "comment": "Mano... que fone maravilhoso. É lindo, é barato, é perfeito. Ótimo áudio, o mic dele é ótimo para um fone nesse valor. Só tenho elogios a esse headset. Pode comprar porque compensa demais",
+          "title": "THALYSON RAFAEL BARBOSA RIBEIRO",
+          "images": [],
+          "createdAt": "2025-04-24T09:02:48.577Z",
+          "updatedAt": "2025-04-24T11:56:41.719Z"
+        }
+      ]
+    }
+  ],
+  "total": 15
+}
