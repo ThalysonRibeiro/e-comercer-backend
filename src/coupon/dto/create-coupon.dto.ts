@@ -16,8 +16,8 @@ export class CreateCouponDto {
   discount_value: number;
 
   @IsNotEmpty()
-  @IsNumber()
-  discount_type: number;
+  @IsString()
+  discount_type: string;
 
   @IsOptional()
   @IsNumber()
