@@ -20,6 +20,7 @@ import {
   CreateUserDTO,
 } from '../users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
+import { Throttle } from '@nestjs/throttler';
 
 // DTOs
 
@@ -46,12 +47,24 @@ export class AuthController {
   //useradmin
   @Public()
   @Post('register-admin')
+  @Throttle({
+    default: {
+      limit: parseInt(process.env.THROTTLE_REGISTER_RATE_LIMIT || '3'),
+      ttl: parseInt(process.env.THROTTLE_RATE_LIMIT_TTL || '60000'),
+    },
+  })
   async registerAdmin(@Body() body: CreateUserAdminDTO) {
     return this.authService.registerAdmin(body);
   }
 
   @Public()
   @Post('login-admin')
+  @Throttle({
+    default: {
+      limit: parseInt(process.env.THROTTLE_LOGIN_RATE_LIMIT || '5'),
+      ttl: parseInt(process.env.THROTTLE_RATE_LIMIT_TTL || '60000'),
+    },
+  })
   async loginAdmin(@Body() body: { login: string; password: string }) {
     const { login, password } = body;
     return this.authService.loginWithCredentials(login, password);
@@ -66,12 +79,24 @@ export class AuthController {
   //userdefault
   @Public()
   @Post('register')
+  @Throttle({
+    default: {
+      limit: parseInt(process.env.THROTTLE_REGISTER_RATE_LIMIT || '3'),
+      ttl: parseInt(process.env.THROTTLE_RATE_LIMIT_TTL || '60000'),
+    },
+  })
   async register(@Body() body: CreateUserDTO) {
     return this.authService.register(body);
   }
 
   @Public()
   @Post('google')
+  @Throttle({
+    default: {
+      limit: parseInt(process.env.THROTTLE_LOGIN_RATE_LIMIT || '5'),
+      ttl: parseInt(process.env.THROTTLE_RATE_LIMIT_TTL || '60000'),
+    },
+  })
   async googleLogin(@Body() body: { token: string }) {
     const googlePayload = await this.authService.validateGoogleToken(
       body.token,
@@ -81,6 +106,12 @@ export class AuthController {
 
   @Public()
   @Post('login')
+  @Throttle({
+    default: {
+      limit: parseInt(process.env.THROTTLE_LOGIN_RATE_LIMIT || '5'),
+      ttl: parseInt(process.env.THROTTLE_RATE_LIMIT_TTL || '60000'),
+    },
+  })
   async login(@Body() body: { login: string; password: string }) {
     const { login, password } = body;
     return this.authService.loginWithCredentials(login, password);

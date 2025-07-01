@@ -23,7 +23,9 @@ export class ApiKeyGuard implements CanActivate {
     private configService: ConfigService,
   ) {
     try {
-      this.apiKeys = JSON.parse(this.configService.get<string>('API_KEYS_JSON') || '{}');
+      this.apiKeys = JSON.parse(
+        this.configService.get<string>('API_KEYS_JSON') || '{}',
+      );
     } catch (err) {
       console.error('Erro ao fazer parse do API_KEYS_JSON:', err.message);
     }
@@ -31,7 +33,7 @@ export class ApiKeyGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>();
-    const apiKey = request.headers['x-api-key']
+    const apiKey = request.headers['x-api-key'];
 
     if (!apiKey || !this.apiKeys[apiKey as string]) {
       throw new UnauthorizedException('API Key inválida');
@@ -44,8 +46,11 @@ export class ApiKeyGuard implements CanActivate {
       throw new ForbiddenException('Origem não autorizada');
     }
 
-    const requiredScopes = this.reflector.get<string[]>('scopes', context.getHandler()) || [];
-    const hasScope = requiredScopes.every(scope => keyData.scopes.includes(scope));
+    const requiredScopes =
+      this.reflector.get<string[]>('scopes', context.getHandler()) || [];
+    const hasScope = requiredScopes.every((scope) =>
+      keyData.scopes.includes(scope),
+    );
 
     if (!hasScope) {
       throw new ForbiddenException('Permissão insuficiente');
