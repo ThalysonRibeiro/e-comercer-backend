@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -28,9 +28,26 @@ import { ContactInfoModule } from 'src/contact-info/contact-info.module';
 import { ThemeColorModule } from 'src/theme-color/theme-color.module';
 import { InstitutionalLinkModule } from 'src/institutional-link/institutional-link.module';
 import { BrandsModule } from 'src/brands/brands.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        const ttl = config.get<string>('THROTTLE_RATE_LIMIT_TTL');
+        const limit = config.get<string>('THROTTLE_RATE_LIMIT_LIMIT');
+        return {
+          throttlers: [
+            {
+              ttl: ttl ? parseInt(ttl) : 60000,
+              limit: limit ? parseInt(limit) : 100,
+            },
+          ],
+        };
+      },
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -71,6 +88,10 @@ import { BrandsModule } from 'src/brands/brands.module';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
-export class AppModule { }
+export class AppModule {}
