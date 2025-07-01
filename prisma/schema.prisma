@@ -355,27 +355,28 @@ model ThemeColors {
   id             String      @id @unique @default(uuid())
   siteContentId  String
   nameTheme      String?
+  isDarkTheme    Boolean?    @default(false)
   primaryColor   String?
   secondaryColor String?
   hover          String?
-  star           String?
   danger         String?
   success        String? //Cor para mensagens de sucesso
   warning        String? //Cor para alertas ou avisos
   shadowColor    String? //Cor das sombras, se aplicável
-  isDarkTheme    Boolean?    @default(false)
   price          String?
+  oldPrice       String?
+  star           String?
   title          String?
   textColor      String?
-  oldPrice       String?
-  borderColor    String?
+  textHover      String?
   textButton     String?
+  borderColor    String?
   bgCard         String?
   themeColor     String?
+  bgFooterColor  String?
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
   themeSelected  Boolean     @default(false)
-  textHover      String?
   siteContent    SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
 }
 
