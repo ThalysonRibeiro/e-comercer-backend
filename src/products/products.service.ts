@@ -34,7 +34,7 @@ export class ProductsService {
     }
 
     const category = await this.prisma.category.findUnique({
-      where: { id: createProductDto.categoryId }
+      where: { id: createProductDto.categoryId },
     });
 
     const dateFuture = new Date();
@@ -54,7 +54,9 @@ export class ProductsService {
           bigsale: createProductDto.bigsale,
           sku: `SKU-PRD-${crypto.randomInt(10000)}`,
           stock: createProductDto.stock,
-          category: category?.name ? category?.name.toLowerCase() : createProductDto.category,
+          category: category?.name
+            ? category?.name.toLowerCase()
+            : createProductDto.category,
           categoryId: createProductDto.categoryId,
           brand: createProductDto.brand.toLowerCase(),
           tags: createProductDto.tags.map((tag) => tag.toLowerCase()),
@@ -318,7 +320,7 @@ export class ProductsService {
         featured,
         stock,
         emphasis,
-        sort
+        sort,
       } = productsFilterDto;
 
       // Prepara o filtro de preço
@@ -346,9 +348,13 @@ export class ProductsService {
       let brandFilter: { brand?: { in: string[] } } = {}; // Nova estrutura para array de marcas
       if (brand) {
         // Verifica se brand é uma string e converte para array
-        const brandArray = typeof brand === 'string'
-          ? brand.split(',').filter(Boolean).map(b => b.trim())
-          : brand;
+        const brandArray =
+          typeof brand === 'string'
+            ? brand
+                .split(',')
+                .filter(Boolean)
+                .map((b) => b.trim())
+            : brand;
 
         // Só adiciona o filtro se houver marcas válidas
         if (brandArray && brandArray.length > 0) {
@@ -512,7 +518,7 @@ export class ProductsService {
           ...featuredFilter,
           ...whereClause,
           ...emphasisFilter,
-        }
+        },
       });
 
       return { products, total };

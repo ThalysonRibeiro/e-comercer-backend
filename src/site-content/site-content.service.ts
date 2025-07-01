@@ -9,13 +9,10 @@ export class SiteContentService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) { }
+  ) {}
   async create(createSiteContentDto: CreateSiteContentDto) {
     if (!createSiteContentDto) {
-      throw new HttpException(
-        'Não pode ser vazio',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Não pode ser vazio', HttpStatus.BAD_REQUEST);
     }
     try {
       const siteLayout = await this.prisma.siteContent.create({
@@ -202,10 +199,7 @@ export class SiteContentService {
       throw new HttpException('o ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
     if (!id) {
-      throw new HttpException(
-        'o ID é obrigatório',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('o ID é obrigatório', HttpStatus.BAD_REQUEST);
     }
 
     try {

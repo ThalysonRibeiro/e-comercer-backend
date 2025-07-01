@@ -23,7 +23,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) { }
+  constructor(private readonly productsService: ProductsService) {}
 
   //Como proteger uma rota com escopo:
   // @UseGuards(ApiKeyGuard)

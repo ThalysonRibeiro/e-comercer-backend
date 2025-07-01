@@ -1,4 +1,10 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateCartDto {
   @IsNotEmpty()
@@ -30,7 +36,6 @@ export class CreateCartDto {
 
   @IsOptional()
   size: string[];
-
 
   @IsOptional()
   @IsNumber()

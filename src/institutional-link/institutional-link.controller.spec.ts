@@ -11,7 +11,9 @@ describe('InstitutionalLinkController', () => {
       providers: [InstitutionalLinkService],
     }).compile();
 
-    controller = module.get<InstitutionalLinkController>(InstitutionalLinkController);
+    controller = module.get<InstitutionalLinkController>(
+      InstitutionalLinkController,
+    );
   });
 
   it('should be defined', () => {

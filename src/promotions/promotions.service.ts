@@ -10,7 +10,7 @@ export class PromotionsService {
   constructor(
     private prisma: PrismaService,
     private imagesService: ImagesService,
-  ) { }
+  ) {}
 
   async create(createPromotionDto: CreatePromotionDto) {
     if (!createPromotionDto.siteContentId) {
@@ -168,7 +168,7 @@ export class PromotionsService {
         where: {
           ...(checkActive !== undefined && { isActive: checkActive }),
           ...(position && { position: position.toLowerCase() }),
-          ...(endDateQueryFilter),
+          ...endDateQueryFilter,
         },
         take: limit,
         skip: offset,

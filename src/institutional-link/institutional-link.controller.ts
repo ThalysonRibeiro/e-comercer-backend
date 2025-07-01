@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { InstitutionalLinkService } from './institutional-link.service';
 import { CreateInstitutionalLinkDto } from './dto/create-institutional-link.dto';
 import { UpdateInstitutionalLinkDto } from './dto/update-institutional-link.dto';
@@ -8,7 +16,9 @@ import { AccountType } from '@prisma/client';
 @Roles(AccountType.useradmin)
 @Controller('institutional-link/admin')
 export class InstitutionalLinkController {
-  constructor(private readonly institutionalLinkService: InstitutionalLinkService) { }
+  constructor(
+    private readonly institutionalLinkService: InstitutionalLinkService,
+  ) {}
 
   @Post()
   create(@Body() createInstitutionalLinkDto: CreateInstitutionalLinkDto) {
@@ -26,7 +36,10 @@ export class InstitutionalLinkController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInstitutionalLinkDto: UpdateInstitutionalLinkDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateInstitutionalLinkDto: UpdateInstitutionalLinkDto,
+  ) {
     return this.institutionalLinkService.update(id, updateInstitutionalLinkDto);
   }
 

@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class InstitutionalLinkService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createInstitutionalLinkDto: CreateInstitutionalLinkDto) {
     if (!createInstitutionalLinkDto.siteContentId) {
@@ -15,7 +15,7 @@ export class InstitutionalLinkService {
       );
     }
     const existingSiteContent = await this.prisma.siteContent.findUnique({
-      where: { id: createInstitutionalLinkDto.siteContentId }
+      where: { id: createInstitutionalLinkDto.siteContentId },
     });
     if (!existingSiteContent) {
       throw new HttpException(
@@ -28,9 +28,9 @@ export class InstitutionalLinkService {
         data: {
           siteContentId: existingSiteContent.id,
           name: createInstitutionalLinkDto.name,
-          link: createInstitutionalLinkDto.link
-        }
-      })
+          link: createInstitutionalLinkDto.link,
+        },
+      });
     } catch (error) {
       throw new HttpException(
         'erro ao criar InstitutionalLink!',
@@ -52,14 +52,11 @@ export class InstitutionalLinkService {
 
   async findOne(id: string) {
     if (!id) {
-      throw new HttpException(
-        'o id é obrigatório!',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('o id é obrigatório!', HttpStatus.BAD_REQUEST);
     }
     try {
       return await this.prisma.institutionalLink.findUnique({
-        where: { id }
+        where: { id },
       });
     } catch (error) {
       throw new HttpException(
@@ -69,16 +66,17 @@ export class InstitutionalLinkService {
     }
   }
 
-  async update(id: string, updateInstitutionalLinkDto: UpdateInstitutionalLinkDto) {
+  async update(
+    id: string,
+    updateInstitutionalLinkDto: UpdateInstitutionalLinkDto,
+  ) {
     if (!id) {
-      throw new HttpException(
-        'Id é obrigatório!',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Id é obrigatório!', HttpStatus.BAD_REQUEST);
     }
-    const existingInstitutionalLink = await this.prisma.institutionalLink.findFirst({
-      where: { id }
-    });
+    const existingInstitutionalLink =
+      await this.prisma.institutionalLink.findFirst({
+        where: { id },
+      });
 
     if (!existingInstitutionalLink) {
       throw new HttpException(
@@ -91,9 +89,9 @@ export class InstitutionalLinkService {
         where: { id: existingInstitutionalLink.id },
         data: {
           name: updateInstitutionalLinkDto.name,
-          link: updateInstitutionalLinkDto.link
-        }
-      })
+          link: updateInstitutionalLinkDto.link,
+        },
+      });
     } catch (error) {
       throw new HttpException(
         'erro ao atualizar InstitutionalLink!',
@@ -104,18 +102,15 @@ export class InstitutionalLinkService {
 
   async remove(id: string) {
     if (!id) {
-      throw new HttpException(
-        'o id é obrigatório!',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('o id é obrigatório!', HttpStatus.BAD_REQUEST);
     }
     try {
       await this.prisma.institutionalLink.delete({
-        where: { id }
+        where: { id },
       });
       return {
-        message: "Item deletado com sucesso!"
-      }
+        message: 'Item deletado com sucesso!',
+      };
     } catch (error) {
       throw new HttpException(
         'erro ao deletar InstitutionalLink!',

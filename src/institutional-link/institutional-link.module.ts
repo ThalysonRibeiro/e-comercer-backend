@@ -7,4 +7,4 @@ import { PrismaService } from 'src/prisma/prisma.service';
   controllers: [InstitutionalLinkController],
   providers: [InstitutionalLinkService, PrismaService],
 })
-export class InstitutionalLinkModule { }
+export class InstitutionalLinkModule {}
