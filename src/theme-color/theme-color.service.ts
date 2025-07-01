@@ -52,6 +52,7 @@ export class ThemeColorService {
           bgCard: createThemeColorDto.bgCard,
           themeColor: createThemeColorDto.themeColor,
           themeSelected: createThemeColorDto.themeSelected,
+          bgFooterColor: createThemeColorDto.bgFooterColor,
         },
       });
       return themeColor;
@@ -78,6 +79,9 @@ export class ThemeColorService {
         where: {
           ...isDarkThemeFilter,
           themeSelected: true,
+        },
+        orderBy: {
+          isDarkTheme: 'desc',
         },
       });
       // return theme
@@ -154,6 +158,7 @@ export class ThemeColorService {
           bgCard: updateThemeColorDto.bgCard,
           themeColor: updateThemeColorDto.themeColor,
           themeSelected: updateThemeColorDto.themeSelected,
+          bgFooterColor: updateThemeColorDto.bgFooterColor,
         },
       });
       return themeColor;
