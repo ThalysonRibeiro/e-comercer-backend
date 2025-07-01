@@ -82,6 +82,10 @@ export class CreateThemeColorDto {
   themeColor: string;
 
   @IsOptional()
+  @IsString()
+  bgFooterColor: string;
+
+  @IsOptional()
   @IsBoolean()
   themeSelected: boolean;
 }
