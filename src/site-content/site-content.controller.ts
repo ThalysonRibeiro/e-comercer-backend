@@ -23,10 +23,10 @@ import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('site-content')
 export class SiteContentController {
-  constructor(private readonly siteContentService: SiteContentService) { }
+  constructor(private readonly siteContentService: SiteContentService) {}
 
   @Roles(AccountType.useradmin)
-  @Post()
+  @Post('admin')
   create(@Body() createSiteContentDto: CreateSiteContentDto) {
     return this.siteContentService.create(createSiteContentDto);
   }
