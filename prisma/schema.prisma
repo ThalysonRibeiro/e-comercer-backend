@@ -12,7 +12,7 @@ model User {
   status                 AccountStatus
   type                   AccountType
   name                   String?
-  genero                 String
+  gender                 String?
   dateOfBirth            DateTime?
   email                  String            @unique
   phone                  String
