@@ -43,7 +43,7 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
-  ) {}
+  ) { }
   //useradmin
   @Public()
   @Post('register-admin')

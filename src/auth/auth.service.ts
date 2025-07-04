@@ -806,4 +806,48 @@ export class AuthService {
   validateJwtPayload(payload: any) {
     return this.usersService.findByEmail(payload.email);
   }
+
+  // private getEmailTemplate(name: string, confirmationUrl: string): string {
+  //     return `
+  //       <!doctype html>
+  //       <html lang="pt-br">
+  //         <head>
+  //           <meta charset="UTF-8" />
+  //           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  //           <title>Confirme seu email</title>
+  //           <style>
+  //             body { font-family: Arial, sans-serif; background-color: #f4f7fa; color: #333; margin: 0; padding: 0; }
+  //             .container { width: 100%; max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+  //             .header { text-align: center; margin-bottom: 20px; }
+  //             .header h1 { font-size: 24px; color: #000; }
+  //             .content { font-size: 16px; line-height: 1.5; }
+  //             .button-container { text-align: center; margin: 20px 0; }
+  //             .confirm-button { display: inline-block; padding: 12px 30px; font-size: 16px; color: #fff; background-color: #000; text-decoration: none; border-radius: 5px; }
+  //             .footer { text-align: center; font-size: 14px; color: #999; margin-top: 20px; }
+  //           </style>
+  //         </head>
+  //         <body>
+  //           <div class="container">
+  //             <div class="header">
+  //               <h1>Confirme seu Email</h1>
+  //             </div>
+  //             <div class="content">
+  //               <p>Olá ${name},</p>
+  //               <p>Sua conta foi criada com sucesso! Para começar a usar nossa plataforma, confirme seu email.</p>
+  //               <div class="button-container">
+  //                 <a href="${confirmationUrl}" class="confirm-button">Confirmar E-mail</a>
+  //               </div>
+  //               <p>Se o botão não funcionar, copie e cole este link: ${confirmationUrl}</p>
+  //             </div>
+  //             <div class="footer">
+  //               <p>&copy; 2025 POWER GADGET. Todos os direitos reservados.</p>
+  //             </div>
+  //           </div>
+  //         </body>
+  //       </html>
+  //     `;
+  //   }
 }
+
+
+
