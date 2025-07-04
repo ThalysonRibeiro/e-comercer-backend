@@ -62,7 +62,7 @@ export class AuthService {
         status: AccountStatus.active,
         type: AccountType.userdefault,
         cpf_or_cnpj: createUserDTO.cpf_or_cnpj.trim(),
-        genero: createUserDTO.genero.trim(),
+        gender: createUserDTO.gender.trim(),
         dateOfBirth: createUserDTO.dateOfBirth,
         phone: createUserDTO.phone,
         emailVerificationToken, // Adicionar o token ao criar o usuário
@@ -284,6 +284,15 @@ export class AuthService {
       );
     }
 
+    const typeMap = {
+      [AccountType.useradmin]: AccountType.useradmin,
+      [AccountType.usermoderator]: AccountType.usermoderator,
+      [AccountType.userdefault]: AccountType.userdefault
+    };
+
+    const typeExists = typeMap[createUserAdminDTO.type] || AccountType.userdefault;
+
+
     const emailVerificationToken = crypto.randomBytes(32).toString('hex');
 
     let newUser;
@@ -294,9 +303,9 @@ export class AuthService {
         name: createUserAdminDTO.name,
         password: createUserAdminDTO.password, // Idealmente, o password deve ser hashado
         status: AccountStatus.active,
-        type: AccountType.useradmin,
+        type: typeExists, // Usar o tipo fornecido no DTO
         cpf_or_cnpj: createUserAdminDTO.cpf_or_cnpj.trim(),
-        genero: createUserAdminDTO.genero.trim(),
+        gender: createUserAdminDTO.gender.trim(),
         dateOfBirth: createUserAdminDTO.dateOfBirth,
         phone: createUserAdminDTO.phone,
         emailVerificationToken, // Adicionar o token ao criar o usuário
@@ -533,7 +542,7 @@ export class AuthService {
           status: AccountStatus.active,
           type: AccountType.userdefault,
           cpf_or_cnpj: '',
-          genero: '',
+          gender: '',
           phone: '',
         });
       }
@@ -564,7 +573,7 @@ export class AuthService {
         status: user.status,
         isProfileComplete: this.isProfileComplete(user),
         cpf_or_cnpj: user.cpf_or_cnpj,
-        genero: user.genero,
+        gender: user.gender,
         dateOfBirth: user.dateOfBirth,
         phone: user.phone,
         emailVerified: user.emailVerified,
@@ -599,7 +608,7 @@ export class AuthService {
       type,
       name,
       cpf_or_cnpj,
-      genero,
+      gender,
       dateOfBirth,
       email,
       phone,
@@ -619,7 +628,7 @@ export class AuthService {
       type,
       name,
       cpf_or_cnpj,
-      genero,
+      gender,
       dateOfBirth,
       email,
       phone,

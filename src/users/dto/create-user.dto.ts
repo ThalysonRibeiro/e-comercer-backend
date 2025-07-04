@@ -76,6 +76,7 @@ export class CreateUserDTO {
 
   status: AccountStatus;
 
+
   type: AccountType;
 
   @IsString()
@@ -83,7 +84,7 @@ export class CreateUserDTO {
   cpf_or_cnpj: string;
 
   @IsString()
-  genero: string;
+  gender: string;
 
   @IsOptional()
   @IsDate()

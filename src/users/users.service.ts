@@ -85,7 +85,7 @@ export class UsersService {
         type: true,
         name: true,
         cpf_or_cnpj: true,
-        genero: true,
+        gender: true,
         dateOfBirth: true,
         email: true,
         phone: true,
@@ -171,7 +171,7 @@ export class UsersService {
       status: AccountStatus;
       type: AccountType;
       cpf_or_cnpj: string;
-      genero: string;
+      gender: string;
       dateOfBirth: Date | null;
       phone: string;
       password: string;
@@ -194,7 +194,7 @@ export class UsersService {
     data: {
       name: string;
       cpf_or_cnpj: string;
-      genero: string;
+      gender: string;
       dateOfBirth: string;
       phone: string;
     },

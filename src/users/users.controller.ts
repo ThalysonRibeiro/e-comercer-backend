@@ -21,7 +21,7 @@ import { AccountType } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService) { }
 
   @UseGuards(JwtAuthGuard)
   @Patch('complete-profile')
@@ -31,7 +31,7 @@ export class UsersController {
     profileData: {
       name: string;
       cpf_or_cnpj: string;
-      genero: string;
+      gender: string;
       dateOfBirth: string;
       phone: string;
     },
