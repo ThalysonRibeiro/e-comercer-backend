@@ -4,12 +4,14 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { AccountStatus } from '@prisma/client';
+import { TokenBlacklistService } from './token-blacklist/token-blacklist.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private configService: ConfigService,
     private usersService: UsersService,
+    private tokenBlacklistService: TokenBlacklistService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -17,10 +19,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: configService.get<string>('JWT_SECRET'),
       issuer: 'auth-api',
       audience: 'users',
+      passReqToCallback: true,
     });
   }
 
-  async validate(payload: any) {
+  async validate(req: any, payload: any) {
+    const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
+    if (await this.tokenBlacklistService.isBlacklisted(token)) {
+      throw new UnauthorizedException('Token inválido');
+    }
+
     const user = await this.usersService.findById(payload.sub);
 
     if (!user) {

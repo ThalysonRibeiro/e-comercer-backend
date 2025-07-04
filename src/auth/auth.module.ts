@@ -8,6 +8,7 @@ import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { EmailModule } from '../email/email.module';
 import { EmailVerificationModule } from '../email-verification/email-verification.module';
+import { TokenBlacklistModule } from './token-blacklist/token-blacklist.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { EmailVerificationModule } from '../email-verification/email-verificatio
     ConfigModule,
     EmailModule,
     EmailVerificationModule,
+    TokenBlacklistModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

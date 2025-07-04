@@ -10,6 +10,8 @@ import {
   NotFoundException,
   Query,
   Param,
+  UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
@@ -21,6 +23,8 @@ import {
 } from '../users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { Throttle } from '@nestjs/throttler';
+
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 // DTOs
 
@@ -149,5 +153,15 @@ export class AuthController {
       resetPasswordDto.token,
       resetPasswordDto.newPassword,
     );
+  }
+
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(204)
+  async logout(@Req() req) {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (token) {
+      await this.authService.logout(token);
+    }
   }
 }

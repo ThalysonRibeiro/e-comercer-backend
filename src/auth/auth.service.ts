@@ -16,6 +16,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { EmailService } from '../email/email.service';
+import { TokenBlacklistService } from './token-blacklist/token-blacklist.service';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private readonly emailService: EmailService,
+    private readonly tokenBlacklistService: TokenBlacklistService,
   ) {
     this.googleClient = new OAuth2Client(
       this.configService.get<string>('GOOGLE_CLIENT_ID'),
@@ -805,6 +807,10 @@ export class AuthService {
 
   validateJwtPayload(payload: any) {
     return this.usersService.findByEmail(payload.email);
+  }
+
+  async logout(token: string): Promise<void> {
+    await this.tokenBlacklistService.blacklist(token);
   }
 
   // private getEmailTemplate(name: string, confirmationUrl: string): string {
