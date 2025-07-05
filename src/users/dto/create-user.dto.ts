@@ -76,7 +76,6 @@ export class CreateUserDTO {
 
   status: AccountStatus;
 
-
   type: AccountType;
 
   @IsString()

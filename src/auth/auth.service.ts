@@ -75,8 +75,7 @@ export class AuthService {
 
       // Criar URL de confirmação
       const frontendUrl =
-        this.configService.get<string>('FRONTEND_URL') ||
-        'http://localhost:3001';
+        this.configService.get<string>('SITE_URL') || 'http://localhost:3001';
       const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
 
       // Enviar um email de confirmação
@@ -289,11 +288,11 @@ export class AuthService {
     const typeMap = {
       [AccountType.useradmin]: AccountType.useradmin,
       [AccountType.usermoderator]: AccountType.usermoderator,
-      [AccountType.userdefault]: AccountType.userdefault
+      [AccountType.userdefault]: AccountType.userdefault,
     };
 
-    const typeExists = typeMap[createUserAdminDTO.type] || AccountType.userdefault;
-
+    const typeExists =
+      typeMap[createUserAdminDTO.type] || AccountType.userdefault;
 
     const emailVerificationToken = crypto.randomBytes(32).toString('hex');
 
@@ -318,8 +317,7 @@ export class AuthService {
 
       // Criar URL de confirmação
       const frontendUrl =
-        this.configService.get<string>('FRONTEND_URL') ||
-        'http://localhost:3000';
+        this.configService.get<string>('SITE_URL') || 'http://localhost:3000';
       const confirmationUrl = `${frontendUrl}/confirm-email?token=${emailVerificationToken}`;
 
       // Enviar um email de confirmação
@@ -696,7 +694,10 @@ export class AuthService {
     };
   }
 
-  async generatePasswordResetToken(email: string) {
+  async generatePasswordResetToken(
+    email: string,
+    application: 'site' | 'dashboard',
+  ) {
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
@@ -705,9 +706,17 @@ export class AuthService {
       };
     }
 
+    // Token simples - SEM issuer e audience
     const resetToken = this.jwtService.sign(
-      { sub: user.id, email: user.email },
-      { expiresIn: '1h' },
+      {
+        sub: user.id,
+        email: user.email,
+        app: application,
+        type: 'reset-password',
+      },
+      {
+        expiresIn: '1h', // Apenas o tempo de expiração
+      },
     );
 
     await this.usersService.updateUser(user.id, {
@@ -715,19 +724,14 @@ export class AuthService {
       resetPasswordExpires: new Date(Date.now() + 3600000), // 1 hora
     } as any);
 
-    const resetLink = `${this.configService.get('FRONTEND_URL')}/reset-password?token=${resetToken}`;
+    const resetLink = this.getResetLink(application, resetToken);
 
     try {
       await this.emailService.sendEmail(
         user.email,
         'Recuperação de Senha',
         `Olá ${user.name || 'Usuário'}, para redefinir sua senha, acesse o link: ${resetLink}`,
-        `<h1>Olá ${user.name || 'Usuário'},</h1>
-         <p>Recebemos uma solicitação para redefinir sua senha.</p>
-         <p>Clique no link abaixo para criar uma nova senha:</p>
-         <a href="${resetLink}">Redefinir Senha</a>
-         <p>Este link é válido por 1 hora.</p>
-         <p>Se você não solicitou esta alteração, ignore este email.</p>`,
+        this.getEmailTemplate(user.name || 'Usuário', resetLink, application),
       );
     } catch (error) {
       throw new HttpException(
@@ -741,41 +745,92 @@ export class AuthService {
     };
   }
 
+  private getResetLink(
+    application: 'site' | 'dashboard',
+    token: string,
+  ): string {
+    const baseUrl =
+      application === 'site'
+        ? this.configService.get('SITE_URL')
+        : this.configService.get('DASHBOARD_URL');
+
+    return `${baseUrl}/reset-password?token=${token}`;
+  }
+
+  private getEmailTemplate(
+    userName: string,
+    resetLink: string,
+    application: 'site' | 'dashboard',
+  ): string {
+    const appName = application === 'site' ? 'Site' : 'Dashboard';
+
+    return `
+    <h1>Olá ${userName},</h1>
+    <p>Recebemos uma solicitação para redefinir sua senha do ${appName}.</p>
+    <p>Clique no link abaixo para criar uma nova senha:</p>
+    <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+      Redefinir Senha - ${appName}
+    </a>
+    <p>${resetLink}.</p>
+    <p>Este link é válido por 1 hora.</p>
+    <p>Se você não solicitou esta alteração, ignore este email.</p>
+  `;
+  }
+
   async resetPassword(token: string, newPassword: string) {
     try {
-      // Verificar token
-      const payload = this.jwtService.verify(token);
-      const user = await this.usersService.findById(payload.sub);
+      let payload;
+      try {
+        payload = this.jwtService.verify(token);
+      } catch (jwtError) {
+        throw new HttpException(
+          'Token inválido ou expirado.',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
 
-      if (!user || user.resetPasswordToken !== token) {
+      // Verificar tipo
+      if (payload.type !== 'reset-password') {
         throw new HttpException('Token inválido.', HttpStatus.BAD_REQUEST);
       }
 
+      // Buscar usuário
+      const user = await this.usersService.findById(payload.sub);
+      if (!user) {
+        throw new HttpException('Token inválido.', HttpStatus.BAD_REQUEST);
+      }
+
+      // Verificar se o token salvo no DB é o mesmo
+      if (user.resetPasswordToken !== token) {
+        throw new HttpException('Token inválido.', HttpStatus.BAD_REQUEST);
+      }
+
+      // Verificar expiração
       if (user.resetPasswordExpires && new Date() > user.resetPasswordExpires) {
         throw new HttpException('Token expirado.', HttpStatus.BAD_REQUEST);
       }
 
-      // Criptografar a nova senha
+      // Criptografar nova senha
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      // Atualizar a senha do usuário e limpar o token de redefinição
+      // Atualizar usuário
       await this.usersService.updateUser(user.id, {
         password: hashedPassword,
         resetPasswordToken: null,
         resetPasswordExpires: null,
       });
 
-      // Enviar email de confirmação
+      // Email de confirmação
       try {
         await this.emailService.sendEmail(
           user.email,
           'Senha redefinida com sucesso',
           `Olá ${user.name || 'Usuário'}, sua senha foi redefinida com sucesso.`,
-          `<h1>Olá ${user.name || 'Usuário'},</h1><p>Sua senha foi redefinida com sucesso. Agora você pode fazer login com sua nova senha.</p>`,
+          `<h1>Olá ${user.name || 'Usuário'},</h1><p>Sua senha foi redefinida com sucesso.</p>`,
         );
       } catch (error) {
         throw new HttpException(
-          'Erro ao enviar email de confirmação de redefinição de senha:',
+          `❌ Erro no email: ${error}`,
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -787,13 +842,11 @@ export class AuthService {
       }
 
       throw new HttpException(
-        'Erro ao redefinir a senha.',
-        HttpStatus.BAD_REQUEST,
+        'Erro interno do servidor.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
-
-  // Verificar se o perfil está completo
 
   private isProfileComplete(user: any): boolean {
     return !!(
@@ -805,8 +858,29 @@ export class AuthService {
     );
   }
 
-  validateJwtPayload(payload: any) {
-    return this.usersService.findByEmail(payload.email);
+  async validateAccessToken(
+    token: string,
+  ): Promise<{ valid: boolean; user?: any }> {
+    const isBlacklisted = await this.tokenBlacklistService.isBlacklisted(token);
+    if (isBlacklisted) {
+      throw new UnauthorizedException('Token is blacklisted');
+    }
+
+    try {
+      const payload = this.jwtService.verify(token);
+      const user = await this.usersService.findById(payload.sub);
+
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...result } = user;
+
+      return { valid: true, user: result };
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 
   async logout(token: string): Promise<void> {
@@ -854,6 +928,3 @@ export class AuthService {
   //     `;
   //   }
 }
-
-
-

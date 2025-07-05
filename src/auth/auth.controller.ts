@@ -25,29 +25,19 @@ import { UsersService } from 'src/users/users.service';
 import { Throttle } from '@nestjs/throttler';
 
 import { JwtAuthGuard } from './jwt-auth.guard';
-
-// DTOs
-
-export class ChangePasswordDto {
-  currentPassword: string;
-  newPassword: string;
-}
-
-export class ForgotPasswordDto {
-  email: string;
-}
-
-export class ResetPasswordDto {
-  token: string;
-  newPassword: string;
-}
+import { ApiKeyGuard } from './guards/api-key.guard';
+import { Scopes } from './decorators/scopes.decorator';
+import { IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { ChangePasswordDto } from './dto/update-password.dto';
+import { ForgotPasswordDto } from './dto/create-forgot-password.dto';
+import { ResetPasswordDto } from './dto/update-reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
-  ) { }
+  ) {}
   //useradmin
   @Public()
   @Post('register-admin')
@@ -141,12 +131,27 @@ export class AuthController {
     );
   }
 
-  // Esqueceu a senha (enviar link de redefinição)
-  @Post('forgot-password')
-  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-    return this.authService.generatePasswordResetToken(forgotPasswordDto.email);
+  // @UseGuards(ApiKeyGuard)
+  // @Scopes('admin')
+  @Public()
+  @Post('forgot-password/site')
+  async forgotPasswordSite(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.generatePasswordResetToken(
+      forgotPasswordDto.email,
+      'site',
+    );
   }
 
+  @Public()
+  @Post('forgot-password/dashboard')
+  async forgotPasswordDashboard(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.generatePasswordResetToken(
+      forgotPasswordDto.email,
+      'dashboard',
+    );
+  }
+
+  @Public()
   @Post('reset-password')
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     return this.authService.resetPassword(
@@ -163,5 +168,15 @@ export class AuthController {
     if (token) {
       await this.authService.logout(token);
     }
+  }
+
+  @Get('validate-token')
+  @UseGuards(JwtAuthGuard)
+  async validateToken(@Req() req) {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      throw new HttpException('Token not found', HttpStatus.UNAUTHORIZED);
+    }
+    return this.authService.validateAccessToken(token);
   }
 }
