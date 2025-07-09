@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
@@ -600,6 +601,20 @@ export class AuthService {
       );
     }
 
+    if (!user.emailVerified) {
+      throw new HttpException(
+        'Confirme seu email antes de prosseguir',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+
+    if (user.status === AccountStatus.inactive) {
+      throw new HttpException(
+        'Conta inativa. Entre em contato com o suporte',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+
     // Gerar JWT token
     const payload = { sub: user.id, email: user.email, phone: user.phone };
     const {
@@ -884,7 +899,18 @@ export class AuthService {
   }
 
   async logout(token: string): Promise<void> {
-    await this.tokenBlacklistService.blacklist(token);
+    if (!token) {
+      throw new BadRequestException('Token não fornecido');
+    }
+    try {
+      await this.tokenBlacklistService.blacklist(token);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        'Token inválido ou expirado.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   // private getEmailTemplate(name: string, confirmationUrl: string): string {
