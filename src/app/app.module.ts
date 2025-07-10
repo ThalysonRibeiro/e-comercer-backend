@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
@@ -29,6 +29,7 @@ import { ThemeColorModule } from 'src/theme-color/theme-color.module';
 import { InstitutionalLinkModule } from 'src/institutional-link/institutional-link.module';
 import { BrandsModule } from 'src/brands/brands.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { NotificationsModule } from 'src/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -76,6 +77,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     ThemeColorModule,
     InstitutionalLinkModule,
     BrandsModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [
