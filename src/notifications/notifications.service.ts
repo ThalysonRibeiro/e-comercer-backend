@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class NotificationsService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createNotificationDto: CreateNotificationDto) {
     if (!createNotificationDto.userId) {
@@ -17,7 +17,10 @@ export class NotificationsService {
     });
 
     if (!existingUser) {
-      throw new HttpException('Usuário não encontrado!', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Usuário não encontrado!',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     try {
@@ -26,11 +29,14 @@ export class NotificationsService {
           userId: existingUser.id,
           title: createNotificationDto.title,
           message: createNotificationDto.message,
-        }
+        },
       });
     } catch (error) {
       console.log(error);
-      throw new HttpException('erro ao criar notificação!', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'erro ao criar notificação!',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -52,7 +58,7 @@ export class NotificationsService {
 
   async findOne(id: string) {
     if (!id) {
-      throw new HttpException('o id é obrigatório!', HttpStatus.BAD_REQUEST)
+      throw new HttpException('o id é obrigatório!', HttpStatus.BAD_REQUEST);
     }
     try {
       return await this.prisma.notifications.findUnique({
@@ -72,7 +78,10 @@ export class NotificationsService {
     }
     const existingNotification = await this.findOne(id);
     if (!existingNotification) {
-      throw new HttpException('Notificação não encontrada!', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Notificação não encontrada!',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     try {
@@ -82,7 +91,7 @@ export class NotificationsService {
           title: updateNotificationDto.title,
           message: updateNotificationDto.message,
           is_read: updateNotificationDto.is_read,
-        }
+        },
       });
     } catch (error) {
       console.log(error);
@@ -99,21 +108,24 @@ export class NotificationsService {
     }
     const existingNotification = await this.findOne(id);
     if (!existingNotification) {
-      throw new HttpException('Notificação não encontrada!', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Notificação não encontrada!',
+        HttpStatus.BAD_REQUEST,
+      );
     }
     try {
       return await this.prisma.notifications.update({
         where: { id: existingNotification.id },
         data: {
           is_read: true,
-        }
+        },
       });
     } catch (error) {
       console.log(error);
       throw new HttpException(
         'erro marcar como lida a notificação!',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
   }
 
@@ -123,7 +135,10 @@ export class NotificationsService {
     }
     const existingNotification = await this.findOne(id);
     if (!existingNotification) {
-      throw new HttpException('Notificação não encontrada!', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Notificação não encontrada!',
+        HttpStatus.BAD_REQUEST,
+      );
     }
     try {
       await this.prisma.notifications.delete({

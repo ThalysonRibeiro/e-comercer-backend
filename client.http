@@ -1,0 +1,1020 @@
+### Variáveis de Ambiente
+@baseUrl = http://localhost:3333
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbWNxZnJyd2QwMDAwZjg1ODBhMm85eGI3IiwiZW1haWwiOiJkZWc5NS5haWthQGdtYWlsLmNvbSIsInBob25lIjoiKDExKSAxMTExMS0xMTExIiwiaWF0IjoxNzUyMTY0NjI5LCJleHAiOjE3NTQ3NTY2MjksImF1ZCI6InVzZXJzIiwiaXNzIjoiYXV0aC1hcGkifQ.IY5Oih31BfZnA8dflUmshCgKK_SArz5OkY4-yFh2wrA
+
+### App
+
+# @name getHello
+GET {{baseUrl}}
+Content-Type: application/json
+x-api-key: sk_site_9f81ab12e3
+Authorization: Bearer {{token}}
+
+
+### Auth
+
+# @name registerAdmin
+POST {{baseUrl}}/auth/register-admin
+Content-Type: application/json
+
+{
+  "name": "Admin User",
+  "email": "admin@example.com",
+  "password": "password",
+  "cpf_or_cnpj": "000.000.000-00"
+}
+###
+
+# @name loginAdmin
+POST {{baseUrl}}/auth/login-admin
+Content-Type: application/json
+
+{
+  "login": "admin@example.com",
+  "password": "password"
+}
+
+###
+
+# @name getAdminData
+GET {{baseUrl}}/auth/admin/admin-only
+Authorization: Bearer {{token}}
+
+###
+
+# @name register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password"
+}
+
+###
+
+# @name googleLogin
+POST {{baseUrl}}/auth/google
+Content-Type: application/json
+
+{
+  "token": "your_google_token"
+}
+
+###
+
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "login": "test@example.com",
+  "password": "password"
+}
+
+###
+
+# @name getProfile
+GET {{baseUrl}}/auth/profile/user_id
+Authorization: Bearer {{token}}
+
+# @name changePassword
+PATCH {{baseUrl}}/auth/password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "password",
+  "newPassword": "new_password"
+}
+
+###
+
+# @name forgotPasswordSite
+POST {{baseUrl}}/auth/forgot-password/site
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+###
+
+# @name forgotPasswordDashboard
+POST {{baseUrl}}/auth/forgot-password/dashboard
+Content-Type: application/json
+
+{
+  "email": "admin@example.com"
+}
+
+###
+
+# @name resetPassword
+POST {{baseUrl}}/auth/reset-password
+Content-Type: application/json
+
+{
+  "token": "your_reset_token",
+  "newPassword": "new_password"
+}
+
+###
+
+# @name logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{token}}
+
+###
+
+# @name validateToken
+GET {{baseUrl}}/auth/validate-token
+Authorization: Bearer {{token}}
+
+### Address
+
+# @name createAddress
+POST {{baseUrl}}/address
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "street": "Main Street",
+  "number": "123",
+  "city": "Anytown",
+  "state": "CA",
+  "zip": "12345",
+  "userId": "user_id"
+}
+
+###
+
+# @name findAllAddresses
+GET {{baseUrl}}/address/admin
+Authorization: Bearer {{token}}
+
+###
+
+# @name findAllAddressUserId
+GET {{baseUrl}}/address/user/user_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateAddress
+PATCH {{baseUrl}}/address/address_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "street": "New Street"
+}
+
+###
+
+# @name removeAddress
+DELETE {{baseUrl}}/address/address_id
+Authorization: Bearer {{token}}
+
+### Brands
+
+# @name createBrand
+POST {{baseUrl}}/brands/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "New Brand"
+}
+
+###
+
+# @name uploadImageBrand
+PUT {{baseUrl}}/brands/image/admin/brand_id
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="image.jpg"
+
+< ./files/cm88t22080000f84kgf75i0ut.jpg
+--boundary--
+
+###
+
+# @name findAllBrands
+GET {{baseUrl}}/brands
+
+###
+
+# @name findOneBrand
+GET {{baseUrl}}/brands/brand_id
+
+###
+
+# @name updateBrand
+PATCH {{baseUrl}}/brands/admin/brand_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Updated Brand"
+}
+
+###
+
+# @name removeBrand
+DELETE {{baseUrl}}/brands/admin/brand_id
+Authorization: Bearer {{token}}
+
+### Cart
+
+# @name createCart
+POST {{baseUrl}}/cart
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userId": "user_id",
+  "items": [
+    {
+      "productId": "product_id",
+      "quantity": 1
+    }
+  ]
+}
+
+###
+
+# @name findAllCarts
+GET {{baseUrl}}/cart/admin
+Authorization: Bearer {{token}}
+
+###
+
+# @name findOneCart
+GET {{baseUrl}}/cart/cart_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name editeCart
+PATCH {{baseUrl}}/cart
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "cartId": "cart_id",
+  "items": [
+    {
+      "productId": "product_id",
+      "quantity": 2
+    }
+  ]
+}
+
+###
+
+# @name removeCartItem
+DELETE {{baseUrl}}/cart/item_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name removeCart
+DELETE {{baseUrl}}/cart/all/cart_id
+Authorization: Bearer {{token}}
+
+### Category
+
+# @name createCategory
+POST {{baseUrl}}/category/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "New Category"
+}
+
+###
+
+# @name findAllCategories
+GET {{baseUrl}}/category
+
+###
+
+# @name findOneCategory
+GET {{baseUrl}}/category/category_id
+
+###
+
+# @name updateCategory
+PATCH {{baseUrl}}/category/admin/category_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Updated Category"
+}
+
+###
+
+# @name removeCategory
+DELETE {{baseUrl}}/category/admin/category_id
+Authorization: Bearer {{token}}
+
+### Contact Info
+
+# @name createContactInfo
+POST {{baseUrl}}/contact-info/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "phone": "123-456-7890",
+  "email": "contact@example.com"
+}
+
+###
+
+# @name findAllContactInfo
+GET {{baseUrl}}/contact-info
+
+###
+
+# @name findOneContactInfo
+GET {{baseUrl}}/contact-info/contact_info_id
+
+###
+
+# @name updateContactInfo
+PATCH {{baseUrl}}/contact-info/admin/contact_info_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "phone": "098-765-4321"
+}
+
+###
+
+# @name removeContactInfo
+DELETE {{baseUrl}}/contact-info/admin/contact_info_id
+Authorization: Bearer {{token}}
+
+### Coupon
+
+# @name createCoupon
+POST {{baseUrl}}/coupon/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "code": "SUMMER2025",
+  "discount": 10,
+  "expiresAt": "2025-08-31T23:59:59Z"
+}
+
+###
+
+# @name findAllCoupons
+GET {{baseUrl}}/coupon/admin
+Authorization: Bearer {{token}}
+
+###
+
+# @name findOneCoupon
+GET {{baseUrl}}/coupon/admin/coupon_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateCoupon
+PATCH {{baseUrl}}/coupon/admin/coupon_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "discount": 15
+}
+
+###
+
+# @name removeCoupon
+DELETE {{baseUrl}}/coupon/admin/coupon_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name checkCoupon
+GET {{baseUrl}}/coupon/check/SUMMER2025
+
+### Email Verification
+
+# @name sendVerificationEmail
+POST {{baseUrl}}/email-verification/send
+Content-Type: application/json
+
+{
+  "userId": "user_id"
+}
+
+###
+
+# @name verifyEmail
+GET {{baseUrl}}/email-verification/verify-email?token=your_verification_token
+
+###
+
+# @name confirmEmail
+POST {{baseUrl}}/email-verification/confirm-email
+Content-Type: application/json
+
+{
+  "token": "your_confirmation_token"
+}
+
+### Institutional Link
+
+# @name createInstitutionalLink
+POST {{baseUrl}}/institutional-link/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "About Us",
+  "url": "/about"
+}
+
+###
+
+# @name findAllInstitutionalLinks
+GET {{baseUrl}}/institutional-link/admin
+Authorization: Bearer {{token}}
+
+###
+
+# @name findOneInstitutionalLink
+GET {{baseUrl}}/institutional-link/admin/link_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateInstitutionalLink
+PATCH {{baseUrl}}/institutional-link/admin/link_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "About Our Company"
+}
+
+###
+
+# @name removeInstitutionalLink
+DELETE {{baseUrl}}/institutional-link/admin/link_id
+Authorization: Bearer {{token}}
+
+### Notifications
+
+# @name createNotification
+POST {{baseUrl}}/notifications
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userId": "user_id",
+  "message": "New notification"
+}
+
+###
+
+# @name findAllNotifications
+GET {{baseUrl}}/notifications
+Authorization: Bearer {{token}}
+
+###
+
+# @name findOneNotification
+GET {{baseUrl}}/notifications/notification_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateNotification
+PATCH {{baseUrl}}/notifications/notification_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "message": "Updated notification"
+}
+
+###
+
+# @name markAsRead
+PUT {{baseUrl}}/notifications/notification_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name removeNotification
+DELETE {{baseUrl}}/notifications/notification_id
+Authorization: Bearer {{token}}
+
+### Products
+
+# @name createProduct
+POST {{baseUrl}}/products/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "New Product",
+  "description": "Product description",
+  "price": 100,
+  "stock": 10,
+  "categoryId": "category_id",
+  "brandId": "brand_id"
+}
+
+###
+
+# @name uploadProductImages
+POST {{baseUrl}}/products/admin/image
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="productId"
+
+product_id
+--boundary
+Content-Disposition: form-data; name="files"; filename="image1.jpg"
+
+< ./files/cm88t22080000f84kgf75i0ut.jpg
+--boundary
+Content-Disposition: form-data; name="files"; filename="image2.webp"
+
+< ./files/94e56d28-73bf-4a5c-8e6f-fb6c4305520f.webp
+--boundary--
+
+###
+
+# @name findAllProducts
+GET {{baseUrl}}/products
+
+###
+
+# @name findOneProduct
+GET {{baseUrl}}/products/product_id
+
+###
+
+# @name updateProduct
+PATCH {{baseUrl}}/products/admin/product_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Updated Product"
+}
+
+###
+
+# @name removeProduct
+DELETE {{baseUrl}}/products/admin/product_id
+Authorization: Bearer {{token}}
+
+### Promotion Hero
+
+# @name createPromotionHero
+POST {{baseUrl}}/promotion-hero/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Summer Sale",
+  "description": "Up to 50% off!"
+}
+
+###
+
+# @name uploadPromotionHeroImage
+PUT {{baseUrl}}/promotion-hero/image/admin/promotion_hero_id
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="image.jpg"
+
+< ./files/cm88t22080000f84kgf75i0ut.jpg
+--boundary--
+
+###
+
+# @name findAllPromotionHeros
+GET {{baseUrl}}/promotion-hero
+
+###
+
+# @name findOnePromotionHero
+GET {{baseUrl}}/promotion-hero/promotion_hero_id
+
+###
+
+# @name updatePromotionHero
+PATCH {{baseUrl}}/promotion-hero/admin/promotion_hero_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Winter Sale"
+}
+
+###
+
+# @name removePromotionHero
+DELETE {{baseUrl}}/promotion-hero/admin/promotion_hero_id
+Authorization: Bearer {{token}}
+
+### Promotions
+
+# @name createPromotion
+POST {{baseUrl}}/promotions/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Black Friday",
+  "description": "Massive discounts!"
+}
+
+###
+
+# @name uploadPromotionBanner
+PUT {{baseUrl}}/promotions/banner/admin/promotion_id
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="banner.jpg"
+
+< ./files/cm88t22080000f84kgf75i0ut.jpg
+--boundary--
+
+###
+
+# @name uploadPromotionVideo
+PUT {{baseUrl}}/promotions/video/admin/promotion_id
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="video.mp4"
+
+< ./path/to/your/video.mp4
+--boundary--
+
+###
+
+# @name findAllPromotions
+GET {{baseUrl}}/promotions
+
+###
+
+# @name findOnePromotion
+GET {{baseUrl}}/promotions/promotion_id
+
+###
+
+# @name updatePromotion
+PATCH {{baseUrl}}/promotions/admin/promotion_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Cyber Monday"
+}
+
+###
+
+# @name removePromotion
+DELETE {{baseUrl}}/promotions/admin/promotion_id
+Authorization: Bearer {{token}}
+
+### Review
+
+# @name createReview
+POST {{baseUrl}}/review
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userId": "user_id",
+  "productId": "product_id",
+  "rating": 5,
+  "comment": "Great product!"
+}
+
+###
+
+# @name findAllReviewUser
+GET {{baseUrl}}/review/user/user_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name findAllReviewProduct
+GET {{baseUrl}}/review/product/product_id
+
+###
+
+# @name findAllReviews
+GET {{baseUrl}}/review
+
+###
+
+# @name updateReview
+PATCH {{baseUrl}}/review/review_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 4
+}
+
+###
+
+# @name removeReview
+DELETE {{baseUrl}}/review/admin/review_id
+Authorization: Bearer {{token}}
+
+### Site Content
+
+# @name createSiteContent
+POST {{baseUrl}}/site-content/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "My E-commerce Site"
+}
+
+###
+
+# @name uploadSiteBanner
+PUT {{baseUrl}}/site-content/banner/admin/site_content_id
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="banner.jpg"
+
+< ./files/cm88t22080000f84kgf75i0ut.jpg
+--boundary--
+
+###
+
+# @name uploadSiteLogo
+PUT {{baseUrl}}/site-content/logo/admin/site_content_id
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="logo.png"
+
+< ./path/to/your/logo.png
+--boundary--
+
+###
+
+# @name uploadImageOpenGraph
+PUT {{baseUrl}}/site-content/image_openGraph/admin/site_content_id
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="opengraph.jpg"
+
+< ./files/cm88t22080000f84kgf75i0ut.jpg
+--boundary--
+
+###
+
+# @name uploadFavicon
+PUT {{baseUrl}}/site-content/favicon/admin/site_content_id
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="favicon.ico"
+
+< ./path/to/your/favicon.ico
+--boundary--
+
+###
+
+# @name findAllSiteContents
+GET {{baseUrl}}/site-content
+
+###
+
+# @name findOneSiteContent
+GET {{baseUrl}}/site-content/site_content_id
+
+###
+
+# @name updateSiteContent
+PATCH {{baseUrl}}/site-content/admin/site_content_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "My Awesome E-commerce Site"
+}
+
+###
+
+# @name removeSiteContent
+DELETE {{baseUrl}}/site-content/admin/site_content_id
+Authorization: Bearer {{token}}
+
+### Social Media
+
+# @name createSocialMedia
+POST {{baseUrl}}/social-media/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Facebook",
+  "url": "https://www.facebook.com/yourpage"
+}
+
+###
+
+# @name findAllSocialMedias
+GET {{baseUrl}}/social-media
+
+###
+
+# @name findOneSocialMedia
+GET {{baseUrl}}/social-media/social_media_id
+
+###
+
+# @name updateSocialMedia
+PATCH {{baseUrl}}/social-media/admin/social_media_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "url": "https://www.facebook.com/your_new_page"
+}
+
+###
+
+# @name removeSocialMedia
+DELETE {{baseUrl}}/social-media/admin/social_media_id
+Authorization: Bearer {{token}}
+
+### Theme Color
+
+# @name createThemeColor
+POST {{baseUrl}}/theme-color/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Primary Color",
+  "hexCode": "#FF0000"
+}
+
+###
+
+# @name findAllThemeColors
+GET {{baseUrl}}/theme-color
+
+###
+
+# @name findOneThemeColor
+GET {{baseUrl}}/theme-color/theme_color_id
+
+###
+
+# @name updateThemeColor
+PATCH {{baseUrl}}/theme-color/admin/theme_color_id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "hexCode": "#0000FF"
+}
+
+###
+
+# @name removeThemeColor
+DELETE {{baseUrl}}/theme-color/admin/theme_color_id
+Authorization: Bearer {{token}}
+
+### Users
+
+# @name completeProfile
+PATCH {{baseUrl}}/users/complete-profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Full Name",
+  "cpf_or_cnpj": "111.222.333-44",
+  "gender": "Male",
+  "dateOfBirth": "1990-01-01T00:00:00Z",
+  "phone": "1234567890"
+}
+
+###
+
+# @name uploadAvatar
+POST {{baseUrl}}/users/avatar
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="avatar.jpg"
+
+< ./files/cm88t22080000f84kgf75i0ut.jpg
+--boundary--
+
+###
+
+# @name uploadAvatarCloudnary
+POST {{baseUrl}}/users/avatar-Cloudnary
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="avatar.jpg"
+
+< ./files/cm88t22080000f84kgf75i0ut.jpg
+--boundary--
+
+###
+
+# @name findUserById
+GET {{baseUrl}}/users/admin/user_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name allUsers
+GET {{baseUrl}}/users/admin
+Authorization: Bearer {{token}}
+
+###
+
+# @name removeUser
+DELETE {{baseUrl}}/users/admin/user_id
+Authorization: Bearer {{token}}
+
+### Validate Zip
+
+# @name validateZip
+GET {{baseUrl}}/validete-zip/12345-678
+
+### Wishlist
+
+# @name createWishlist
+POST {{baseUrl}}/wishlist
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userId": "user_id",
+  "productId": "product_id"
+}
+
+###
+
+# @name findAllWishlists
+GET {{baseUrl}}/wishlist/admin
+Authorization: Bearer {{token}}
+
+###
+
+# @name findAllWishUser
+GET {{baseUrl}}/wishlist/user/user_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name findOneWishlist
+GET {{baseUrl}}/wishlist/wishlist_id
+Authorization: Bearer {{token}}
+
+###
+
+# @name removeWishlist
+DELETE {{baseUrl}}/wishlist/wishlist_id
+Authorization: Bearer {{token}}
