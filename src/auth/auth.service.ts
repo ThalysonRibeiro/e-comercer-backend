@@ -605,14 +605,14 @@ export class AuthService {
       throw new HttpException(
         'Confirme seu email antes de prosseguir',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
 
     if (user.status === AccountStatus.inactive) {
       throw new HttpException(
         'Conta inativa. Entre em contato com o suporte',
         HttpStatus.BAD_REQUEST,
-      )
+      );
     }
 
     // Gerar JWT token
