@@ -22,7 +22,7 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.8.0",
     "@nestjs/common": "^11.0.20",
-    "@nestjs/config": "^4.0.2",
+    "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^11.0.20",
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/mapped-types": "*",
@@ -39,7 +39,6 @@
     "dotenv": "^16.5.0",
     "google-auth-library": "^9.15.1",
     "jsonwebtoken": "^9.0.2",
-    "lodash": "^4.17.23",
     "nodemailer": "^6.10.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
