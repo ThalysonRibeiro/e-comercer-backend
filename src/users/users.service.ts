@@ -7,6 +7,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { v2 as cloudinary } from 'cloudinary';
 import { ConfigService } from '@nestjs/config';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -35,9 +36,9 @@ export class UsersService {
     });
   }
 
-  async findByCpfOrCnpj(cpf_or_cnpj: string): Promise<User | null> {
+  async findByCpfOrCnpj(document: string): Promise<User | null> {
     return this.prisma.user.findFirst({
-      where: { cpf_or_cnpj },
+      where: { document },
     });
   }
 
@@ -84,7 +85,7 @@ export class UsersService {
         status: true,
         type: true,
         name: true,
-        cpf_or_cnpj: true,
+        document: true,
         gender: true,
         dateOfBirth: true,
         email: true,
@@ -170,7 +171,7 @@ export class UsersService {
       avatar: string;
       status: AccountStatus;
       type: AccountType;
-      cpf_or_cnpj: string;
+      document: string;
       gender: string;
       dateOfBirth: Date | null;
       phone: string;
@@ -189,20 +190,45 @@ export class UsersService {
     });
   }
 
-  async completeProfile(
-    id: string,
-    data: {
-      name: string;
-      cpf_or_cnpj: string;
-      gender: string;
-      dateOfBirth: string;
-      phone: string;
-    },
-  ): Promise<User> {
-    return this.prisma.user.update({
-      where: { id },
-      data,
+  async updateUserProfile(id: string, updateUserDto: UpdateUserDto) {
+    if (!id) {
+      throw new HttpException('O id é obrigatório', HttpStatus.NOT_FOUND);
+    }
+
+    const existingUser = await this.prisma.user.findFirst({
+      where: { id: id },
     });
+
+    if (!existingUser) {
+      throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    try {
+
+      await this.prisma.user.update({
+        where: { id: existingUser.id },
+        data: {
+          name: updateUserDto.name,
+          email: updateUserDto.email?.trim(),
+          status: updateUserDto.status,
+          type: updateUserDto.type,
+          document: updateUserDto.document?.trim(),
+          gender: updateUserDto.gender?.trim(),
+          dateOfBirth: updateUserDto.dateOfBirth,
+          phone: updateUserDto.phone,
+          acceptOffers: updateUserDto.acceptOffers,
+          acceptTerms: updateUserDto.acceptTerms,
+          documentType: updateUserDto.documentType,
+        }
+      });
+
+      return {
+        message: 'Perfil atualizado com sucesso'
+      }
+    } catch (error) {
+      throw new HttpException('Erro ao atualizar usuário', HttpStatus.NOT_FOUND);
+    }
+
   }
 
   async uploadAvatarImage(req, file: Express.Multer.File) {

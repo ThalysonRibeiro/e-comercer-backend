@@ -18,40 +18,36 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { AccountType } from '@prisma/client';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService) { }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('complete-profile')
-  async completeProfile(
-    @Request() req,
+  @Patch('update-profile/:id')
+  async updateProfileUser(
+    @Param('id') id: string,
     @Body()
-    profileData: {
-      name: string;
-      cpf_or_cnpj: string;
-      gender: string;
-      dateOfBirth: string;
-      phone: string;
-    },
+    profileData: UpdateUserDto
   ) {
-    const userId = req.user.id;
-    const updatedUser = await this.usersService.completeProfile(
-      userId,
+    return await this.usersService.updateUser(
+      id,
       profileData,
     );
-
-    return {
-      message: 'Perfil atualizado com sucesso',
-      user: {
-        id: updatedUser.id,
-        name: updatedUser.name,
-        email: updatedUser.email,
-        status: updatedUser.status,
-        // type: updatedUser.type,
-      },
-    };
+  }
+  @UseGuards(JwtAuthGuard)
+  @Roles(AccountType.useradmin, AccountType.usermoderator)
+  @Patch('update-profile-admin/:id')
+  async updateProfileAdmin(
+    @Param('id') id: string,
+    @Body()
+    profileData: UpdateUserDto
+  ) {
+    return await this.usersService.updateUser(
+      id,
+      profileData,
+    );
   }
 
   @UseGuards(JwtAuthGuard)

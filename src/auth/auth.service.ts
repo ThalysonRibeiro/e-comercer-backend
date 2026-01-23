@@ -43,7 +43,7 @@ export class AuthService {
       createUserDTO.phone,
     );
     const existeCpfOrCnpj = await this.usersService.findByCpfOrCnpj(
-      createUserDTO.cpf_or_cnpj,
+      createUserDTO.document,
     );
 
     if (existeEmail || existePhone || existeCpfOrCnpj) {
@@ -64,7 +64,7 @@ export class AuthService {
         password: createUserDTO.password, // Idealmente, o password deve ser hashado
         status: AccountStatus.active,
         type: AccountType.userdefault,
-        cpf_or_cnpj: createUserDTO.cpf_or_cnpj.trim(),
+        document: createUserDTO.document.trim(),
         gender: createUserDTO.gender.trim(),
         dateOfBirth: createUserDTO.dateOfBirth,
         phone: createUserDTO.phone,
@@ -276,7 +276,7 @@ export class AuthService {
       createUserAdminDTO.phone,
     );
     const existeCpfOrCnpj = await this.usersService.findByCpfOrCnpj(
-      createUserAdminDTO.cpf_or_cnpj,
+      createUserAdminDTO.document,
     );
 
     if (existeEmail || existePhone || existeCpfOrCnpj) {
@@ -306,7 +306,7 @@ export class AuthService {
         password: createUserAdminDTO.password, // Idealmente, o password deve ser hashado
         status: AccountStatus.active,
         type: typeExists, // Usar o tipo fornecido no DTO
-        cpf_or_cnpj: createUserAdminDTO.cpf_or_cnpj.trim(),
+        document: createUserAdminDTO.document.trim(),
         gender: createUserAdminDTO.gender.trim(),
         dateOfBirth: createUserAdminDTO.dateOfBirth,
         phone: createUserAdminDTO.phone,
@@ -542,7 +542,7 @@ export class AuthService {
           avatar: picture,
           status: AccountStatus.active,
           type: AccountType.userdefault,
-          cpf_or_cnpj: '',
+          document: '',
           gender: '',
           phone: '',
         });
@@ -573,7 +573,7 @@ export class AuthService {
         type: user.type,
         status: user.status,
         isProfileComplete: this.isProfileComplete(user),
-        cpf_or_cnpj: user.cpf_or_cnpj,
+        document: user.document,
         gender: user.gender,
         dateOfBirth: user.dateOfBirth,
         phone: user.phone,
@@ -622,7 +622,7 @@ export class AuthService {
       status,
       type,
       name,
-      cpf_or_cnpj,
+      document,
       gender,
       dateOfBirth,
       email,
@@ -642,7 +642,7 @@ export class AuthService {
       status,
       type,
       name,
-      cpf_or_cnpj,
+      document,
       gender,
       dateOfBirth,
       email,

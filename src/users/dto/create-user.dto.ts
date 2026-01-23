@@ -80,7 +80,7 @@ export class CreateUserDTO {
 
   @IsString()
   @IsOptional()
-  cpf_or_cnpj: string;
+  document: string;
 
   @IsString()
   gender: string;

@@ -37,7 +37,7 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
-  ) {}
+  ) { }
   //useradmin
   @Public()
   @Post('register-admin')
@@ -111,7 +111,6 @@ export class AuthController {
     return this.authService.loginWithCredentials(login, password);
   }
 
-  @Public()
   @Get('profile/:id')
   getProfile(@Param('id') id: string) {
     // req.user já contém o usuário autenticado graças ao JwtStrategy

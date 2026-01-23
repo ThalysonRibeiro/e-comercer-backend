@@ -25,7 +25,7 @@ model User {
   avatar                 String?
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @updatedAt
-  cpf_or_cnpj            String?
+  document               String?
   acceptOffers           Boolean?          @default(false)
   acceptTerms            Boolean?          @default(false)
   documentType           String?
